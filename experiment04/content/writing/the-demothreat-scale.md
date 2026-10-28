@@ -5,6 +5,7 @@ date: 2022-06-22
 dek: I am convulsed by the agonies of our times.
 image: assets/img/essay-demothreat.webp
 links:
-  - Medium: https://robertmherzog.medium.com/the-demothreat-dtunit-scale-of-threats-to-democracy-29d1af956e3d
+  - label: Medium
+    url: https://robertmherzog.medium.com/the-demothreat-dtunit-scale-of-threats-to-democracy-29d1af956e3d
 ---
 

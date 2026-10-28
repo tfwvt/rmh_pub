@@ -6,8 +6,10 @@ dek: A question for our times.
 image: assets/img/essay-should-we-stop-being-nice.webp
 imagePosition: 50% 25%
 links:
-  - Substack: https://robertherzog.substack.com/p/should-we-stop-being-nice
-  - Medium: https://robertmherzog.medium.com/should-we-stop-being-nice-a26d27f62e38
+  - label: Substack
+    url: https://robertherzog.substack.com/p/should-we-stop-being-nice
+  - label: Medium
+    url: https://robertmherzog.medium.com/should-we-stop-being-nice-a26d27f62e38
 legacy:
   - /should-we-stop-being-nice
   - /blog/2025/9/18/should-we-stop-being-nice

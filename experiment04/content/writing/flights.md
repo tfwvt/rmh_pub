@@ -3,9 +3,9 @@ title: Flights
 kind: film
 label: Short film
 dek: A film by Robert M. Herzog. Director’s statement, screening history and review.
-listed: false
 legacy:
   - /flights-film
+unlisted: true
 ---
 
 <div class="video"><iframe src="https://player.vimeo.com/video/16706344" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy" title="Video"></iframe></div>

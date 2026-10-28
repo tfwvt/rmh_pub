@@ -1,0 +1,14 @@
+{
+  "name": "rmh-site",
+  "private": true,
+  "description": "Robert M. Herzog's website. `npm run build` writes the finished site to dist/.",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "yaml": "2.9.1"
+  }
+}

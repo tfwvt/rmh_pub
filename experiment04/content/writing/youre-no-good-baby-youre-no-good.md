@@ -5,8 +5,10 @@ date: 2024-11-09
 dek: The zeitgeist of the 2024 Venice Biennale.
 image: assets/img/essay-biennale-2024.webp
 links:
-  - Substack: https://robertherzog.substack.com/p/youre-no-good-baby-youre-no-good
-  - Medium: https://robertmherzog.medium.com/youre-no-good-baby-you-re-no-good-the-zeitgeist-of-the-2024-biennale-2196817d32fa
+  - label: Substack
+    url: https://robertherzog.substack.com/p/youre-no-good-baby-youre-no-good
+  - label: Medium
+    url: https://robertmherzog.medium.com/youre-no-good-baby-you-re-no-good-the-zeitgeist-of-the-2024-biennale-2196817d32fa
 legacy:
   - /new-page-55
   - /blog/2024/11/9/youre-no-good-baby-youre-no-good-the-venice-biennale-and-the-zeitgeist-2024

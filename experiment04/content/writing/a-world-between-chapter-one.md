@@ -1,7 +1,7 @@
 ---
-title: A World Between: Chapter One
+title: "A World Between: Chapter One"
 kind: fiction
-dek: Parts of the world were disappearing: for a while, nobody noticed. Or cared.
+dek: "Parts of the world were disappearing: for a while, nobody noticed. Or cared."
 venue: From the novel A World Between
 image: assets/img/book-a-world-between.webp
 legacy:

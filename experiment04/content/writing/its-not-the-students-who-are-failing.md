@@ -5,8 +5,10 @@ date: 2025-12-09
 dek: What I learned teaching in a system that funds failure.
 image: assets/img/essay-not-the-students.webp
 links:
-  - Substack: https://robertherzog.substack.com/p/its-not-the-students-who-are-failing
-  - Medium: https://robertmherzog.medium.com/its-not-the-students-who-are-failing-474ae17336d6
+  - label: Substack
+    url: https://robertherzog.substack.com/p/its-not-the-students-who-are-failing
+  - label: Medium
+    url: https://robertmherzog.medium.com/its-not-the-students-who-are-failing-474ae17336d6
 legacy:
   - /new-page-66
 ---

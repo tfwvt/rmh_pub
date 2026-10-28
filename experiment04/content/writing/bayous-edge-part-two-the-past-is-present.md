@@ -1,12 +1,14 @@
 ---
-title: Bayou’s Edge, Part Two: The Past Is Present
+title: "Bayou’s Edge, Part Two: The Past Is Present"
 kind: fiction
 date: 2025-11-17
-dek: As night falls across the Louisiana bayou, the line between memory and desire blurs — and the past refuses to stay buried.
+dek: As night falls across the Louisiana bayou, the line between memory and
+  desire blurs — and the past refuses to stay buried.
 image: assets/img/fiction-bayous-edge-2.webp
 imagePosition: 50% 40%
 links:
-  - Medium: https://robertmherzog.medium.com/bayous-edge-part-two-the-past-is-present-e57d6fb8f760
+  - label: Medium
+    url: https://robertmherzog.medium.com/bayous-edge-part-two-the-past-is-present-e57d6fb8f760
 legacy:
   - /bayous-edge-part-two-the-past-is-present-1
 ---

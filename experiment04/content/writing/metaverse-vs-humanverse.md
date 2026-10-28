@@ -1,7 +1,8 @@
 ---
 title: Metaverse vs. Humanverse
 kind: essay
-dek: Is the metaverse an evolution in human development and communications, or an overcorrection to the pandemic isolation skid?
+dek: Is the metaverse an evolution in human development and communications, or
+  an overcorrection to the pandemic isolation skid?
 legacy:
   - /the-projects-copy-1-1
 ---

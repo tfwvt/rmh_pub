@@ -1,13 +1,16 @@
 ---
-title: Bullies at Scale: Why Kindness Needs Courage
+title: "Bullies at Scale: Why Kindness Needs Courage"
 kind: essay
 date: 2025-10-14
-dek: After writing about kindness and civility, I found myself thinking about their opposite — the way cruelty, when left unchecked, expands.
+dek: After writing about kindness and civility, I found myself thinking about
+  their opposite — the way cruelty, when left unchecked, expands.
 image: assets/img/essay-bullies-at-scale.webp
 imagePosition: 50% 15%
 links:
-  - Substack: https://robertherzog.substack.com/p/bullies-at-scale-why-kindness-needs
-  - Medium: https://robertmherzog.medium.com/bullies-at-scale-why-kindness-needs-courage-59b1d70471aa
+  - label: Substack
+    url: https://robertherzog.substack.com/p/bullies-at-scale-why-kindness-needs
+  - label: Medium
+    url: https://robertmherzog.medium.com/bullies-at-scale-why-kindness-needs-courage-59b1d70471aa
 legacy:
   - /bullies-at-scale-why-kindness-needs-courage
 ---

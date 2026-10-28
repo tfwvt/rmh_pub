@@ -1,7 +1,8 @@
 ---
 title: The Projects
 kind: fiction
-dek: The large brick buildings were tossed at the base of Catherine Street like undelivered packages.
+dek: The large brick buildings were tossed at the base of Catherine Street like
+  undelivered packages.
 legacy:
   - /the-projects
 ---

@@ -2,8 +2,9 @@
 title: No More, No Less
 kind: fiction
 date: 2010-01-01
-dateLabel: 2010
-dek: He had arrived at the age where men are most vulnerable to folly. The alternative was sadness.
+dateLabel: "2010"
+dek: He had arrived at the age where men are most vulnerable to folly. The
+  alternative was sadness.
 venue: Downstate Story — cover story
 image: assets/img/writing/no-more-no-less.webp
 legacy:

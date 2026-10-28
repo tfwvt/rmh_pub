@@ -1,7 +1,8 @@
 ---
 title: We’re Just NPCs in the Game
 kind: essay
-dek: Would you rather be an NPC to be exploited, or have your finger on the controller?
+dek: Would you rather be an NPC to be exploited, or have your finger on the
+  controller?
 legacy:
   - /the-projects-copy-1-1-1
 ---

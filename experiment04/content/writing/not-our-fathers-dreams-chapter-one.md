@@ -1,5 +1,5 @@
 ---
-title: Not Our Fathers’ Dreams: Chapter One
+title: "Not Our Fathers’ Dreams: Chapter One"
 kind: fiction
 dek: Each generation is given just so many choices; the rest it must create.
 venue: From the novel Not Our Fathers’ Dreams

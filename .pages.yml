@@ -1,0 +1,108 @@
+# Pages CMS settings (https://pagescms.org): an editor for the writing on Robert M. Herzog's site.
+# Each piece is one Markdown file in experiment04/content/writing/. Saving in the editor commits
+# that file to GitHub, and DigitalOcean rebuilds the site (see experiment04/README.md).
+
+media:
+  input: experiment04/assets/img/writing
+  output: assets/img/writing
+  rename: safe
+  extensions: [jpg, jpeg, png, webp, gif]
+
+content:
+  - name: writing
+    label: Writing
+    type: collection
+    path: experiment04/content/writing
+    format: yaml-frontmatter
+    filename:
+      template: "{primary}.md"
+      field: create
+    view:
+      fields: [title, kind, date]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+        description: "The file name, and so the web address (read/the-file-name/), comes from the title when a piece is created. It doesn't change later."
+      - name: kind
+        label: Kind
+        type: select
+        required: true
+        options:
+          values:
+            - name: essay
+              label: Essay
+            - name: oped
+              label: Op-Ed
+            - name: fiction
+              label: Fiction
+            - name: poetry
+              label: Poetry
+            - name: notes
+              label: Notes
+            - name: film
+              label: Film
+      - name: date
+        label: Date
+        type: date
+        default: ""
+        description: "Optional. Pieces are listed newest first; undated pieces come after dated ones."
+        options:
+          format: yyyy-MM-dd
+      - name: dateLabel
+        label: Date as shown
+        type: string
+        description: "Optional. Shown instead of the date, e.g. Fall 2010."
+      - name: dek
+        label: Summary
+        type: text
+        description: "One or two sentences shown under the title."
+      - name: venue
+        label: Published in
+        type: string
+        description: "Optional. Where the piece first appeared, e.g. Solstice Literary Magazine."
+      - name: image
+        label: Image
+        type: image
+        description: "Optional. Shown on the home page card and at the top of the piece (not for poems)."
+      - name: imagePosition
+        label: Image focus
+        type: string
+        description: "Optional. Which part of the image stays in frame on the home page, e.g. 50% 20% (left-right, top-bottom)."
+      - name: links
+        label: Also published on
+        type: object
+        list: true
+        description: "Copies elsewhere, e.g. Substack or Medium. With no text below, the piece links to the first one."
+        fields:
+          - name: label
+            label: Site name
+            type: string
+          - name: url
+            label: Web address
+            type: string
+      - name: body
+        label: Text
+        type: code
+        description: "The piece itself, in Markdown. Leave empty for a piece published only elsewhere. Formatting tips are in experiment04/README.md."
+        options:
+          format: markdown
+      - name: unlisted
+        label: Hide from the Writing list
+        type: boolean
+        description: "The piece keeps its own page, but isn't listed on the home page."
+      - name: label
+        label: Kind as shown
+        type: string
+        description: "Optional. Shown instead of the kind, e.g. Short film."
+      - name: legacy
+        label: Old thezog.com addresses
+        type: string
+        list: true
+        description: "Old addresses that should send visitors here, e.g. /totem. Only needed for pieces from the old site."

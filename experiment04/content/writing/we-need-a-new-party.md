@@ -1,7 +1,8 @@
 ---
 title: We Need a New Party
 kind: oped
-dek: If the Republicans and Democrats were waiters, we’d send our food back for lousy service.
+dek: If the Republicans and Democrats were waiters, we’d send our food back for
+  lousy service.
 image: assets/img/writing/we-need-a-new-party.webp
 legacy:
   - /opedipal-we-need-a-new-party

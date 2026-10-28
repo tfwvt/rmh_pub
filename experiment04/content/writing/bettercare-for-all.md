@@ -2,7 +2,9 @@
 title: BetterCare for All
 kind: oped
 date: 2019-07-06
-dek: The cure for healthcare isn’t Medicare for All, it’s establishing organizations with complete responsibility for the total care, costs, quality and outcomes for a person.
+dek: The cure for healthcare isn’t Medicare for All, it’s establishing
+  organizations with complete responsibility for the total care, costs, quality
+  and outcomes for a person.
 legacy:
   - /blog/2019/7/6/a-new-piece-also-posted-on-medium
 ---

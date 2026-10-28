@@ -2,7 +2,8 @@
 title: Reach Across the Aisle Is an Invite to Getting Bitten
 kind: oped
 date: 2021-02-27
-dek: There’s nothing like self-righteous certainty to cut you off from your fellow human.
+dek: There’s nothing like self-righteous certainty to cut you off from your
+  fellow human.
 legacy:
   - /blog/2021/2/27/reach-across-the-aisle-is-an-invite-to-getting-bitten
 ---

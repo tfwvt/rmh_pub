@@ -5,8 +5,10 @@ date: 2025-10-03
 dek: Your answers were often surprising.
 image: assets/img/essay-your-answers.webp
 links:
-  - Substack: https://robertherzog.substack.com/p/answers-to-my-question-how-nice
-  - Medium: https://robertmherzog.medium.com/your-answers-were-often-surprising-bf96bf22b3a5
+  - label: Substack
+    url: https://robertherzog.substack.com/p/answers-to-my-question-how-nice
+  - label: Medium
+    url: https://robertmherzog.medium.com/your-answers-were-often-surprising-bf96bf22b3a5
 legacy:
   - /your-answers-were-often-surprising
   - /blog/2025/10/12/should-we-stop-being-nice-what-you-told-me

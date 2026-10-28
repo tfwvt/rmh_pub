@@ -1,12 +1,16 @@
 ---
-title: Bayou’s Edge, Part One: The Visitors
+title: "Bayou’s Edge, Part One: The Visitors"
 kind: fiction
 date: 2025-11-06
-dek: Amidst the sultry paddies and verdant levees of the Louisiana bayous, a crawfish farmer’s dark past threatens to erupt, endangering everything he holds dear.
+dek: Amidst the sultry paddies and verdant levees of the Louisiana bayous, a
+  crawfish farmer’s dark past threatens to erupt, endangering everything he
+  holds dear.
 image: assets/img/fiction-bayous-edge-1.webp
 links:
-  - Substack: https://robertherzog.substack.com/p/bayous-edge
-  - Medium: https://robertmherzog.medium.com/bayous-edge-part-one-the-visitors-1464b68ad811
+  - label: Substack
+    url: https://robertherzog.substack.com/p/bayous-edge
+  - label: Medium
+    url: https://robertmherzog.medium.com/bayous-edge-part-one-the-visitors-1464b68ad811
 legacy:
   - /new-page-30
 ---

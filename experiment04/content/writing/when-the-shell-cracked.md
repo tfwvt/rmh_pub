@@ -2,7 +2,8 @@
 title: When the Shell Cracked
 kind: oped
 date: 2021-02-25
-dek: The fragmentation of America — and whether there is a path to rejoining the pieces.
+dek: The fragmentation of America — and whether there is a path to rejoining the
+  pieces.
 legacy:
   - /blog/2021/2/25/when-the-shell-cracked-the-fragmentation-of-america
 ---

@@ -1,7 +1,8 @@
 ---
 title: Thunder in a Clear Blue Sky
 kind: fiction
-dek: An Information Architect tries to keep the framework of his life from falling apart.
+dek: An Information Architect tries to keep the framework of his life from
+  falling apart.
 image: assets/img/script-thunder.webp
 legacy:
   - /the-projects-copy

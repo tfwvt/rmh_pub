@@ -6,6 +6,7 @@ dek: What Europe shows us about the ideals America once held dear.
 venue: Persuasion
 image: assets/img/essay-memories-of-a-nobler-nation.webp
 links:
-  - Persuasion: https://www.persuasion.community/p/memories-of-a-nobler-nation
+  - label: Persuasion
+    url: https://www.persuasion.community/p/memories-of-a-nobler-nation
 ---
 
