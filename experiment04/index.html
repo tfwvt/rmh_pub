@@ -41,6 +41,21 @@
   </header>
 
   <main id="main">
+    <!-- Flourish, like the border on a silent-film title card. Drawn once here, used above and below the film. -->
+    <svg width="0" height="0" class="sprite" aria-hidden="true">
+      <symbol id="flourish" viewBox="0 0 480 48">
+        <g id="flourish-half">
+          <path d="M222 24 H92 C70 24 60 17 60 10 C60 4 66 1 71 4 C76 7 74 14 68 13"/>
+          <path d="M92 24 C78 24 72 30 75 36 C77 40 83 40 84 36"/>
+          <path d="M206 29 H118" stroke-width="0.75"/>
+          <path d="M206 19 H134" stroke-width="0.75"/>
+          <circle cx="228" cy="24" r="1.6" fill="currentColor" stroke="none"/>
+        </g>
+        <use href="#flourish-half" transform="translate(480 0) scale(-1 1)"/>
+        <path d="M240 15 L249 24 L240 33 L231 24 Z" fill="currentColor" stroke="none"/>
+      </symbol>
+    </svg>
+
     <!-- Banner: the open book from thezog.com's home page -->
     <div class="home-banner">
       <img src="assets/img/home-open-book.webp" alt="" width="760" height="545">
@@ -54,12 +69,16 @@
           <h1 class="hero-title">Robert M.<br>Herzog</h1>
           <p class="hero-lede">Essays and stories at the fault lines of democracy and culture — on the page, on the stage and on the screen. His novel was a Barnes &amp; Noble e-Book of the Day, and his films and screenplays have been recognized by Cinevue, Cinequest and the Austin Short Film Festival.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#writing">Author &amp; Writer</a>
-            <a class="btn" href="#film">Cinema and Productions</a>
+            <a class="btn btn-primary" href="#writing">Author / Writer</a>
+            <a class="btn" href="#film">Cinema / Productions</a>
           </div>
           <div class="published-in">
             <p class="published-label">Published in</p>
             <p data-slot="published-in"></p>
+          </div>
+          <div class="latest hero-books">
+            <p class="latest-label">Books</p>
+            <ol class="latest-list" data-slot="hero-books"></ol>
           </div>
           <div class="latest">
             <p class="latest-label">Latest</p>
@@ -70,19 +89,24 @@
           <img src="assets/img/robert-herzog.webp" alt="Portrait of Robert M. Herzog" width="685" height="1026">
         </figure>
       </div>
+      <div class="wrap">
+        <svg class="flourish flourish-flip" viewBox="0 0 480 48" aria-hidden="true"><use href="#flourish"/></svg>
+      </div>
     </section>
 
     <!-- Featured film -->
     <section class="film-feature" id="film" aria-labelledby="film-title" data-slot="featured-film"></section>
 
     <!-- Screen & stage -->
-    <section class="section" id="screen" aria-labelledby="screen-title">
+    <section class="section section-after-film section-flourish-end" id="screen" aria-labelledby="screen-title">
       <div class="wrap">
+        <svg class="flourish" viewBox="0 0 480 48" aria-hidden="true"><use href="#flourish"/></svg>
         <header class="section-head">
           <p class="eyebrow">Screen &amp; Stage</p>
           <h2 id="screen-title">Films, screenplays and plays</h2>
         </header>
         <div class="screen-grid" data-slot="screen"></div>
+        <svg class="flourish flourish-flip" viewBox="0 0 480 48" aria-hidden="true"><use href="#flourish"/></svg>
       </div>
     </section>
 

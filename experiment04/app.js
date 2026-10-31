@@ -18,6 +18,7 @@
     String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
   const isExternal = (url) => /^https?:/i.test(url);
+  const bookId = (b) => "book-" + b.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   const linkAttrs = (url) => (isExternal(url) ? ' target="_blank" rel="noopener"' : "");
 
   const ICONS = {
@@ -81,6 +82,17 @@
         <span class="latest-meta">${esc(where)} · ${esc(fmtDate(w, { month: "short", year: "numeric" }))}</span>
       </a></li>`;
     })
+    .join("");
+
+  // Published books: the ones with a store link (unpublished ones only have on-site excerpts).
+  slot("hero-books").innerHTML = SITE.books
+    .map((b) => ({ b, store: b.buy.find((l) => isExternal(l.url)) }))
+    .filter(({ store }) => store)
+    .slice(0, 2)
+    .map(({ b }) => `<li><a href="#${bookId(b)}">
+        <span class="latest-title">${esc(b.title)}</span>
+        <span class="latest-meta">${esc(b.subtitle || b.kind)}</span>
+      </a></li>`)
     .join("");
 
   slot("published-in").innerHTML = SITE.about.publishedIn
@@ -156,7 +168,7 @@
   slot("books").innerHTML = SITE.books
     .map(
       (b) => `
-      <article class="book reveal">
+      <article class="book reveal" id="${bookId(b)}">
         <div class="book-cover"><img src="${esc(b.cover)}" alt="Cover of ${esc(b.title)}" loading="lazy"></div>
         <div>
           <p class="eyebrow">${esc(b.kind)}</p>
