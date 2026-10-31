@@ -51,7 +51,7 @@ window.SITE = {
     sponsor: { name: "Fiscally sponsored by The Gotham Film & Media Institute", logo: "assets/img/logo-gotham.webp" },
     // Festival badges, shown at the bottom of the right-hand column.
     badges: [
-      { image: "assets/img/badge-austin-short-film-festival.png", alt: "Austin Short Film Festival" },
+      { image: "assets/img/badge-austin-short-film-festival.webp", alt: "Austin Short Film Festival" },
     ],
     actions: [
       { label: "Support the film", url: "https://fiscal.thegotham.org/film/5836/no-kidding-around", primary: true },
