@@ -150,19 +150,17 @@
   slot("screen").innerHTML = SITE.screen
     .map(
       (w) => `
-      <article class="work reveal${w.image ? "" : " work-noimg"}${w.links?.length ? " work-linked" : ""}" id="${workId(w)}">
+      <article class="work reveal${w.image ? "" : " work-noimg"}" id="${workId(w)}">
         ${(() => {
-          // With a link at the bottom, the image and the top area (type, title, role) open it too.
+          // With a link at the bottom, the image opens it too (the text stays plain).
           const main = w.links?.[0];
           const img = w.image ? `<img src="${esc(w.image)}" alt="${esc(w.imageAlt || "")}" loading="lazy">` : "";
           const media = !img ? "" : main ? `<a class="work-media" ${linkTo(main)} tabindex="-1" aria-hidden="true">${img}</a>` : `<div class="work-media">${img}</div>`;
           return `${media}
         <div class="work-body">
-          <div class="work-head">
-            <p class="work-kind">${esc(w.kind)}</p>
-            <h3>${main ? `<a ${linkTo(main)}>${esc(w.title)}</a>` : esc(w.title)}</h3>
-            ${w.role ? `<p class="work-role">${esc(w.role)}</p>` : ""}
-          </div>`;
+          <p class="work-kind">${esc(w.kind)}</p>
+          <h3>${esc(w.title)}</h3>
+          ${w.role ? `<p class="work-role">${esc(w.role)}</p>` : ""}`;
         })()}
           ${(w.laurels || []).map((l) => `<p class="work-laurel">${AWARD}<span>${esc(l)}</span></p>`).join("")}
           <p class="work-summary">${esc(w.summary)}</p>
@@ -235,7 +233,7 @@
     if (date) meta.push(`<span>${esc(date)}</span>`);
     return `
       <article class="piece reveal${w.image ? "" : " piece-noimg"}">
-        ${w.image ? `<div class="piece-media"><img src="${esc(w.image)}" alt="" loading="lazy"${w.imagePosition ? ` style="object-position:${esc(w.imagePosition)}"` : ""}></div>` : ""}
+        ${w.image ? `<a class="piece-media" href="${esc(primary.url)}"${linkAttrs(primary.url)} tabindex="-1" aria-hidden="true"><img src="${esc(w.image)}" alt="" loading="lazy"${w.imagePosition ? ` style="object-position:${esc(w.imagePosition)}"` : ""}></a>` : ""}
         <div class="piece-body">
           <p class="piece-meta">${meta.join("")}</p>
           <h3><a href="${esc(primary.url)}"${linkAttrs(primary.url)}>${esc(w.title)}</a></h3>

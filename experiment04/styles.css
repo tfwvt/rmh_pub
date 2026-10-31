@@ -266,11 +266,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .work-body { padding: 22px 24px 24px; display: flex; flex-direction: column; flex: 1; }
 .work-kind { font: 600 11px/1.2 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .work h3 { font-size: 26px; margin-bottom: 6px; }
-/* Linked cards: the title's link stretches over the whole top area (type, title, role). */
-.work-head { position: relative; }
-.work h3 a { text-decoration: none; }
-.work h3 a::after { content: ""; position: absolute; inset: 0; }
-.work-linked:hover h3 a { color: var(--accent); }
 .work-role { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
 .work-summary { color: var(--ink-2); font-size: 16px; }
 .work-quote { font: italic 300 16px/1.5 var(--serif); color: var(--ink-2); border-left: 2px solid var(--accent); padding-left: 14px; margin: 4px 0 16px; }
@@ -343,15 +338,16 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
   overflow: hidden; transition: transform .25s ease, box-shadow .25s ease, border-color .25s;
 }
-.piece:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); }
-.piece-media { aspect-ratio: 3 / 2; overflow: hidden; background: var(--paper-2); }
-.piece-media img { width: 100%; height: 100%; object-fit: cover; }
+/* The image opens the card's main link (as does the title); the rest of the card is plain text. */
+.piece-media { display: block; aspect-ratio: 3 / 2; overflow: hidden; background: var(--paper-2); }
+.piece-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.piece-media:hover img { transform: scale(1.03); }
 .piece-body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
 .piece-meta { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 12px; color: var(--muted); margin-bottom: 10px; align-items: center; }
 .piece-kind { font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
 .piece h3 { font-size: 22px; line-height: 1.2; margin-bottom: 8px; }
 .piece h3 a { text-decoration: none; }
-.piece h3 a::after { content: ""; position: absolute; inset: 0; } /* whole card clicks through to the primary link */
+.piece h3 a:hover { color: var(--accent); }
 .piece-dek { font-size: 15px; color: var(--ink-2); margin-bottom: 14px; }
 .piece-venue { font: italic 400 14px/1.4 var(--serif); color: var(--ink-2); margin-bottom: 12px; }
 .piece-links { margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px; position: relative; z-index: 1; }
