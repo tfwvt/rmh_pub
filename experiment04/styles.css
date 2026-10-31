@@ -260,12 +260,17 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   overflow: hidden; box-shadow: var(--shadow);
   overflow: clip; /* clips like hidden, but isn't a scroll box, so jump links honour scroll-margin-top */
 }
-.work-media { aspect-ratio: 16 / 10; background: var(--paper-2); overflow: hidden; }
+.work-media { display: block; aspect-ratio: 16 / 10; background: var(--paper-2); overflow: hidden; }
 .work-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
 .work:hover .work-media img { transform: scale(1.03); }
 .work-body { padding: 22px 24px 24px; display: flex; flex-direction: column; flex: 1; }
 .work-kind { font: 600 11px/1.2 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .work h3 { font-size: 26px; margin-bottom: 6px; }
+/* Linked cards: the title's link stretches over the whole top area (type, title, role). */
+.work-head { position: relative; }
+.work h3 a { text-decoration: none; }
+.work h3 a::after { content: ""; position: absolute; inset: 0; }
+.work-linked:hover h3 a { color: var(--accent); }
 .work-role { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
 .work-summary { color: var(--ink-2); font-size: 16px; }
 .work-quote { font: italic 300 16px/1.5 var(--serif); color: var(--ink-2); border-left: 2px solid var(--accent); padding-left: 14px; margin: 4px 0 16px; }

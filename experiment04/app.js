@@ -143,22 +143,27 @@
   }
 
   // ---------- Screen & stage ----------
-  const textLink = (l) => {
-    if (l.internal) {
-      return `<a class="text-link" href="${esc(l.url)}"${l.filter ? ` data-filter="${esc(l.filter)}"` : ""}>${esc(l.label)} ${ARROW}</a>`;
-    }
-    return `<a class="text-link" href="${esc(l.url)}"${linkAttrs(l.url)}>${esc(l.label)} ${ARROW}</a>`;
-  };
+  // Attributes for a link from content.js: in-page filter links keep data-filter, offsite ones open in a new tab.
+  const linkTo = (l) => `href="${esc(l.url)}"` + (l.internal ? (l.filter ? ` data-filter="${esc(l.filter)}"` : "") : linkAttrs(l.url));
+  const textLink = (l) => `<a class="text-link" ${linkTo(l)}>${esc(l.label)} ${ARROW}</a>`;
 
   slot("screen").innerHTML = SITE.screen
     .map(
       (w) => `
-      <article class="work reveal${w.image ? "" : " work-noimg"}" id="${workId(w)}">
-        ${w.image ? `<div class="work-media"><img src="${esc(w.image)}" alt="${esc(w.imageAlt || "")}" loading="lazy"></div>` : ""}
+      <article class="work reveal${w.image ? "" : " work-noimg"}${w.links?.length ? " work-linked" : ""}" id="${workId(w)}">
+        ${(() => {
+          // With a link at the bottom, the image and the top area (type, title, role) open it too.
+          const main = w.links?.[0];
+          const img = w.image ? `<img src="${esc(w.image)}" alt="${esc(w.imageAlt || "")}" loading="lazy">` : "";
+          const media = !img ? "" : main ? `<a class="work-media" ${linkTo(main)} tabindex="-1" aria-hidden="true">${img}</a>` : `<div class="work-media">${img}</div>`;
+          return `${media}
         <div class="work-body">
-          <p class="work-kind">${esc(w.kind)}</p>
-          <h3>${esc(w.title)}</h3>
-          ${w.role ? `<p class="work-role">${esc(w.role)}</p>` : ""}
+          <div class="work-head">
+            <p class="work-kind">${esc(w.kind)}</p>
+            <h3>${main ? `<a ${linkTo(main)}>${esc(w.title)}</a>` : esc(w.title)}</h3>
+            ${w.role ? `<p class="work-role">${esc(w.role)}</p>` : ""}
+          </div>`;
+        })()}
           ${(w.laurels || []).map((l) => `<p class="work-laurel">${AWARD}<span>${esc(l)}</span></p>`).join("")}
           <p class="work-summary">${esc(w.summary)}</p>
           ${w.quote ? `<blockquote class="work-quote">“${esc(w.quote.text)}”<cite>— ${esc(w.quote.source)}</cite></blockquote>` : ""}
