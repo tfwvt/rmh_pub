@@ -18,7 +18,9 @@
     String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
   const isExternal = (url) => /^https?:/i.test(url);
-  const bookId = (b) => "book-" + b.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const slugify = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const bookId = (b) => "book-" + slugify(b.title);
+  const workId = (w) => "work-" + slugify(w.title);
   const linkAttrs = (url) => (isExternal(url) ? ' target="_blank" rel="noopener"' : "");
 
   const ICONS = {
@@ -90,9 +92,18 @@
     .filter(({ store }) => store)
     .slice(0, 2)
     .map(({ b }) => `<li><a href="#${bookId(b)}">
-        <span class="latest-title">${esc(b.title)}</span>
-        <span class="latest-meta">${esc(b.subtitle || b.kind)}</span>
+        <span class="latest-title">${esc(b.title)}${esc(b.heroSeparator || ":")} ${esc(b.subtitle || b.kind)}</span>
       </a></li>`)
+    .join("");
+
+  // Short films, linking to their page on this site (e.g. read/flights/), or to their Screen & Stage card if they have none.
+  slot("hero-films").innerHTML = SITE.screen
+    .filter((w) => /^short film/i.test(w.kind))
+    .map((w) => ({ w, href: (w.links || []).find((l) => !isExternal(l.url))?.url || `#${workId(w)}` }))
+    .map(({ w, href }) => `<li${w.heroNote ? ' class="has-note"' : ""}><a href="${esc(href)}">
+        <span class="latest-title">${esc(w.title)}</span>
+        <span class="latest-meta">${esc(w.role || w.kind)}</span>
+      </a></li>${w.heroNote ? `<li class="latest-note">${esc(w.heroNote)}</li>` : ""}`)
     .join("");
 
   slot("published-in").innerHTML = SITE.about.publishedIn
@@ -142,7 +153,7 @@
   slot("screen").innerHTML = SITE.screen
     .map(
       (w) => `
-      <article class="work reveal${w.image ? "" : " work-noimg"}">
+      <article class="work reveal${w.image ? "" : " work-noimg"}" id="${workId(w)}">
         ${w.image ? `<div class="work-media"><img src="${esc(w.image)}" alt="${esc(w.imageAlt || "")}" loading="lazy"></div>` : ""}
         <div class="work-body">
           <p class="work-kind">${esc(w.kind)}</p>

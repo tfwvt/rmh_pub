@@ -72,6 +72,8 @@ window.SITE = {
       summary: "An ordinary evening at a Williams College dorm in 1968 turns into a night of discovery. Excerpted from the novel Not Our Fathers’ Dreams.",
       quote: { text: "Herzog manages to paint a tableau of that time that rings true using little more than paper airplanes, matches, and, of course, talent.", source: "Joyce Schwarz, FilmFestivals.com" },
       laurels: ["Best Film, Short Subject — Cinevue International Film Competition"],
+      // Extra line shown under the film in the home page's "Short Film" list.
+      heroNote: "Best Film Short Subject — Cinevue International Film Competition, Florida",
       festivals: [
         "Hamptons International Film Festival",
         "Los Angeles International Short Film Festival (LA Shorts Fest)",
@@ -142,6 +144,7 @@ window.SITE = {
     {
       title: "A World Between",
       subtitle: "A Novel",
+      heroSeparator: ",", // home page "Published Books" list: "A World Between, A Novel" (default is a colon)
       kind: "Science fiction · The Story Plant",
       cover: "assets/img/book-a-world-between.webp",
       description: [
