@@ -114,6 +114,7 @@
               .join("")}
           </div>
           ${f.sponsor ? `<div class="sponsor"><span>${esc(f.sponsor.name)}</span><img src="${esc(f.sponsor.logo)}" alt="The Gotham Film &amp; Media Institute" loading="lazy"></div>` : ""}
+          ${f.badges?.length ? `<div class="film-badges">${f.badges.map((b) => `<img src="${esc(b.image)}" alt="${esc(b.alt)}" loading="lazy">`).join("")}</div>` : ""}
         </aside>
       </div>`;
   }

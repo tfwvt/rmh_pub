@@ -142,6 +142,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .site-nav .nav-cta { border: 0; border-radius: 0; padding: 12px 0; color: var(--accent); }
 }
 
+/* ---------- Banner ---------- */
+/* The photo is only 760px wide, so the band stays short to keep it from looking soft. */
+.home-banner img { width: 100%; height: clamp(150px, 24vw, 340px); object-fit: cover; object-position: 50% 62%; }
+
 /* ---------- Hero ---------- */
 .hero { padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 6vw, 80px); }
 .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
@@ -182,9 +186,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .hero-portrait::after { display: none; }
 }
 
-.published-in { border-block: 1px solid var(--line); padding: 18px 0; font-size: 15px; color: var(--ink-2); }
-.published-in p { margin: 0; text-align: center; }
-.published-label { font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-right: 10px; }
+.published-in { border-top: 1px solid var(--line); padding-top: 18px; margin-bottom: 32px; max-width: 560px; font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+.published-in p { margin: 0; }
+.published-in .published-label { font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
 .published-in .pub { font-family: var(--serif); font-style: italic; white-space: nowrap; }
 .published-in .sep { color: var(--line); margin: 0 4px; }
 
@@ -219,8 +223,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .film-actions .btn:hover { border-color: var(--film-ink); }
 .film-actions .btn-primary { background: var(--film-accent); border-color: var(--film-accent); color: #1a1209; }
 .film-actions .btn-primary:hover { background: var(--film-ink); border-color: var(--film-ink); color: #1a1209; }
-.sponsor { display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: var(--film-muted); }
+.sponsor { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding-block: 12px; font-size: 13px; color: var(--film-muted); }
 .sponsor img { width: 200px; filter: invert(1) brightness(1.2); opacity: .85; }
+.film-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.film-badges img { width: 160px; height: auto; }
 .collab { font-size: 14px; color: var(--film-muted); }
 .collab strong { color: var(--film-ink); font-weight: 500; }
 

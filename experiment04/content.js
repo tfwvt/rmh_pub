@@ -49,6 +49,10 @@ window.SITE = {
       "Semi-Finalist — Chicago Script Awards, 2026",
     ],
     sponsor: { name: "Fiscally sponsored by The Gotham Film & Media Institute", logo: "assets/img/logo-gotham.webp" },
+    // Festival badges, shown at the bottom of the right-hand column.
+    badges: [
+      { image: "assets/img/badge-austin-short-film-festival.png", alt: "Austin Short Film Festival" },
+    ],
     actions: [
       { label: "Support the film", url: "https://fiscal.thegotham.org/film/5836/no-kidding-around", primary: true },
       { label: "Request the screenplay", url: "mailto:zog@thezog.com?subject=No%20Kidding%20Around%20%E2%80%94%20Screenplay%20Request" },
