@@ -5,7 +5,6 @@ date: 2025-11-17
 dek: As night falls across the Louisiana bayou, the line between memory and
   desire blurs — and the past refuses to stay buried.
 image: assets/img/fiction-bayous-edge-2.webp
-imagePosition: 50% 40%
 links:
   - label: Medium
     url: https://robertmherzog.medium.com/bayous-edge-part-two-the-past-is-present-e57d6fb8f760
