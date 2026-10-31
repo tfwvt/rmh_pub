@@ -101,6 +101,8 @@ The site is a DigitalOcean App Platform static site that deploys automatically w
 | Output directory | `dist` |
 | Error document | `404.html` |
 
+DigitalOcean uses the Node version in `package.json` (`"engines"`). Keep it pinned to one major version, such as `24.x`. An open range like `>=18` makes it pick the newest Node, which may not be available to its builders yet, and the build fails while downloading Node.
+
 If a deploy fails, the build log in DigitalOcean shows the error. A header that isn't valid YAML stops the build and names the file, and the live site stays as it was.
 
 ## Moving thezog.com to this site
