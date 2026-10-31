@@ -144,10 +144,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- Banner ---------- */
 /* The photo is only 760px wide, so the band stays short to keep it from looking soft. */
-.home-banner img { width: 100%; height: clamp(150px, 24vw, 340px); object-fit: cover; object-position: 50% 62%; }
+.home-banner img { width: 100%; height: clamp(110px, 17.6vw, 250px); object-fit: cover; object-position: 50% 62%; }
 
 /* ---------- Hero ---------- */
-.hero { padding: clamp(40px, 7vw, 96px) 0 clamp(22px, 2.8vw, 36px); }
+.hero { padding: clamp(20px, 3.5vw, 48px) 0 clamp(22px, 2.8vw, 36px); }
 .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
 .hero-title {
   font-size: clamp(56px, 10vw, 128px);
@@ -200,14 +200,15 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* Flourishes (drawn once, in index.html).
    .flourish-end closes a section, centred between its content and the next
    section: its top margin matches the hero's reduced padding-bottom.
-   A .section-flourish-start section opens with one, centred in the section's
-   top space, which is half the usual section padding. */
+   A .section-flourish-close section ends with one, centred in the section's
+   bottom space, which is half the usual section padding. */
 .sprite { position: absolute; }
 .flourish { display: block; width: min(480px, 100%); height: auto; margin: 0 auto clamp(26px, 3.6vw, 46px); color: var(--accent); fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
 .flourish-end { margin: clamp(22px, 2.8vw, 36px) auto 0; }
 .flourish-flip { transform: scaleY(-1); }
-.section-flourish-start { padding-top: 0; }
-.section-flourish-start > .wrap > .flourish:first-child { margin: calc(clamp(64px, 9vw, 120px) / 4) auto; }
+.section-flourish-close { padding-bottom: calc(clamp(64px, 9vw, 120px) / 4); }
+.section-flourish-close > .wrap > .flourish:last-child { margin: calc(clamp(64px, 9vw, 120px) / 4) auto 0; }
+.section-half-start { padding-top: calc(clamp(64px, 9vw, 120px) / 2); }
 .section-half-end { padding-bottom: calc(clamp(64px, 9vw, 120px) / 2); }
 .section-head { margin-bottom: clamp(32px, 4vw, 52px); }
 .section-head h2 { font-size: clamp(32px, 4.4vw, 52px); max-width: 20ch; }
@@ -215,17 +216,17 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- Featured film ---------- */
 .film-feature { background: var(--film-bg); color: var(--film-ink); position: relative; overflow: hidden; }
-.film-hero { position: relative; min-height: clamp(380px, 56vw, 620px); display: flex; align-items: flex-end; overflow: hidden; }
+.film-hero { position: relative; min-height: clamp(380px, 56vw, 620px); display: flex; align-items: flex-start; overflow: hidden; }
 /* The source image has an award badge baked into its lower third; keep it out of frame. */
 .film-hero img { position: absolute; top: 0; left: 0; width: 100%; height: 140%; object-fit: cover; object-position: 50% 0; opacity: .62; }
 .film-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(15 14 13 / .15) 0%, rgb(15 14 13 / .55) 55%, var(--film-bg) 100%); }
-/* Bottom padding lifts the title off the image's bottom edge so it is in easy view after jumping to #film. */
-.film-hero .wrap { position: relative; z-index: 1; padding-bottom: clamp(40px, 8vw, 120px); }
+/* The title block starts a third of the way down the image (its min-height / 3). */
+.film-hero .wrap { position: relative; z-index: 1; padding-top: calc(clamp(380px, 56vw, 620px) / 3); padding-bottom: 40px; }
 .film-feature .eyebrow { color: var(--film-accent); }
 .film-title { font-size: clamp(48px, 9vw, 112px); font-weight: 400; letter-spacing: -0.03em; line-height: .95; margin-bottom: 18px; }
 .film-status { display: inline-flex; align-items: center; gap: 8px; font: 500 13px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--film-ink); border: 1px solid rgb(255 255 255 / .25); padding: 8px 14px; border-radius: 999px; }
 .film-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--film-accent); box-shadow: 0 0 0 4px rgb(229 162 102 / .2); }
-.film-body { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(32px, 6vw, 80px); padding-top: 24px; padding-bottom: clamp(64px, 8vw, 104px); }
+.film-body { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(32px, 6vw, 80px); padding-top: 24px; padding-bottom: calc(clamp(64px, 8vw, 104px) / 2); }
 .film-logline { font: 300 clamp(22px, 2.4vw, 30px)/1.4 var(--serif); margin-bottom: 28px; }
 .film-about p { color: var(--film-muted); }
 .film-credits { font-size: 14px; color: var(--film-muted); border-top: 1px solid var(--film-line); padding-top: 18px; margin-top: 28px; }
