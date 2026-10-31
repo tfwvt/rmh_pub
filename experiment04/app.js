@@ -152,14 +152,14 @@
       (w) => `
       <article class="work reveal${w.image ? "" : " work-noimg"}" id="${workId(w)}">
         ${(() => {
-          // With a link at the bottom, the image opens it too (the text stays plain).
+          // With a link at the bottom, the image and the title open it too (the other text stays plain).
           const main = w.links?.[0];
           const img = w.image ? `<img src="${esc(w.image)}" alt="${esc(w.imageAlt || "")}" loading="lazy">` : "";
           const media = !img ? "" : main ? `<a class="work-media" ${linkTo(main)} tabindex="-1" aria-hidden="true">${img}</a>` : `<div class="work-media">${img}</div>`;
           return `${media}
         <div class="work-body">
           <p class="work-kind">${esc(w.kind)}</p>
-          <h3>${esc(w.title)}</h3>
+          <h3>${main ? `<a ${linkTo(main)}>${esc(w.title)}</a>` : esc(w.title)}</h3>
           ${w.role ? `<p class="work-role">${esc(w.role)}</p>` : ""}`;
         })()}
           ${(w.laurels || []).map((l) => `<p class="work-laurel">${AWARD}<span>${esc(l)}</span></p>`).join("")}
