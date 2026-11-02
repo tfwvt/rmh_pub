@@ -149,9 +149,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- Hero ---------- */
 .hero { padding: clamp(20px, 3.5vw, 48px) 0 clamp(22px, 2.8vw, 36px); }
-.hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.hero-grid { --hero-title-size: clamp(56px, 10vw, 128px); display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
 .hero-title {
-  font-size: clamp(56px, 10vw, 128px);
+  font-size: var(--hero-title-size);
   font-weight: 400;
   line-height: 0.92;
   letter-spacing: -0.035em;
@@ -172,7 +172,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .latest-list li.has-note { border-bottom: 0; }
 .latest-note { padding: 0 0 12px; font-size: 14px; line-height: 1.45; color: var(--ink-2); }
 
-.hero-portrait { margin: 0; position: relative; }
+/* Top of the photo lines up with the top of the capital "R" in the name: skip the
+   eyebrow line (12px x 1.2 line-height + 14px margin), then the space above the
+   capitals inside the title's line box (about 0.116em in Fraunces at line-height 0.92). */
+.hero-portrait { margin: calc(12px * 1.2 + 14px + var(--hero-title-size) * 0.116) 0 0; position: relative; }
 .hero-portrait img {
   width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%;
   border-radius: var(--radius);
@@ -185,8 +188,12 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 
 @media (max-width: 860px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-portrait { order: -1; max-width: 340px; }
+  /* Name on one line: "Robert M. Herzog" is about 8em wide, so 11vw keeps it inside
+     the column (100vw minus the gutters) down to 320px screens. */
+  .hero-grid { grid-template-columns: 1fr; --hero-title-size: min(clamp(56px, 10vw, 128px), 11vw); }
+  .hero-title { white-space: nowrap; }
+  .hero-title br { display: none; }
+  .hero-portrait { order: -1; max-width: 340px; margin-top: 0; }
   .hero-portrait img { aspect-ratio: 1 / 1; }
   .hero-portrait::after { display: none; }
 }
