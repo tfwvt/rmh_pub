@@ -37,6 +37,8 @@
   };
   const icon = (name) => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ICONS.external}</svg>`;
   const AWARD = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.6 14 7 22l5-3 5 3-1.6-8"/></svg>';
+  // Laurel wreath with a star, shown before an award note (e.g. Flights' Cinevue award).
+  const LAUREL = '<svg class="laurel-icon" viewBox="0 0.3 24 20.4" aria-hidden="true" fill="currentColor"><path d="M7.50 18.79Q5.10 17.64 3.15 19.46Q5.55 20.61 7.50 18.79ZM7.50 18.79Q7.66 16.59 5.63 15.71Q5.48 17.91 7.50 18.79ZM4.37 15.77Q2.90 13.75 0.50 14.41Q1.96 16.43 4.37 15.77ZM4.37 15.77Q5.48 14.02 4.18 12.41Q3.07 14.16 4.37 15.77ZM3.02 11.63Q2.72 9.32 0.45 8.83Q0.75 11.14 3.02 11.63ZM3.02 11.63Q4.71 10.69 4.33 8.80Q2.64 9.74 3.02 11.63ZM3.78 7.34Q4.55 5.33 2.89 3.95Q2.12 5.97 3.78 7.34ZM3.78 7.34Q5.57 7.33 6.06 5.60Q4.27 5.62 3.78 7.34ZM6.46 3.91Q7.98 2.62 7.20 0.79Q5.68 2.08 6.46 3.91ZM8.63 2.66Q10.41 3.07 11.41 1.53Q9.63 1.12 8.63 2.66ZM16.50 18.79Q18.45 20.61 20.85 19.46Q18.90 17.64 16.50 18.79ZM16.50 18.79Q18.52 17.91 18.37 15.71Q16.34 16.59 16.50 18.79ZM19.63 15.77Q22.04 16.43 23.50 14.41Q21.10 13.75 19.63 15.77ZM19.63 15.77Q20.93 14.16 19.82 12.41Q18.52 14.02 19.63 15.77ZM20.98 11.63Q23.25 11.14 23.55 8.83Q21.28 9.32 20.98 11.63ZM20.98 11.63Q21.36 9.74 19.67 8.80Q19.29 10.69 20.98 11.63ZM20.22 7.34Q21.88 5.97 21.11 3.95Q19.45 5.33 20.22 7.34ZM20.22 7.34Q19.73 5.62 17.94 5.60Q18.43 7.33 20.22 7.34ZM17.54 3.91Q18.32 2.08 16.80 0.79Q16.02 2.62 17.54 3.91ZM15.37 2.66Q14.37 1.12 12.59 1.53Q13.59 3.07 15.37 2.66Z"/><path d="M9.82 19.73A9 9 0 0 1 8.63 2.66" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M14.18 19.73A9 9 0 0 0 15.37 2.66" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M12.00 7.00L12.85 9.23L15.23 9.35L13.38 10.85L14.00 13.15L12.00 11.85L10.00 13.15L10.62 10.85L8.77 9.35L11.15 9.23Z"/></svg>';
   const ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
   const platformIcon = (label) => {
@@ -103,7 +105,7 @@
     .map(({ w, href }) => `<li${w.heroNote ? ' class="has-note"' : ""}><a href="${esc(href)}">
         <span class="latest-title">${esc(w.title)}</span>
         <span class="latest-meta">${esc(w.role || w.kind)}</span>
-      </a></li>${w.heroNote ? `<li class="latest-note">${esc(w.heroNote)}</li>` : ""}`)
+      </a></li>${w.heroNote ? `<li class="latest-note">${w.heroNoteAward ? `${LAUREL} ` : ""}${esc(w.heroNote)}</li>` : ""}`)
     .join("");
 
   slot("published-in").innerHTML = SITE.about.publishedIn

@@ -171,6 +171,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* A note line (e.g. an award) belongs to the item above it, so no divider between them. */
 .latest-list li.has-note { border-bottom: 0; }
 .latest-note { padding: 0 0 12px; font-size: 14px; line-height: 1.45; color: var(--ink-2); }
+.laurel-icon { display: inline-block; width: 24px; height: 20.4px; vertical-align: -5px; margin-right: 2px; color: var(--accent); }
 
 /* Top of the photo lines up with the top of the capital "R" in the name: skip the
    eyebrow line (12px x 1.2 line-height + 14px margin), then the space above the
@@ -198,7 +199,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .hero-portrait::after { display: none; }
 }
 
-.published-in { border-top: 1px solid var(--line); padding-top: 18px; margin-top: 32px; max-width: 560px; font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+.published-in { border-top: 1px solid var(--line); padding-top: 18px; margin: 32px 0; max-width: 560px; font-size: 15px; line-height: 1.6; color: var(--ink-2); }
 .published-in p { margin: 0; }
 .published-in .published-label { font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
 .published-in .pub { font-family: var(--serif); font-style: italic; white-space: nowrap; }
@@ -225,12 +226,14 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- Featured film ---------- */
 .film-feature { background: var(--film-bg); color: var(--film-ink); position: relative; overflow: hidden; }
-.film-hero { position: relative; min-height: clamp(380px, 56vw, 620px); display: flex; align-items: flex-start; overflow: hidden; }
+.film-hero { position: relative; display: flex; align-items: flex-start; overflow: hidden; }
 /* The source image has an award badge baked into its lower third; keep it out of frame. */
 .film-hero img { position: absolute; top: 0; left: 0; width: 100%; height: 140%; object-fit: cover; object-position: 50% 0; opacity: .62; }
 .film-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(15 14 13 / .15) 0%, rgb(15 14 13 / .55) 55%, var(--film-bg) 100%); }
-/* The title block starts a third of the way down the image (its min-height / 3). */
-.film-hero .wrap { position: relative; z-index: 1; padding-top: calc(clamp(380px, 56vw, 620px) / 3); padding-bottom: 40px; }
+/* The title block starts as far down as it did when the image band was clamp(380px, 56vw, 620px)
+   tall (a third of that). The band now ends just below the status pill: 8px here plus the
+   body's 24px top padding leaves 32px between the pill and the logline. */
+.film-hero .wrap { position: relative; z-index: 1; padding-top: calc(clamp(380px, 56vw, 620px) / 3); padding-bottom: 8px; }
 .film-feature .eyebrow { color: var(--film-accent); }
 .film-title { font-size: clamp(48px, 9vw, 112px); font-weight: 400; letter-spacing: -0.03em; line-height: .95; margin-bottom: 18px; }
 .film-status { display: inline-flex; align-items: center; gap: 8px; font: 500 13px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--film-ink); border: 1px solid rgb(255 255 255 / .25); padding: 8px 14px; border-radius: 999px; }
@@ -378,7 +381,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .writing-more { text-align: center; margin-top: 40px; }
 
 /* ---------- About ---------- */
-.about-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(32px, 6vw, 88px); align-items: start; }
+/* Between the heading and the text below: 44% of one heading line (the h2's font-size x its
+   1.1 line-height). */
+.about-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: calc(clamp(32px, 4.4vw, 52px) * 1.1 * 0.44) clamp(32px, 6vw, 88px); align-items: start; }
 .about-grid .section-head { grid-column: 1 / -1; margin-bottom: 0; }
 .about-lead { font: 400 clamp(22px, 2.4vw, 28px)/1.35 var(--serif); margin-bottom: 20px; }
 .about-copy p { color: var(--ink-2); }
@@ -392,6 +397,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 @media (max-width: 860px) {
   .about-grid { grid-template-columns: 1fr; }
+  /* Stacked: keep the bio-to-quote gap at its old clamp(32px, 6vw, 88px), not the heading row gap. */
+  .about-voice { margin-top: calc(clamp(32px, 6vw, 88px) - clamp(32px, 4.4vw, 52px) * 1.1 * 0.44); }
 }
 
 /* ---------- Follow ---------- */

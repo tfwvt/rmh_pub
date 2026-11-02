@@ -74,6 +74,7 @@ window.SITE = {
       laurels: ["Best Film, Short Subject — Cinevue International Film Competition"],
       // Extra line shown under the film in the home page's "Short Film" list.
       heroNote: "Best Film Short Subject — Cinevue International Film Competition, Florida",
+      heroNoteAward: true, // adds a laurel icon before the note
       festivals: [
         "Hamptons International Film Festival",
         "Los Angeles International Short Film Festival (LA Shorts Fest)",
