@@ -183,10 +183,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   filter: grayscale(0.25) contrast(1.05);
   box-shadow: var(--shadow);
 }
-.hero-portrait::after {
-  content: ""; position: absolute; inset: auto -14px -14px auto; width: 45%; height: 45%;
-  border: 1px solid var(--accent); border-radius: var(--radius); z-index: -1;
-}
 
 @media (max-width: 860px) {
   /* Name on one line: "Robert M. Herzog" is about 8em wide, so 11vw keeps it inside
@@ -196,7 +192,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .hero-title br { display: none; }
   .hero-portrait { order: -1; max-width: 340px; margin-top: 0; }
   .hero-portrait img { aspect-ratio: 1 / 1; }
-  .hero-portrait::after { display: none; }
 }
 
 .published-in { border-top: 1px solid var(--line); padding-top: 18px; margin: 32px 0; max-width: 560px; font-size: 15px; line-height: 1.6; color: var(--ink-2); }
