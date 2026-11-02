@@ -113,6 +113,11 @@
     .join(' <span class="sep" aria-hidden="true">/</span> ');
 
   // ---------- Featured film ----------
+  // "Written and produced by X · Co-directed by Y": the role before "by" in each part is bold.
+  const creditsHtml = (credits) => credits
+    .split(" · ")
+    .map((part) => { const m = part.match(/^(.+?)( by .*)$/); return m ? `<strong>${esc(m[1])}</strong>${esc(m[2])}` : esc(part); })
+    .join(" · ");
   const f = SITE.featuredFilm;
   if (f) {
     slot("featured-film").innerHTML = `
@@ -128,7 +133,7 @@
         <div>
           <p class="film-logline">${esc(f.logline)}</p>
           <div class="film-about">${f.about.map((p) => `<p>${esc(p)}</p>`).join("")}</div>
-          <p class="film-credits">${esc(f.credits)}</p>
+          <p class="film-credits">${creditsHtml(f.credits)}</p>
           ${f.collaborator ? `<p class="collab"><strong>Co-director.</strong> ${esc(f.collaborator)}</p>` : ""}
         </div>
         <aside class="film-side">

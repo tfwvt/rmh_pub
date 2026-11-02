@@ -256,7 +256,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .film-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
 .film-badges img { width: 160px; height: auto; }
 .collab { font-size: 14px; color: var(--film-muted); }
-.collab strong { color: var(--film-ink); font-weight: 500; }
+.collab strong, .film-credits strong { color: var(--film-ink); font-weight: 500; }
 
 @media (max-width: 860px) {
   .film-body { grid-template-columns: 1fr; }
