@@ -240,7 +240,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .film-side { display: flex; flex-direction: column; gap: 28px; }
 .laurels li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--film-line); font-size: 15px; line-height: 1.45; }
 .laurels li:first-child { border-top: 1px solid var(--film-line); }
-.laurels svg { flex-shrink: 0; width: 22px; height: 22px; fill: none; stroke: var(--film-accent); stroke-width: 1.5; margin-top: 1px; }
+.laurels .laurel-icon { flex-shrink: 0; width: 24px; height: 20.4px; margin: 1px 0 0; vertical-align: 0; color: var(--film-accent); }
 .film-actions { display: flex; flex-direction: column; gap: 10px; }
 .film-actions .btn { justify-content: center; border-color: rgb(255 255 255 / .25); color: var(--film-ink); }
 .film-actions .btn:hover { border-color: var(--film-ink); }

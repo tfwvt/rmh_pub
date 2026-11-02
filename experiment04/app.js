@@ -137,7 +137,7 @@
           ${f.collaborator ? `<p class="collab"><strong>Co-director.</strong> ${esc(f.collaborator)}</p>` : ""}
         </div>
         <aside class="film-side">
-          <ul class="laurels">${f.laurels.map((l) => `<li>${AWARD}<span>${esc(l)}</span></li>`).join("")}</ul>
+          <ul class="laurels">${f.laurels.map((l) => `<li>${LAUREL}<span>${esc(l)}</span></li>`).join("")}</ul>
           <div class="film-actions">
             ${f.actions
               .map((a) => `<a class="btn${a.primary ? " btn-primary" : ""}" href="${esc(a.url)}"${linkAttrs(a.url)}>${esc(a.label)}</a>`)
