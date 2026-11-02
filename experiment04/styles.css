@@ -171,7 +171,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* A note line (e.g. an award) belongs to the item above it, so no divider between them. */
 .latest-list li.has-note { border-bottom: 0; }
 .latest-note { padding: 0 0 12px; font-size: 14px; line-height: 1.45; color: var(--ink-2); }
-.laurel-icon { display: inline-block; width: 24px; height: 20.4px; vertical-align: -5px; margin-right: 2px; color: var(--accent); }
+.laurel-icon { display: inline-block; width: 24px; height: 21.6px; vertical-align: -6px; margin-right: 2px; color: var(--accent); }
 
 /* Top of the photo lines up with the top of the capital "R" in the name: skip the
    eyebrow line (12px x 1.2 line-height + 14px margin), then the space above the
@@ -240,7 +240,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .film-side { display: flex; flex-direction: column; gap: 28px; }
 .laurels li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--film-line); font-size: 15px; line-height: 1.45; }
 .laurels li:first-child { border-top: 1px solid var(--film-line); }
-.laurels .laurel-icon { flex-shrink: 0; width: 24px; height: 20.4px; margin: 1px 0 0; vertical-align: 0; color: var(--film-accent); }
+.laurels .laurel-icon { flex-shrink: 0; width: 24px; height: 21.6px; margin: 1px 0 0; vertical-align: 0; color: var(--film-accent); }
 .film-actions { display: flex; flex-direction: column; gap: 10px; }
 .film-actions .btn { justify-content: center; border-color: rgb(255 255 255 / .25); color: var(--film-ink); }
 .film-actions .btn:hover { border-color: var(--film-ink); }
@@ -279,7 +279,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .work-quote { font: italic 300 16px/1.5 var(--serif); color: var(--ink-2); border-left: 2px solid var(--accent); padding-left: 14px; margin: 4px 0 16px; }
 .work-quote cite { display: block; font: normal 400 13px/1.4 var(--sans); color: var(--muted); margin-top: 6px; }
 .work-laurel { font-size: 14px; font-weight: 500; margin-bottom: 12px; display: flex; gap: 8px; align-items: flex-start; }
-.work-laurel svg { flex-shrink: 0; width: 18px; height: 18px; fill: none; stroke: var(--accent); stroke-width: 1.6; margin-top: 2px; }
+.work-laurel .laurel-icon { flex-shrink: 0; width: 21px; height: 18.9px; margin: 1px 0 0; vertical-align: 0; }
 .work details { font-size: 14px; color: var(--ink-2); margin-bottom: 14px; }
 .work summary { cursor: pointer; color: var(--ink); font-weight: 500; }
 .work details ul { margin-top: 10px; columns: 1; }
