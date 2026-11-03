@@ -144,8 +144,9 @@ const pieces = fs
 
 for (const p of pieces) {
   if (!p.title || !p.kind) throw new Error(`${p.slug}: title and kind are required`);
-  if (!p.body && !p.links.length) throw new Error(`${p.slug}: needs body text or at least one link`);
   p.url = p.body ? `read/${p.slug}/` : null;
+  // A piece with neither text nor a link (e.g. a work in progress) is listed as a card only.
+  p.href = p.url || p.links[0]?.url || null;
 }
 
 // ---------- Article pages ----------
@@ -170,7 +171,7 @@ const listed = pieces.filter((p) => p.listed);
 for (const p of pieces.filter((x) => x.body)) {
   const prefix = "../../";
   const more = listed
-    .filter((x) => x.slug !== p.slug && x.kind === p.kind)
+    .filter((x) => x.slug !== p.slug && x.kind === p.kind && x.href)
     .slice(0, 3)
     .map((x) => {
       const href = x.url ? prefix + x.url : x.links[0].url;
@@ -236,7 +237,7 @@ const redirects = {
   "/fiction": "index.html#writing",
   "/opedipal-nonfiction": "index.html#writing",
 };
-for (const p of pieces) for (const old of p.legacy) redirects[old.toLowerCase().replace(/\/+$/, "")] = p.url || p.links[0].url;
+for (const p of pieces) for (const old of p.legacy) if (p.href) redirects[old.toLowerCase().replace(/\/+$/, "")] = p.href;
 const notFound = fs.readFileSync(path.join(ROOT, "templates", "404.html"), "utf8");
 fs.writeFileSync(path.join(DIST, "404.html"), fill(notFound, { redirects: JSON.stringify(redirects, null, 2) }));
 

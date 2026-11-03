@@ -1,0 +1,6 @@
+# Locally installed agent skills and their working files (not part of the site)
+.claude/
+.agents/
+.impeccable/
+skills-lock.json
+.hallmark/

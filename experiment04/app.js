@@ -75,7 +75,7 @@
   slot("roles").textContent = SITE.person.roles.join(" · ");
 
   slot("latest").innerHTML = writing
-    .filter((w) => w.date && !w.dateLabel)
+    .filter((w) => w.date && !w.dateLabel && primaryLink(w))
     .slice(0, 3)
     .map((w) => {
       const link = primaryLink(w);
@@ -89,7 +89,7 @@
 
   // Published books: the ones with a store link (unpublished ones only have on-site excerpts).
   slot("hero-books").innerHTML = SITE.books
-    .map((b) => ({ b, store: b.buy.find((l) => isExternal(l.url)) }))
+    .map((b) => ({ b, store: (b.buy || []).find((l) => isExternal(l.url)) }))
     .filter(({ store }) => store)
     .slice(0, 2)
     .map(({ b }) => `<li><a href="#${bookId(b)}">
@@ -153,6 +153,8 @@
   const linkTo = (l) => `href="${esc(l.url)}"` + (l.internal ? (l.filter ? ` data-filter="${esc(l.filter)}"` : "") : linkAttrs(l.url));
   const textLink = (l) => `<a class="text-link" ${linkTo(l)}>${esc(l.label)} ${ARROW}</a>`;
 
+  // Award / selection lines with a laurel; laurelsBelow: true puts them under the summary instead of above it.
+  const laurelLines = (w, cls = "") => (w.laurels || []).map((l) => `<p class="work-laurel${cls}">${LAUREL}<span>${esc(l)}</span></p>`).join("");
   slot("screen").innerHTML = SITE.screen
     .map(
       (w) => `
@@ -168,8 +170,9 @@
           <h3>${main ? `<a ${linkTo(main)}>${esc(w.title)}</a>` : esc(w.title)}</h3>
           ${w.role ? `<p class="work-role">${esc(w.role)}</p>` : ""}`;
         })()}
-          ${(w.laurels || []).map((l) => `<p class="work-laurel">${LAUREL}<span>${esc(l)}</span></p>`).join("")}
+          ${w.laurelsBelow ? "" : laurelLines(w)}
           <p class="work-summary">${esc(w.summary)}</p>
+          ${w.laurelsBelow ? laurelLines(w, " work-laurel-below") : ""}
           ${w.quote ? `<blockquote class="work-quote">“${esc(w.quote.text)}”<cite>— ${esc(w.quote.source)}</cite></blockquote>` : ""}
           ${
             w.festivals
@@ -189,18 +192,20 @@
     .map(
       (b) => `
       <article class="book reveal" id="${bookId(b)}">
-        <div class="book-cover"><img src="${esc(b.cover)}" alt="Cover of ${esc(b.title)}" loading="lazy"></div>
+        ${b.cover
+          ? `<div class="book-cover"><img src="${esc(b.cover)}" alt="Cover of ${esc(b.title)}" loading="lazy"></div>`
+          : `<div class="book-cover"><div class="book-cover-card" aria-hidden="true"><span class="book-cover-title">${esc(b.title)}</span><span class="book-cover-author">${esc(SITE.person.name)}</span></div></div>`}
         <div>
           <p class="eyebrow">${esc(b.kind)}</p>
           <h3>${esc(b.title)}</h3>
           ${b.subtitle ? `<p class="book-subtitle">${esc(b.subtitle)}</p>` : ""}
           ${b.badge ? `<p class="book-badge">${esc(b.badge)}</p>` : ""}
-          <div class="book-desc">${b.description.map((p) => `<p>${esc(p)}</p>`).join("")}</div>
+          ${b.description?.length ? `<div class="book-desc">${b.description.map((p) => `<p>${esc(p)}</p>`).join("")}</div>` : ""}
           ${b.quote ? `<blockquote class="book-quote">“${esc(b.quote.text)}”<cite>— ${esc(b.quote.source)}</cite></blockquote>` : ""}
           ${b.epigraph ? `<blockquote class="book-quote">“${esc(b.epigraph.text)}”<cite>— ${esc(b.epigraph.source)}</cite></blockquote>` : ""}
-          <div class="book-buy">
+          ${b.buy?.length ? `<div class="book-buy">
             ${b.buy.map((l, i) => `<a class="btn${i === 0 ? " btn-primary" : ""}" href="${esc(l.url)}"${linkAttrs(l.url)}>${esc(l.label)}</a>`).join("")}
-          </div>
+          </div>` : ""}
         </div>
       </article>`
     )
@@ -239,10 +244,12 @@
     if (date) meta.push(`<span>${esc(date)}</span>`);
     return `
       <article class="piece reveal${w.image ? "" : " piece-noimg"}">
-        ${w.image ? `<a class="piece-media" href="${esc(primary.url)}"${linkAttrs(primary.url)} tabindex="-1" aria-hidden="true"><img src="${esc(w.image)}" alt="" loading="lazy"${w.imagePosition ? ` style="object-position:${esc(w.imagePosition)}"` : ""}></a>` : ""}
+        ${w.image ? (primary
+          ? `<a class="piece-media" href="${esc(primary.url)}"${linkAttrs(primary.url)} tabindex="-1" aria-hidden="true"><img src="${esc(w.image)}" alt="" loading="lazy"${w.imagePosition ? ` style="object-position:${esc(w.imagePosition)}"` : ""}></a>`
+          : `<div class="piece-media" aria-hidden="true"><img src="${esc(w.image)}" alt="" loading="lazy"${w.imagePosition ? ` style="object-position:${esc(w.imagePosition)}"` : ""}></div>`) : ""}
         <div class="piece-body">
           <p class="piece-meta">${meta.join("")}</p>
-          <h3><a href="${esc(primary.url)}"${linkAttrs(primary.url)}>${esc(w.title)}</a></h3>
+          <h3>${primary ? `<a href="${esc(primary.url)}"${linkAttrs(primary.url)}>${esc(w.title)}</a>` : esc(w.title)}</h3>
           ${w.venue ? `<p class="piece-venue">${esc(w.venue)}</p>` : ""}
           ${w.dek ? `<p class="piece-dek">${esc(w.dek)}</p>` : ""}
           <div class="piece-links">

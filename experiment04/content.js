@@ -100,17 +100,12 @@ window.SITE = {
       links: [{ label: "Read the story", url: "#writing", internal: true, filter: "fiction" }],
     },
     {
-      title: "Crawfish & Specks",
-      kind: "Screenplay",
-      image: "assets/img/script-crawfish-and-specks.webp",
-      imageAlt: "A farmer in a boat on a flooded crawfish field",
-      summary: "After Katrina came the BP Spill. A Louisiana bayou farmer must find the strength to once again fight for his threatened way of life, or lose everything that he cares about.",
-    },
-    {
       title: "4 Times 50, Not 200",
       kind: "Play in four courses",
       image: "assets/img/script-4-times-50.webp",
       imageAlt: "Two men sharing a long outdoor lunch",
+      laurels: ["Selected to be in the NYC Fringe Festival 2027"],
+      laurelsBelow: true, // show the laurel line under the summary
       summary: "Over a series of grand lunches, four guys turning 50 in 1996 seek a future that better reflects the hopes of their past.",
     },
     {
@@ -119,11 +114,6 @@ window.SITE = {
       image: "assets/img/script-adjacent-beds.webp",
       imageAlt: "A man wearing a virtual reality headset in the dark",
       summary: "A poignant story of a son’s world of cutting edge augmented reality technology clashing with his trying to deal with his aging mother and keep his life from unraveling.",
-    },
-    {
-      title: "Listing",
-      kind: "Work in progress",
-      summary: "An online erotic adventure takes a very strange turn.",
     },
   ],
 
@@ -176,6 +166,12 @@ window.SITE = {
         { label: "Read “That Terrible Night in June, 1968”", url: "read/that-terrible-night-in-june-1968/" },
       ],
     },
+    {
+      title: "Board to Death",
+      subtitle: "A Novel",
+      kind: "Novel · Finished, unpublished",
+      // No cover yet: the page shows a plain title card instead. Add cover, description and buy when ready.
+    },
   ],
 
   // Reader reviews of A World Between, shown as a quote strip.
@@ -190,16 +186,17 @@ window.SITE = {
   // Run `node build.js` after adding or changing one.
 
   about: {
-    lead: "Robert M. Herzog is a novelist, screenwriter, playwright and filmmaker.",
+    lead: "Robert M. Herzog is a novelist, screenwriter, playwright, and filmmaker whose work explores ambition, identity, moral choices, and the often complicated relationship between individuals and the worlds they inhabit. Moving between drama, satire, and speculative fiction, his stories examine the forces that shape our lives—and the ways people struggle to understand, challenge, or escape them.",
     paragraphs: [
-      "He wrote, produced and directed the award-winning short film Flights, which screened at numerous festivals including the Hamptons and LA International Short Film Festival, and won Best Film — Short Subject at the Cinevue International Film Competition. His screenwriting has been recognized by Cinequest, the Los Angeles Independent Film Festival, New York Script Awards, Best Script Award London and other competitions.",
-      "His published works include the novel A World Between, a Barnes & Noble e-Book of the Day, and Views from the Side Mirror, an essay collection, as well as short stories and poems in Solstice Literary Magazine, Toasted Cheese, Downstate Story, Straylight and South Jersey Underground. His essays appear on Substack, Medium and in Persuasion.",
+      "His published books include the novel A World Between, selected as a Barnes & Noble e-Book of the Day, and Views from the Side Mirror: Essaying America, a collection of essays on American life and culture. His short fiction and poetry have appeared in numerous literary journals, while his essays and commentary appear on Substack, Medium, and other publications.",
+      "Herzog wrote, produced, and directed the short film Flights, which screened at festivals in Los Angeles and the Hamptons and received several awards. His screenplays have earned recognition from Cinequest, the Austin Short Film Festival, and other competitions.",
+      "Beyond his creative work, Herzog has spent decades as an entrepreneur and executive in technology, energy, and healthcare, experiences that inform his interest in ambition, power, human relationships, and social change.",
     ],
     voice: [
-      "I’ve climbed to over 22,000 feet. I remember the first great bottle of wine I ever had (a ’64 Margaux), and most since.",
-      "I’ve been a CEO, COO, CMO, CFO, teacher, river runner, political consultant, actor, writer and filmmaker. And always, an entrepreneur. I’ve managed over $150 million in financings, for tech, digital and creative companies. I close deals.",
-      "I live at this intersection of art and entrepreneurship, of creativity and business. Can’t say I planned it that way, but there it is.",
-      "I don’t intend to be a current events commentator, another echo of RSS. A character in my play 4 Times 50, Not 200 refers to Repetitive Stupidity Syndrome (RSS) — every day enduring the same traffic jam, failure of government and corporation, sitcom joke — hoping for something different yet not finding a way to achieve it. Though I would like to help transform the world. This website is one way of expressing that hope.",
+      "I’ve climbed to over 22,000 feet. I remember the first great bottle of wine I ever had (a ’64 Margaux), and many since.",
+      "I’ve been a CEO, COO, CMO, CFO, teacher, river runner, political consultant, actor, writer, and filmmaker. I’ve managed over $750 million in financings, for tech, digital, and creative companies. I close deals.",
+      "Somewhere along the way, I discovered that the worlds of business, politics, and storytelling have more in common than one might expect. Ambition, conflict, improbable characters, unexpected reversals—I’ve encountered them in all three.",
+      "Can’t say I planned it that way, but there it is.",
     ],
     publishedIn: ["Persuasion", "Solstice Literary Magazine", "Toasted Cheese", "Downstate Story", "Straylight", "South Jersey Underground"],
   },
