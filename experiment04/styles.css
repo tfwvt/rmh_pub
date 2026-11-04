@@ -149,7 +149,15 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- Hero ---------- */
 .hero { padding: clamp(20px, 3.5vw, 48px) 0 clamp(22px, 2.8vw, 36px); }
-.hero-grid { --hero-title-size: clamp(56px, 10vw, 128px); display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+/* Wide: bio on the left spanning both rows; photo, then the Author / Film buttons, on the right. */
+.hero-grid {
+  --hero-title-size: clamp(56px, 10vw, 128px);
+  display: grid; grid-template-columns: 1.15fr 0.85fr; grid-template-rows: auto 1fr;
+  grid-template-areas: "copy portrait" "copy actions";
+  gap: 32px clamp(32px, 6vw, 80px); align-items: start;
+}
+.hero-copy { grid-area: copy; }
+.hero-portrait { grid-area: portrait; }
 .hero-title {
   font-size: var(--hero-title-size);
   font-weight: 400;
@@ -158,12 +166,14 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   font-variation-settings: "opsz" 144;
   margin-bottom: 28px;
 }
-.hero-lede { font: italic 300 clamp(18px, 1.6vw, 21px)/1.5 var(--serif); color: var(--ink-2); max-width: 36em; margin-bottom: 32px; }
+.hero-lede { font: italic 300 clamp(18px, 1.6vw, 21px)/1.5 var(--serif); color: var(--ink-2); max-width: 36em; }
 .hero-lede p + p { margin-top: 0.9em; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 48px; }
-/* The hero lists (books, film, publications, latest articles): each starts with a rule and a small label. */
-.latest { border-top: 1px solid var(--line); padding-top: 18px; max-width: 560px; }
-.latest + .latest { margin-top: 32px; }
+.hero-actions { grid-area: actions; display: flex; flex-wrap: wrap; gap: 12px; }
+/* The hero lists (books, film, publications, latest articles) sit below the bio and
+   portrait, two columns across the full width on wider screens, one below 860px.
+   Each starts with a rule and a small label. */
+.hero-lists { display: grid; grid-template-columns: 1fr 1fr; gap: 32px clamp(32px, 6vw, 80px); align-items: start; margin-top: 48px; }
+.latest { border-top: 1px solid var(--line); padding-top: 18px; }
 .latest-label { font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .latest-list li { border-bottom: 1px solid var(--line); }
 .latest-list a { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; text-decoration: none; }
@@ -172,8 +182,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .latest-meta { flex-shrink: 0; font-size: 13px; color: var(--muted); padding-top: 2px; }
 /* A note line (e.g. an award) belongs to the item above it, so no divider between them. */
 .latest-list li.has-note { border-bottom: 0; }
-.latest-note { padding: 0 0 12px; font-size: 14px; line-height: 1.45; color: var(--ink-2); }
-.laurel-icon { display: inline-block; width: 24px; height: 21.6px; vertical-align: -6px; margin-right: 2px; color: var(--accent); }
+.latest-note { padding: 0 0 12px; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+.laurel-icon { display: inline-block; width: 24px; height: 21.6px; vertical-align: -6px; margin-left: 2px; color: var(--accent); }
+.nowrap { white-space: nowrap; }
 
 /* Top of the photo lines up with the top of the capital "R" in the name: skip the
    eyebrow line (12px x 1.2 line-height + 14px margin), then the space above the
@@ -189,14 +200,18 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 @media (max-width: 860px) {
   /* Name on one line: "Robert M. Herzog" is about 8em wide, so 11vw keeps it inside
      the column (100vw minus the gutters) down to 320px screens. */
-  .hero-grid { grid-template-columns: 1fr; --hero-title-size: min(clamp(56px, 10vw, 128px), 11vw); }
+  /* One column: photo, bio, then the buttons. The photo keeps its larger gap below it. */
+  .hero-grid { grid-template-columns: 1fr; grid-template-rows: none; grid-template-areas: "portrait" "copy" "actions"; --hero-title-size: min(clamp(56px, 10vw, 128px), 11vw); }
   .hero-title { white-space: nowrap; }
   .hero-title br { display: none; }
-  .hero-portrait { order: -1; max-width: 340px; margin-top: 0; }
+  .hero-portrait { max-width: 340px; margin: 0 0 calc(clamp(32px, 6vw, 80px) - 32px); }
   .hero-portrait img { aspect-ratio: 1 / 1; }
+  .hero-lists { grid-template-columns: 1fr; }
+  .latest { max-width: 560px; }
 }
 
-.published-in { font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+/* Published In closes the hero lists with a rule like the one above it. */
+.published-in { font-size: 15px; line-height: 1.6; color: var(--ink-2); border-bottom: 1px solid var(--line); padding-bottom: 18px; }
 .published-in p { margin: 0; }
 .published-in .latest-label { margin-bottom: 10px; }
 .published-in .pub { font-family: var(--serif); font-style: italic; white-space: nowrap; }
@@ -207,12 +222,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .section-alt { background: var(--paper-2); }
 
 /* Dividers: thin orange rules between sections.
-   .divider-end closes a section, centred between its content and the next
-   section: its top margin matches the hero's reduced padding-bottom.
    A .section-divider-close section ends with one, centred in the section's
    bottom space, which is half the usual section padding. */
 .divider { display: block; width: min(480px, 100%); height: 0; border: 0; border-top: 1px solid var(--accent); margin: 0 auto clamp(26px, 3.6vw, 46px); }
-.divider-end { margin: clamp(22px, 2.8vw, 36px) auto 0; }
 .section-divider-close { padding-bottom: calc(clamp(64px, 9vw, 120px) / 4); }
 .section-divider-close > .wrap > .divider:last-child { margin: calc(clamp(64px, 9vw, 120px) / 4) auto 0; }
 .section-half-start { padding-top: calc(clamp(64px, 9vw, 120px) / 2); }

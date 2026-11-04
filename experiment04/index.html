@@ -58,33 +58,34 @@
             <p>Robert M. Herzog is a novelist, screenwriter, playwright, and filmmaker whose work explores ambition, identity, moral choices, and the contradictions of human behavior. Moving between drama, satire, and speculative fiction, his stories examine people navigating changing worlds, confronting unexpected challenges, and sometimes discovering that their greatest obstacles are themselves.</p>
             <p>A published author and award-winning filmmaker, Herzog brings to his creative work decades of experience as an entrepreneur and executive in technology, energy, and healthcare, as well as a lifelong engagement with politics and American culture.</p>
           </div>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#books">Author</a>
-            <a class="btn" href="#film">Film Writer &amp; Producer</a>
-          </div>
-          <div class="latest">
-            <p class="latest-label">Published Books</p>
-            <ul class="latest-list" data-slot="hero-books"></ul>
-          </div>
-          <div class="latest">
-            <p class="latest-label">Short Film</p>
-            <ul class="latest-list" data-slot="hero-films"></ul>
-          </div>
-          <div class="latest published-in">
-            <p class="latest-label">Published in</p>
-            <p data-slot="published-in"></p>
-          </div>
-          <div class="latest">
-            <p class="latest-label">Latest Articles</p>
-            <ol class="latest-list" data-slot="latest"></ol>
-          </div>
         </div>
         <figure class="hero-portrait">
           <img src="assets/img/robert-herzog.webp" alt="Portrait of Robert M. Herzog" width="685" height="1026">
         </figure>
+        <!-- Below the photo on wider screens, below the bio on narrow ones. -->
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#books">Author</a>
+          <a class="btn" href="#film">Film Writer &amp; Producer</a>
+        </div>
       </div>
-      <div class="wrap">
-        <hr class="divider divider-end">
+      <!-- Film, books, latest articles and publications: full width below the bio. -->
+      <div class="wrap hero-lists">
+        <div class="latest">
+          <p class="latest-label">Short Film</p>
+          <ul class="latest-list" data-slot="hero-films"></ul>
+        </div>
+        <div class="latest">
+          <p class="latest-label">Published Books</p>
+          <ul class="latest-list" data-slot="hero-books"></ul>
+        </div>
+        <div class="latest">
+          <p class="latest-label">Latest Articles</p>
+          <ol class="latest-list" data-slot="latest"></ol>
+        </div>
+        <div class="latest published-in">
+          <p class="latest-label">Published in</p>
+          <p data-slot="published-in"></p>
+        </div>
       </div>
     </section>
 

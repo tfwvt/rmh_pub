@@ -94,8 +94,17 @@
     .slice(0, 2)
     .map(({ b }) => `<li><a href="#${bookId(b)}">
         <span class="latest-title">${esc(b.title)}${esc(b.heroSeparator || ":")} ${esc(b.subtitle || b.kind)}</span>
+        <span class="latest-meta">Author</span>
       </a></li>`)
     .join("");
+
+  // A short film's note, with the laurel after the text for awards. The last word and the
+  // laurel are kept together so the laurel never wraps onto a line by itself.
+  const heroNoteHtml = (w) => {
+    if (!w.heroNoteAward) return esc(w.heroNote);
+    const m = w.heroNote.match(/^(.*?)(\S+)$/s);
+    return `${esc(m[1])}<span class="nowrap">${esc(m[2])} ${LAUREL}</span>`;
+  };
 
   // Short films, linking to their page on this site (e.g. read/flights/), or to their Screen & Stage card if they have none.
   slot("hero-films").innerHTML = SITE.screen
@@ -104,7 +113,7 @@
     .map(({ w, href }) => `<li${w.heroNote ? ' class="has-note"' : ""}><a href="${esc(href)}">
         <span class="latest-title">${esc(w.title)}</span>
         <span class="latest-meta">${esc(w.role || w.kind)}</span>
-      </a></li>${w.heroNote ? `<li class="latest-note">${w.heroNoteAward ? `${LAUREL} ` : ""}${esc(w.heroNote)}</li>` : ""}`)
+      </a></li>${w.heroNote ? `<li class="latest-note">${heroNoteHtml(w)}</li>` : ""}`)
     .join("");
 
   slot("published-in").innerHTML = SITE.about.publishedIn

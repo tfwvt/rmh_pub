@@ -73,7 +73,7 @@ window.SITE = {
       quote: { text: "Herzog manages to paint a tableau of that time that rings true using little more than paper airplanes, matches, and, of course, talent.", source: "Joyce Schwarz, FilmFestivals.com" },
       laurels: ["Best Film, Short Subject — Cinevue International Film Competition"],
       // Extra line shown under the film in the home page's "Short Film" list.
-      heroNote: "Best Film Short Subject — Cinevue International Film Competition, Florida",
+      heroNote: "Best Film Short Subject — Cinevue International Film Competition, FL",
       heroNoteAward: true, // adds a laurel icon before the note
       festivals: [
         "Hamptons International Film Festival",
@@ -198,6 +198,6 @@ window.SITE = {
       "Somewhere along the way, I discovered that the worlds of business, politics, and storytelling have more in common than one might expect. Ambition, conflict, improbable characters, unexpected reversals—I’ve encountered them in all three.",
       "Can’t say I planned it that way, but there it is.",
     ],
-    publishedIn: ["Persuasion", "Solstice Literary Magazine", "Toasted Cheese", "Downstate Story", "Straylight", "South Jersey Underground"],
+    publishedIn: ["Persuasion", "Solstice Literary Magazine", "Toasted Cheese", "Downstate Story Magazine", "Straylight Literary Arts Magazine", "South Jersey Underground"],
   },
 };
