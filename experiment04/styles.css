@@ -118,28 +118,38 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   transition: border-color .2s;
 }
 .site-header.scrolled { border-bottom-color: var(--line); }
-.header-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-.wordmark { font: 500 20px/1 var(--serif); text-decoration: none; letter-spacing: -0.01em; }
+.header-inner { display: flex; align-items: center; gap: 28px; height: 64px; }
+.wordmark { font: 500 20px/1 var(--serif); text-decoration: none; letter-spacing: -0.01em; margin-right: auto; }
 .site-nav { display: flex; align-items: center; gap: 28px; font-size: 15px; }
 .site-nav a { text-decoration: none; color: var(--ink-2); }
 .site-nav a:hover { color: var(--ink); }
-.site-nav .nav-cta { color: var(--ink); border: 1px solid var(--line); padding: 7px 16px; border-radius: 999px; }
-.site-nav .nav-cta:hover { border-color: var(--ink); }
-.menu-toggle { display: none; background: none; border: 0; padding: 8px; margin-right: -8px; color: var(--ink); cursor: pointer; }
-.menu-toggle svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.site-nav .nav-subscribe { color: var(--accent); }
+.site-nav .nav-subscribe:hover { color: var(--ink); }
+/* With room to spare, Subscribe is a pill button, as it was before. */
+@media (min-width: 540px) {
+  .site-nav .nav-subscribe { color: var(--ink); border: 1px solid var(--line); padding: 7px 16px; border-radius: 999px; }
+  .site-nav .nav-subscribe:hover { border-color: var(--ink); }
+}
 
+/* Phones: the name and the four links stay on one line; the name shrinks to make room
+   (down to 13px). Below 350px, where even that won't fit, the links wrap onto a second
+   row and the name goes back to full size. */
 @media (max-width: 760px) {
-  .menu-toggle { display: block; }
-  .site-nav {
-    position: absolute; top: 64px; left: 0; right: 0;
-    flex-direction: column; align-items: stretch; gap: 0;
-    background: var(--paper); border-bottom: 1px solid var(--line);
-    padding: 8px var(--gutter) 20px;
-    display: none;
-  }
-  .site-nav.open { display: flex; }
-  .site-nav a { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 17px; }
-  .site-nav .nav-cta { border: 0; border-radius: 0; padding: 12px 0; color: var(--accent); }
+  .header-inner { flex-wrap: wrap; gap: 0 12px; height: auto; min-height: 64px; }
+  /* The name is about 8.1em wide; the links take about 195px plus the gaps and gutters. */
+  .wordmark { font-size: clamp(13px, 12.3vw - 30.5px, 20px); white-space: nowrap; }
+  .site-nav { gap: 12px; font-size: 14px; }
+}
+/* Subscribe joins the links when they fit beside the full-size name (from 485px), and on
+   the wrapped second row below 350px. In between it would squeeze the name, so it's hidden. */
+@media (min-width: 350px) and (max-width: 484px) {
+  .site-nav .nav-subscribe { display: none; }
+}
+@media (max-width: 349px) {
+  html { scroll-padding-top: 88px; }
+  .header-inner { padding-top: 12px; padding-bottom: 10px; }
+  .wordmark { font-size: 20px; }
+  .site-nav { flex-basis: 100%; padding-top: 10px; }
 }
 
 /* ---------- Banner ---------- */
@@ -513,14 +523,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 6px 18px; }
 .footer-links a { font-size: 14px; color: var(--ink-2); text-decoration: none; }
 .footer-links a:hover { color: var(--accent); }
-
-/* Article pages have no menu script: keep a short row of links on phones. */
-@media (max-width: 760px) {
-  .site-nav-static { position: static; display: flex; flex-direction: row; gap: 16px; padding: 0; background: none; border: 0; }
-  .site-nav-static a { padding: 0; border: 0; font-size: 15px; }
-  .site-nav-static a:not(.nav-cta):not([href$="#writing"]) { display: none; }
-  .site-nav-static .nav-cta { padding: 0; color: var(--accent); }
-}
 
 /* ---------- Motion ---------- */
 .js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }

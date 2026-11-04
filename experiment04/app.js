@@ -349,23 +349,11 @@
 
   slot("year").textContent = new Date().getFullYear();
 
-  // ---------- Header & menu ----------
+  // ---------- Header ----------
   const header = $(".site-header");
-  const nav = $("#site-nav");
-  const toggle = $(".menu-toggle");
   const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 8);
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
-  toggle.addEventListener("click", () => {
-    const open = nav.classList.toggle("open");
-    toggle.setAttribute("aria-expanded", String(open));
-  });
-  nav.addEventListener("click", (e) => {
-    if (e.target.closest("a")) {
-      nav.classList.remove("open");
-      toggle.setAttribute("aria-expanded", "false");
-    }
-  });
 
   // ---------- Reveal on scroll ----------
   const io =
