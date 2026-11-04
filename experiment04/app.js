@@ -164,6 +164,14 @@
           ${f.badges?.length ? `<div class="film-badges">${f.badges.map((b) => `<img src="${esc(b.image)}" alt="${esc(b.alt)}" loading="lazy">`).join("")}</div>` : ""}
         </aside>
       </div>`;
+    // Film strips: fit a whole number of sprocket tiles (34px or a little less) across the band.
+    const band = slot("featured-film");
+    const fitSprockets = () => {
+      const w = band.clientWidth;
+      if (w) band.style.setProperty("--sprocket-tile", `${w / Math.ceil(w / 34)}px`);
+    };
+    fitSprockets();
+    if ("ResizeObserver" in window) new ResizeObserver(fitSprockets).observe(band);
   }
 
   // ---------- Screen & stage ----------
