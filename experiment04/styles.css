@@ -225,6 +225,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .published-in p { margin: 0; }
 .published-in .latest-label { margin-bottom: 10px; }
 .published-in .pub { font-family: var(--serif); font-style: italic; white-space: nowrap; }
+.published-in .pub-long { white-space: normal; }
+.published-in .pub-part { white-space: nowrap; }
 .published-in .sep { color: var(--line); margin: 0 4px; }
 
 /* ---------- Sections ---------- */

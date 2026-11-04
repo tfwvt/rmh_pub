@@ -115,9 +115,19 @@
       </a></li>${w.heroNote ? `<li class="latest-note">${heroNoteHtml(w)}</li>` : ""}`)
     .join("");
 
+  // Each name stays on one line, except long ones (four words or more), which may break
+  // once, in the middle: "Straylight Literary / Arts Magazine".
+  const pubName = (p) => {
+    const words = p.split(" ");
+    if (words.length < 4) return esc(p);
+    const half = Math.ceil(words.length / 2);
+    return `<span class="pub-part">${esc(words.slice(0, half).join(" "))}</span> <span class="pub-part">${esc(words.slice(half).join(" "))}</span>`;
+  };
+  // The non-breaking space keeps each "/" on the same line as the name before it, so a
+  // line can end with one but never starts with one.
   slot("published-in").innerHTML = SITE.about.publishedIn
-    .map((p) => `<span class="pub">${esc(p)}</span>`)
-    .join(' <span class="sep" aria-hidden="true">/</span> ');
+    .map((p) => `<span class="pub${p.split(" ").length >= 4 ? " pub-long" : ""}">${pubName(p)}</span>`)
+    .join('&nbsp;<span class="sep" aria-hidden="true">/</span> ');
 
   // ---------- Featured film ----------
   // "Written and produced by X · Co-directed by Y": the role before "by" in each part is bold.
