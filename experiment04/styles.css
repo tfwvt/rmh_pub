@@ -62,7 +62,7 @@
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 76px; -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; scroll-padding-top: 64px; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   background: var(--paper);
@@ -118,7 +118,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   transition: border-color .2s;
 }
 .site-header.scrolled { border-bottom-color: var(--line); }
-.header-inner { display: flex; align-items: center; gap: 28px; height: 64px; }
+.header-inner { display: flex; align-items: center; gap: 28px; height: 52px; }
 .wordmark { font: 500 20px/1 var(--serif); text-decoration: none; letter-spacing: -0.01em; margin-right: auto; }
 .site-nav { display: flex; align-items: center; gap: 28px; font-size: 15px; }
 .site-nav a { text-decoration: none; color: var(--ink-2); }
@@ -135,7 +135,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
    (down to 13px). Below 350px, where even that won't fit, the links wrap onto a second
    row and the name goes back to full size. */
 @media (max-width: 760px) {
-  .header-inner { flex-wrap: wrap; gap: 0 12px; height: auto; min-height: 64px; }
+  .header-inner { flex-wrap: wrap; gap: 0 12px; height: auto; min-height: 52px; }
   /* The name is about 8.1em wide; the links take about 195px plus the gaps and gutters. */
   .wordmark { font-size: clamp(13px, 12.3vw - 30.5px, 20px); white-space: nowrap; }
   .site-nav { gap: 12px; font-size: 14px; }
@@ -146,10 +146,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .site-nav .nav-subscribe { display: none; }
 }
 @media (max-width: 349px) {
-  html { scroll-padding-top: 88px; }
-  .header-inner { padding-top: 12px; padding-bottom: 10px; }
+  html { scroll-padding-top: 72px; }
+  .header-inner { padding-top: 8px; padding-bottom: 7px; }
   .wordmark { font-size: 20px; }
-  .site-nav { flex-basis: 100%; padding-top: 10px; }
+  .site-nav { flex-basis: 100%; padding-top: 6px; }
 }
 
 /* ---------- Banner ---------- */
@@ -319,10 +319,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* ---------- Books ---------- */
 .books { display: grid; gap: clamp(48px, 6vw, 80px); }
 .book { display: grid; grid-template-columns: minmax(160px, 260px) 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
-/* Extra room when the hero's book and film links jump here. A book that hasn't been
-   revealed yet sits 16px low (.reveal), so the browser scrolls to that spot
-   and the book then slides up; without this its top ends up under the header. */
-.book, .work { scroll-margin-top: 28px; }
+/* A little extra room above a book or card when the hero's links jump to it. */
+.book, .work { scroll-margin-top: 12px; }
 .book-cover img { width: 100%; border-radius: 4px 10px 10px 4px; box-shadow: -6px 0 0 -3px rgb(0 0 0 / .08), 0 20px 40px -18px rgb(0 0 0 / .45); }
 .book h3 { font-size: clamp(30px, 3.6vw, 44px); }
 /* Stand-in cover for a book without cover art: title and author set on a plain board. */
@@ -525,11 +523,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .footer-links a:hover { color: var(--accent); }
 
 /* ---------- Motion ---------- */
-.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
-.js .reveal.in { opacity: 1; transform: none; }
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
-  .js .reveal { opacity: 1; transform: none; }
 }

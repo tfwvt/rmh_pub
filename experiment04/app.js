@@ -8,7 +8,6 @@
 
   const SITE = window.SITE;
   if (!SITE) return;
-  document.documentElement.classList.add("js");
 
   // ---------- Helpers ----------
   const $ = (sel, root = document) => root.querySelector(sel);
@@ -167,7 +166,7 @@
   slot("screen").innerHTML = SITE.screen
     .map(
       (w) => `
-      <article class="work reveal${w.image ? "" : " work-noimg"}" id="${workId(w)}">
+      <article class="work${w.image ? "" : " work-noimg"}" id="${workId(w)}">
         ${(() => {
           // With a link at the bottom, the image and the title open it too (the other text stays plain).
           const main = w.links?.[0];
@@ -200,7 +199,7 @@
   slot("books").innerHTML = SITE.books
     .map(
       (b) => `
-      <article class="book reveal" id="${bookId(b)}">
+      <article class="book" id="${bookId(b)}">
         ${b.cover
           ? `<div class="book-cover"><img src="${esc(b.cover)}" alt="Cover of ${esc(b.title)}" loading="lazy"></div>`
           : `<div class="book-cover"><div class="book-cover-card" aria-hidden="true"><span class="book-cover-title">${esc(b.title)}</span><span class="book-cover-author">${esc(SITE.person.name)}</span></div></div>`}
@@ -225,7 +224,7 @@
       `<p class="eyebrow reviews-title">Readers on <em>A World Between</em></p>` +
       SITE.reviews
         .map(
-          (r) => `<blockquote class="review reveal"><span class="stars" aria-label="Five stars">★★★★★</span>“${esc(r.text)}”<cite>— ${esc(r.source)}</cite></blockquote>`
+          (r) => `<blockquote class="review"><span class="stars" aria-label="Five stars">★★★★★</span>“${esc(r.text)}”<cite>— ${esc(r.source)}</cite></blockquote>`
         )
         .join("");
   }
@@ -252,7 +251,7 @@
     const date = fmtDate(w);
     if (date) meta.push(`<span>${esc(date)}</span>`);
     return `
-      <article class="piece reveal${w.image ? "" : " piece-noimg"}">
+      <article class="piece${w.image ? "" : " piece-noimg"}">
         ${w.image ? (primary
           ? `<a class="piece-media" href="${esc(primary.url)}"${linkAttrs(primary.url)} tabindex="-1" aria-hidden="true"><img src="${esc(w.image)}" alt="" loading="lazy"${w.imagePosition ? ` style="object-position:${esc(w.imagePosition)}"` : ""}></a>`
           : `<div class="piece-media" aria-hidden="true"><img src="${esc(w.image)}" alt="" loading="lazy"${w.imagePosition ? ` style="object-position:${esc(w.imagePosition)}"` : ""}></div>`) : ""}
@@ -288,7 +287,6 @@
     moreBtn.hidden = matches.length <= state.limit;
     moreBtn.textContent = `Show more (${matches.length - shown.length})`;
     filtersEl.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.kind === state.kind)));
-    observe(grid.querySelectorAll(".reveal"));
   }
 
   function setKind(kind) {
@@ -320,11 +318,11 @@
   const ab = SITE.about;
   slot("about").insertAdjacentHTML(
     "beforeend",
-    `<div class="about-copy reveal">
+    `<div class="about-copy">
        <p class="about-lead">${esc(ab.lead)}</p>
        ${ab.paragraphs.map((p) => `<p>${esc(p)}</p>`).join("")}
      </div>
-     <blockquote class="about-voice reveal">
+     <blockquote class="about-voice">
        ${ab.voice.map((p) => `<p>${esc(p)}</p>`).join("")}
        <cite>— Robert, in his own words</cite>
      </blockquote>`
@@ -355,24 +353,5 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  // ---------- Reveal on scroll ----------
-  const io =
-    "IntersectionObserver" in window
-      ? new IntersectionObserver(
-          (entries) =>
-            entries.forEach((en) => {
-              if (en.isIntersecting) {
-                en.target.classList.add("in");
-                io.unobserve(en.target);
-              }
-            }),
-          { rootMargin: "0px 0px -8% 0px" }
-        )
-      : null;
-  function observe(nodes) {
-    nodes.forEach((n) => (io ? io.observe(n) : n.classList.add("in")));
-  }
-
   renderWriting();
-  observe(document.querySelectorAll(".reveal"));
 })();
