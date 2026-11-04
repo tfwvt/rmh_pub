@@ -64,6 +64,20 @@ window.SITE = {
   // Films and scripts. `kind` is shown as a label on the card.
   screen: [
     {
+      // A teaser for the No Kidding Around band at the bottom of this section (#film).
+      title: "No Kidding Around",
+      kind: "Feature screenplay · In development",
+      role: "Writer · Producer · Co-director",
+      image: "assets/img/film-no-kidding-around.webp",
+      imageAlt: "An empty classroom in disarray, a child’s open lunchbox on the floor",
+      laurels: [
+        "Finalist — Best Drama Screenplay, Austin Short Film Festival, Fall 2026",
+        "Semi-Finalist — Chicago Script Awards, 2026",
+      ],
+      summary: "Three ordinary school days, alive with humor, connection and innocence, are shattered by gun violence.",
+      links: [{ label: "Find out more", url: "#film", internal: true }],
+    },
+    {
       title: "Flights",
       kind: "Short film",
       role: "Writer · Director",

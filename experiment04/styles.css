@@ -221,12 +221,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .section { padding: clamp(64px, 9vw, 120px) 0; }
 .section-alt { background: var(--paper-2); }
 
-/* Dividers: thin orange rules between sections.
-   A .section-divider-close section ends with one, centred in the section's
-   bottom space, which is half the usual section padding. */
-.divider { display: block; width: min(480px, 100%); height: 0; border: 0; border-top: 1px solid var(--accent); margin: 0 auto clamp(26px, 3.6vw, 46px); }
-.section-divider-close { padding-bottom: calc(clamp(64px, 9vw, 120px) / 4); }
-.section-divider-close > .wrap > .divider:last-child { margin: calc(clamp(64px, 9vw, 120px) / 4) auto 0; }
 .section-half-start { padding-top: calc(clamp(64px, 9vw, 120px) / 2); }
 .section-half-end { padding-bottom: calc(clamp(64px, 9vw, 120px) / 2); }
 .section-head { margin-bottom: clamp(32px, 4vw, 52px); }
@@ -234,7 +228,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .section-head-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; }
 
 /* ---------- Featured film ---------- */
-.film-feature { background: var(--film-bg); color: var(--film-ink); position: relative; overflow: hidden; }
+/* Sits below the Screen & Stage cards, as the end of that section. */
+.film-feature { background: var(--film-bg); color: var(--film-ink); position: relative; overflow: hidden; margin-top: clamp(32px, 4vw, 52px); }
 .film-hero { position: relative; display: flex; align-items: flex-start; overflow: hidden; }
 /* The source image has an award badge baked into its lower third; keep it out of frame. */
 .film-hero img { position: absolute; top: 0; left: 0; width: 100%; height: 140%; object-fit: cover; object-position: 50% 0; opacity: .62; }
