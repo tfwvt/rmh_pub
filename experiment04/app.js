@@ -162,6 +162,7 @@
           </div>
           ${f.sponsor ? `<div class="sponsor"><span>${esc(f.sponsor.name)}</span><img src="${esc(f.sponsor.logo)}" alt="The Gotham Film &amp; Media Institute" loading="lazy"></div>` : ""}
           ${f.badges?.length ? `<div class="film-badges">${f.badges.map((b) => `<img src="${esc(b.image)}" alt="${esc(b.alt)}" loading="lazy">`).join("")}</div>` : ""}
+          <a class="film-more" href="${esc(document.querySelector('.site-nav a').getAttribute("href"))}" hidden>More films, screenplays &amp; plays</a>
         </aside>
       </div>`;
     // Film strips: fit a whole number of sprocket tiles (34px or a little less) across the band.
@@ -172,6 +173,15 @@
     };
     fitSprockets();
     if ("ResizeObserver" in window) new ResizeObserver(fitSprockets).observe(band);
+
+    // "More films, screenplays & plays" only shows after a visitor follows the No Kidding
+    // Around teaser card (its image, title or "Find out more") down to the band, and hides
+    // again once they use it to go back up.
+    const more = band.querySelector(".film-more");
+    document.addEventListener("click", (e) => {
+      if (e.target.closest('.screen-grid a[href="#film"]')) more.hidden = false;
+      else if (e.target.closest(".film-more")) more.hidden = true;
+    });
   }
 
   // ---------- Screen & stage ----------

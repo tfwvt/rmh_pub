@@ -288,6 +288,12 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .sponsor img { width: 200px; filter: invert(1) brightness(1.2); opacity: .85; }
 .film-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
 .film-badges img { width: 160px; height: auto; }
+/* "More films, screenplays & plays": back up to Screen & Stage, the same place as the menu's Film link. */
+/* 12px lower than the band's usual 28px gap, and 12px closer to the bottom film strip
+   (the negative margin eats into .film-body's 40px bottom padding). The .film-side prefix
+   outranks the "no trailing margins" rule for last items above. */
+.film-side .film-more { align-self: center; font: 600 12px/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--film-accent); text-decoration: none; padding: 6px 0; margin: 12px 0 -12px; }
+.film-more:hover { color: var(--film-ink); }
 .collab { font-size: 14px; color: var(--film-muted); }
 .collab strong, .film-credits strong { color: var(--film-ink); font-weight: 500; }
 
