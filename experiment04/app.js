@@ -73,14 +73,22 @@
   // ---------- Hero ----------
   slot("roles").textContent = SITE.person.roles.join(" · ");
 
+  // Titles in the hero lists (Short Film, Published Books, Latest Articles) end with an arrow,
+  // so they read as links before they're hovered ("link-cue" in styles.css). The last word
+  // and the arrow are kept together so the arrow never wraps onto a line by itself.
+  const cueTitle = (title) => {
+    const m = title.match(/^(.*?)(\S+)$/s);
+    return `${esc(m[1])}<span class="nowrap">${esc(m[2])}${ARROW}</span>`;
+  };
+
   slot("latest").innerHTML = writing
     .filter((w) => w.date && !w.dateLabel && primaryLink(w))
     .slice(0, 3)
     .map((w) => {
       const link = primaryLink(w);
       const where = w.url ? KIND_LABELS[w.kind] : link.label;
-      return `<li><a href="${esc(link.url)}"${linkAttrs(link.url)}>
-        <span class="latest-title">${esc(w.title)}</span>
+      return `<li><a class="link-cue" href="${esc(link.url)}"${linkAttrs(link.url)}>
+        <span class="latest-title">${cueTitle(w.title)}</span>
         <span class="latest-meta">${esc(where)} · ${esc(fmtDate(w, { month: "short", year: "numeric" }))}</span>
       </a></li>`;
     })
@@ -91,8 +99,8 @@
     .map((b) => ({ b, store: (b.buy || []).find((l) => isExternal(l.url)) }))
     .filter(({ store }) => store)
     .slice(0, 2)
-    .map(({ b }) => `<li><a href="#${bookId(b)}">
-        <span class="latest-title">${esc(b.title)}${esc(b.heroSeparator || ":")} ${esc(b.subtitle || b.kind)}</span>
+    .map(({ b }) => `<li><a class="link-cue" href="#${bookId(b)}">
+        <span class="latest-title">${cueTitle(`${b.title}${b.heroSeparator || ":"} ${b.subtitle || b.kind}`)}</span>
         <span class="latest-meta">Author</span>
       </a></li>`)
     .join("");
@@ -109,8 +117,8 @@
   slot("hero-films").innerHTML = SITE.screen
     .filter((w) => /^short film/i.test(w.kind))
     .map((w) => ({ w, href: (w.links || []).find((l) => !isExternal(l.url))?.url || `#${workId(w)}` }))
-    .map(({ w, href }) => `<li${w.heroNote ? ' class="has-note"' : ""}><a href="${esc(href)}">
-        <span class="latest-title">${esc(w.title)}</span>
+    .map(({ w, href }) => `<li${w.heroNote ? ' class="has-note"' : ""}><a class="link-cue" href="${esc(href)}">
+        <span class="latest-title">${cueTitle(w.title)}</span>
         <span class="latest-meta">${esc(w.role || w.kind)}</span>
       </a></li>${w.heroNote ? `<li class="latest-note">${heroNoteHtml(w)}</li>` : ""}`)
     .join("");

@@ -190,6 +190,16 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .latest-list a:hover .latest-title { color: var(--accent); }
 .latest-title { font: 500 17px/1.35 var(--serif); transition: color .2s; }
 .latest-meta { flex-shrink: 0; font-size: 13px; color: var(--muted); padding-top: 2px; }
+/* Hero list links (Short Film, Published Books, Latest Articles) show they're links before
+   they're hovered: the title is followed by an arrow in the accent colour, like the Screen & Stage links.
+   On hover the title turns accent and the arrow moves right. */
+.link-cue .latest-title svg {
+  display: inline-block; width: 15px; height: 15px; margin-left: 8px; vertical-align: -1px;
+  fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  transition: transform .2s;
+}
+.link-cue:hover .latest-title svg { transform: translateX(3px); }
+@media (prefers-reduced-motion: reduce) { .link-cue:hover .latest-title svg { transform: none; } }
 /* A note line (e.g. an award) belongs to the item above it, so no divider between them. */
 .latest-list li.has-note { border-bottom: 0; }
 .latest-note { padding: 0 0 12px; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
