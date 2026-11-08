@@ -48,13 +48,6 @@
   --accent-soft: #f0dcc6;
   --on-accent: #fffaf3;
 
-  /* The film band is always dark, in either theme. */
-  --film-bg: #0f0e0d;
-  --film-ink: #f1ece3;
-  --film-muted: #a99f92;
-  --film-line: #2c2824;
-  --film-accent: #e5a266;
-
   --serif: "Fraunces", Georgia, "Times New Roman", serif;
   --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 
@@ -99,7 +92,11 @@
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 64px; -webkit-text-size-adjust: 100%; }
+/* Jump links stop with their target right under the sticky header, so no strip of the section
+   above shows between them. The header is 53px tall (52px plus the 1px line under it); stopping
+   at 52px tucks the target's top edge under that line, so sections that start part-way through
+   a pixel can't leave a hairline gap either. */
+html { scroll-behavior: smooth; scroll-padding-top: 52px; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   background: var(--paper);
@@ -183,7 +180,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .site-nav .nav-subscribe { display: none; }
 }
 @media (max-width: 349px) {
-  html { scroll-padding-top: 72px; }
+  html { scroll-padding-top: 64px; } /* the header is 65px here, with the links on a second row */
   .header-inner { padding-top: 8px; padding-bottom: 7px; }
   .wordmark { font-size: 20px; }
   .site-nav { flex-basis: 100%; padding-top: 6px; }
@@ -246,7 +243,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
    they're hovered: the title is followed by an arrow in the accent colour, like the Screen & Stage links.
    On hover the title turns accent and the arrow moves right. */
 .link-cue .latest-title svg {
-  display: inline-block; width: 15px; height: 15px; margin-left: 8px; vertical-align: -1px;
+  display: inline-block; width: 19px; height: 19px; margin-left: 8px; vertical-align: -3px;
   fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   transition: transform .2s;
 }
@@ -308,19 +305,26 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- Featured film ---------- */
 /* Sits below the Screen & Stage cards, as the end of that section. */
-.film-feature { background: var(--film-bg); color: var(--film-ink); position: relative; overflow: hidden; margin-top: clamp(32px, 4vw, 52px); }
-/* Strips of film sprocket holes across the top and bottom of the band. Each dark strip
-   runs to the band's edge (the rounded corners clip it) and is 8px deeper than the
-   corners plus the holes; the holes are centred in it. The band's bottom padding
-   keeps the content clear of the lower strip. */
-.film-feature { --film-strip: calc(var(--radius) + 28px + 8px); padding-bottom: var(--film-strip); }
+/* The band uses the page's own background and colours (light or dark with the theme); only
+   its film strips are dark. */
+.film-feature { position: relative; overflow: hidden; margin-top: clamp(32px, 4vw, 52px); }
+/* Strips of film sprocket holes across the top and bottom of the band, with square
+   corners. Each dark strip runs to the band's edge and is as deep as it was when the band
+   had rounded corners (the corner radius plus the holes plus 8px), so the spacing is
+   unchanged; the holes are centred in it. The band's bottom padding
+   keeps the content clear of the lower strip. The strip and hole colours are what the
+   strips showed over the band's old dark background, so they look the same as before. */
+/* --sprocket-end is extra black at each end of a strip, before the first hole and after the last. */
+.film-feature { --film-strip: calc(var(--radius) + 28px + 8px); --sprocket-end: 8px; padding-bottom: var(--film-strip); }
 .film-feature::before, .film-feature::after {
   content: ""; position: absolute; z-index: 2; left: 0; right: 0; height: var(--film-strip);
   /* One 34px tile is half a gap, a hole, half a gap. app.js narrows the tile (--sprocket-tile)
-     so a whole number fit across, leaving half a gap at each edge; the SVG keeps the hole's
-     size and centres it, so only the gaps shrink. */
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 28'%3E%3Crect x='9' y='7' width='16' height='14' rx='3' fill='%23f1ece3'/%3E%3C/svg%3E") repeat-x left center / var(--sprocket-tile, 34px) 28px, rgb(10 9 8 / .7);
-  opacity: .85; pointer-events: none;
+     so a whole number fit between the ends, leaving half a gap plus --sprocket-end at each
+     edge; the SVG keeps the hole's size and centres it, so only the gaps shrink. The holes
+     sit in the content box (inside the end padding); the black fills the whole strip. */
+  padding-inline: var(--sprocket-end);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 28'%3E%3Crect x='9' y='7' width='16' height='14' rx='3' fill='%23cfcbc3'/%3E%3C/svg%3E") repeat-x left center / var(--sprocket-tile, 34px) 28px content-box, #0c0b0a;
+  pointer-events: none;
 }
 .film-feature::before { top: 0; }
 .film-feature::after { bottom: 0; }
@@ -334,44 +338,55 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .film-eyebrow { grid-column: 1 / -1; text-align: center; font-size: 14px; margin: 0 -.14em 0 0; }
 .film-media { margin: 0; }
 .film-media img { display: block; width: 100%; height: auto; border-radius: calc(var(--radius) - 4px); }
-.film-feature .eyebrow { color: var(--film-accent); }
 .film-title { font-size: clamp(44px, 5.2vw, 68px); font-weight: 400; letter-spacing: -0.03em; line-height: .95; margin-bottom: 18px; }
-.film-status { display: inline-flex; align-items: center; gap: 8px; font: 500 13px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--film-ink); border: 1px solid rgb(255 255 255 / .25); padding: 8px 14px; border-radius: 999px; }
-.film-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--film-accent); box-shadow: 0 0 0 4px rgb(229 162 102 / .2); }
-/* 28px above the body, the same as the gaps between items in the right-hand column. */
+.film-status { display: inline-flex; align-items: center; gap: 8px; font: 500 13px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--ink); border: 1px solid var(--line); padding: 8px 14px; border-radius: 999px; }
+.film-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+/* 28px above the body. */
 .film-body { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(32px, 6vw, 80px); padding-top: 28px; padding-bottom: 40px; }
 /* Keep the space above the bottom film strip to the 40px padding: no trailing margins. */
 .film-body > * > :last-child { margin-bottom: 0; padding-bottom: 0; }
 .film-logline { font: 300 clamp(22px, 2.4vw, 30px)/1.4 var(--serif); margin-bottom: 28px; }
-.film-about p { color: var(--film-muted); }
-.film-credits { font-size: 14px; color: var(--film-muted); border-top: 1px solid var(--film-line); padding-top: 18px; margin-top: 28px; }
-.film-side { display: flex; flex-direction: column; gap: 28px; }
+.film-about p { color: var(--ink-2); }
+.film-credits { font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 18px; margin-top: 28px; }
+/* The right-hand column is spaced fairly tightly so on wide screens it ends close to the left-hand
+   column: 20px between the buttons, sponsor and badge, plus 10px more above and below the sponsor
+   (30px in all) to give the Gotham logo some room. */
+.film-side { display: flex; flex-direction: column; gap: 20px; }
+.film-side .sponsor { padding-block: 10px; gap: 8px; }
 .film-intro .laurels { margin-top: 28px; }
-.laurels li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--film-line); font-size: 15px; line-height: 1.45; }
-.laurels li:first-child { border-top: 1px solid var(--film-line); }
-.laurels .laurel-icon { flex-shrink: 0; width: 24px; height: 21.6px; margin: 1px 0 0; vertical-align: 0; color: var(--film-accent); }
+.laurels li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; line-height: 1.45; }
+.laurels li:first-child { border-top: 1px solid var(--line); }
+.laurels .laurel-icon { flex-shrink: 0; width: 24px; height: 21.6px; margin: 1px 0 0; vertical-align: 0; color: var(--accent); }
 .film-actions { display: flex; flex-direction: column; gap: 10px; }
-.film-actions .btn { justify-content: center; border-color: rgb(255 255 255 / .25); color: var(--film-ink); }
-.film-actions .btn:hover { border-color: var(--film-ink); }
-.film-actions .btn-primary { background: var(--film-accent); border-color: var(--film-accent); color: #1a1209; }
-.film-actions .btn-primary:hover { background: var(--film-ink); border-color: var(--film-ink); color: #1a1209; }
-.sponsor { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding-block: 12px; font-size: 13px; color: var(--film-muted); }
-.sponsor img { width: 200px; height: auto; filter: invert(1) brightness(1.2); opacity: .85; }
+.film-actions .btn { justify-content: center; }
+/* "Support the film" stays in the accent colour, unlike the site's usual dark primary button. */
+.film-actions .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.film-actions .btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.sponsor { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding-block: 12px; font-size: 13px; color: var(--muted); }
+/* The logo is black lettering: turned light in dark mode. */
+.sponsor img { width: 200px; height: auto; opacity: .85; }
+:root[data-theme="dark"] .sponsor img { filter: invert(1) brightness(1.2); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sponsor img { filter: invert(1) brightness(1.2); }
+}
 .film-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
-.film-badge { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+.film-badge { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
 .film-badge img { width: 160px; height: auto; }
 /* Under the badge: "FINALIST", then the award in smaller capitals, one entry per line. */
 .film-badge figcaption { display: flex; flex-direction: column; gap: 4px; text-transform: uppercase; }
-.film-badge-title { font: 600 20px/1.2 var(--sans); letter-spacing: .2em; margin-right: -.2em; color: var(--film-ink); margin-bottom: 4px; }
-.film-badge-line { font: 600 11px/1.4 var(--sans); letter-spacing: .14em; margin-right: -.14em; color: var(--film-muted); }
-/* "More films, screenplays & plays": back up to Screen & Stage, the same place as the menu's Film link. */
-/* 12px lower than the band's usual 28px gap, and 12px closer to the bottom film strip
-   (the negative margin eats into .film-body's 40px bottom padding). The .film-side prefix
-   outranks the "no trailing margins" rule for last items above. */
-.film-side .film-more { align-self: center; font: 600 12px/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--film-accent); text-decoration: none; padding: 6px 0; margin: 12px 0 -12px; }
-.film-more:hover { color: var(--film-ink); }
-.collab { font-size: 14px; color: var(--film-muted); }
-.collab strong, .film-credits strong { color: var(--film-ink); font-weight: 500; }
+.film-badge-title { font: 600 20px/1.2 var(--sans); letter-spacing: .2em; margin-right: -.2em; color: var(--ink); margin-bottom: 2px; }
+.film-badge-line { font: 600 11px/1.4 var(--sans); letter-spacing: .14em; margin-right: -.14em; color: var(--muted); }
+.collab { font-size: 14px; color: var(--muted); }
+.collab strong, .film-credits strong { color: var(--ink); font-weight: 500; }
+/* The large link to the film's own page, centred across the bottom of the band under a rule,
+   40px above the bottom film strip (the same space the two columns had above it). */
+.film-page { text-align: center; padding-bottom: 40px; }
+.film-page::before { content: ""; display: block; border-top: 1px solid var(--line); margin-bottom: 32px; }
+/* 22px on phones fits it on one line down to about 375px; if it wraps, the arrow stays with the last word. */
+.film-page-link { font: 400 clamp(22px, 3vw, 36px)/1.25 var(--serif); letter-spacing: -0.01em; color: var(--accent); text-decoration: none; }
+.film-page-link svg { display: inline-block; width: .8em; height: .8em; margin-left: .35em; vertical-align: -0.08em; fill: none; stroke: currentColor; stroke-width: 2; transition: transform .2s; }
+.film-page-link:hover { color: var(--ink); }
+.film-page-link:hover svg { transform: translateX(4px); }
 
 @media (max-width: 860px) {
   /* One column: the image, then the title and logline, then the rest. */
@@ -390,9 +405,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .film-status { order: 4; align-self: flex-start; }
   .film-intro .laurels { order: 5; }
 }
-/* On wide screens the dark panel stops at the content width instead of running edge to edge. */
+/* On wide screens the band (and so its film strips) stops at the content width instead of running edge to edge. */
 @media (min-width: 1260px) {
-  .film-feature { max-width: var(--wrap); margin-inline: auto; border-radius: var(--radius); }
+  .film-feature { max-width: var(--wrap); margin-inline: auto; }
 }
 
 /* ---------- Screen grid ---------- */
@@ -427,7 +442,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .work-links { margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px 18px; padding-top: 8px; }
 .text-link { font-size: 14px; font-weight: 500; color: var(--accent); text-decoration: none; display: inline-flex; gap: 6px; align-items: center; }
 .text-link:hover { text-decoration: underline; }
-.text-link svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
+/* 19px, the same as the arrows in the hero lists. */
+.text-link svg { flex-shrink: 0; width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; }
 .work-noimg .work-body { padding-top: 28px; }
 .work-noimg h3 { font-size: 30px; }
 
@@ -524,6 +540,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 .platform:hover { border-color: var(--ink); color: var(--ink); }
 .platform svg { width: 13px; height: 13px; fill: currentColor; }
+/* The arrow icons (Read, and ↗ for other sites) are 19px like the site's other arrows; the negative
+   margin keeps their pills the same height as the ones with 13px logos. */
+.platform .icon-arrow { width: 19px; height: 19px; margin-block: -3px; }
 .piece-noimg .piece-body { padding-top: 26px; }
 .piece-noimg h3 { font-size: 25px; }
 .piece-noimg::before { content: ""; height: 4px; background: var(--accent); opacity: .7; }
@@ -553,6 +572,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 
 /* ---------- Follow ---------- */
+/* The last section is at least a screen tall (less the header), so the Subscribe link can
+   bring it right up under the header instead of stopping at the bottom of the page. */
+#follow { min-height: calc(100vh - 53px); }
 .follow-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
 .newsletter h2 { font-size: clamp(32px, 4vw, 46px); margin-bottom: 14px; }
 .newsletter-blurb { font: italic 300 20px/1.45 var(--serif); color: var(--ink-2); max-width: 40ch; margin-bottom: 24px; }
@@ -597,8 +619,12 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* ---------- Article pages ---------- */
 .wrap-narrow { width: 100%; max-width: 720px; margin: 0 auto; padding: 0 var(--gutter); }
 .article-head { padding-top: clamp(32px, 6vw, 72px); padding-bottom: clamp(28px, 4vw, 44px); }
-.back-link { display: inline-block; margin-bottom: 28px; font-size: 14px; color: var(--muted); text-decoration: none; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 28px; font-size: 14px; color: var(--muted); text-decoration: none; }
+/* A 19px arrow like the site's others; the negative margin keeps the link the height of its text. */
+.back-link svg { flex-shrink: 0; width: 19px; height: 19px; margin-block: -3px; fill: none; stroke: currentColor; stroke-width: 2; }
 .back-link:hover { color: var(--accent); }
+/* The same link repeated at the bottom of a page (backLinkAtEnd), first in the footer under its rule. */
+.back-link-end { justify-self: start; margin-bottom: 0; }
 .article-title { font-size: clamp(38px, 6.4vw, 66px); font-weight: 400; line-height: 1.04; letter-spacing: -0.025em; margin-bottom: 20px; }
 .article-dek { font: italic 300 clamp(20px, 2.4vw, 24px)/1.45 var(--serif); color: var(--ink-2); margin-bottom: 24px; }
 .article-byline { font-size: 14px; font-weight: 500; margin: 0; }
@@ -627,6 +653,20 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .prose li { margin-bottom: 0.6em; }
 .prose .video { position: relative; aspect-ratio: 16 / 9; margin: 2em 0; }
 .prose .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
+/* Buttons in an article (e.g. No Kidding Around's "Support the film"): the site's own buttons
+   rather than prose links, with the main one in the accent colour as in the home page's film band. */
+.prose .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 1.8em 0; }
+.prose .btn-row .btn { color: var(--ink); }
+.prose .btn-row .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.prose .btn-row .btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.prose .sponsor { margin: 2.2em 0; font-family: var(--sans); line-height: 1.4; }
+/* <figure class="sized" style="--w: 200px">: the image at most --w wide, centred (e.g. a badge). */
+.prose figure.sized img { width: min(var(--w, 100%), 100%); height: auto; margin-inline: auto; }
+/* Black-on-clear artwork (a badge or logo) turns light in dark mode. */
+:root[data-theme="dark"] .invert-dark { filter: invert(1) brightness(1.2); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .invert-dark { filter: invert(1) brightness(1.2); }
+}
 .prose-poem { font-size: 20px; line-height: 1.8; }
 
 .article-foot { display: grid; gap: 28px; margin-top: 56px; padding: 32px 0 clamp(56px, 8vw, 88px); border-top: 1px solid var(--line); }

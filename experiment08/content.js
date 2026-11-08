@@ -38,10 +38,7 @@ window.SITE = {
     status: "Moving toward production",
     credits: "Written and produced by Robert M. Herzog · Co-directed by Robert M. Herzog and Dean Imperial",
     logline: "Three ordinary school days—alive with humor, connection, and innocence—are shattered by gun violence. In the aftermath, the familiar chorus of thoughts, prayers, and deflection reveals a tragedy that has become disturbingly routine.",
-    about: [
-      "No Kidding Around begins with three ordinary school days. A grade-school father and daughter share a small morning ritual. Two middle-school friends argue about the greatest basketball player of all time. Two high-school students tentatively discover a connection with each other. These are the moments childhood is made of: funny, awkward, tender and fleeting.",
-      "Then gun violence interrupts them. The violence itself is never the spectacle. Instead, the film remains with what has been interrupted and lost—and with the now-familiar responses that follow.",
-    ],
+    // Optional `about: ["paragraph", …]` adds text under the logline; the full story is on the film's own page.
     image: "assets/img/film-no-kidding-around.webp",
     imageAlt: "An empty classroom in disarray, a child’s open lunchbox on the floor",
     laurels: [
@@ -58,7 +55,6 @@ window.SITE = {
         size: [320, 285],
         alt: "Austin Short Film Festival",
         title: "Finalist",
-        caption: ["Best Drama Screenplay", "2026 Austin Short Film Festival"],
       },
     ],
     actions: [
@@ -67,12 +63,14 @@ window.SITE = {
       { label: "Pitch deck (PDF)", url: "assets/files/no-kidding-around-pitch-deck.pdf" },
     ],
     collaborator: "Dean Imperial is a screenwriter, director and producer whose feature film CAPER premiered at SXSW in 2025. His television writing credits include Godfather of Harlem, Hotel Cocaine and Imposters.",
+    // The large link across the bottom of the band, to the film's own page (content/writing/no-kidding-around.md).
+    pageLink: { label: "Find out more about the project", url: "read/no-kidding-around/" },
   },
 
   // Films and scripts. `kind` is shown as a label on the card.
   screen: [
     {
-      // A teaser for the No Kidding Around band at the bottom of this section (#film).
+      // A teaser for No Kidding Around; it links to the film's own page, as does the band at the bottom of this section.
       title: "No Kidding Around",
       kind: "Feature screenplay · In development",
       role: "Writer · Producer · Co-director",
@@ -83,7 +81,7 @@ window.SITE = {
         "Semi-Finalist — Chicago Script Awards, 2026",
       ],
       summary: "Three ordinary school days, alive with humor, connection and innocence, are shattered by gun violence.",
-      links: [{ label: "Find out more", url: "#film", internal: true }],
+      links: [{ label: "Find out more", url: "read/no-kidding-around/" }],
     },
     {
       title: "Flights",
@@ -198,7 +196,18 @@ window.SITE = {
       title: "Board to Death",
       subtitle: "A Novel",
       kind: "Novel · Finished, unpublished",
-      // No cover yet: the page shows a plain title card instead. Add cover, description and buy when ready.
+      // A photo stands in for the cover until there's cover art.
+      cover: "assets/img/book-board-to-death.webp",
+      coverSize: [766, 1022],
+      coverAlt: "An elderly woman looking out from an apartment window in a red brick building",
+      description: [
+        //   keeps a dash on the line before it; ‑ is a hyphen that won't split "co-op".
+        "For decades Hudson River Housing has been a rent-stabilized haven in Manhattan’s West Village: eighteen buildings, three hundred sixty apartments of teachers and firefighters, artists and musicians. Now the owners are threatening market rents — and dangling the dream every New Yorker waits for, the insider price on a co‑op conversion.",
+        "Henry can prove the Tenants Association board is about to overpay by forty million dollars. The board would rather not hear it. They throw him out of the meeting, leaving his wife, Genvive, on the board — and in real danger.",
+      ],
+      buy: [
+        { label: "Read the Opening Chapters", url: "read/board-to-death-opening-chapters/" },
+      ],
     },
   ],
 
@@ -220,8 +229,8 @@ window.SITE = {
     { title: "Winds", kind: "Story", venue: "Toasted Cheese", honor: "Editor’s Pick", url: "read/winds/", quote: "It’s hard for a man to escape himself, even under a Caribbean moon." },
     { title: "No More, No Less", kind: "Story", venue: "Downstate Story Magazine", honor: "Cover story", url: "read/no-more-no-less/", quote: "He had arrived at the age where men are most vulnerable to folly. The alternative was sadness." },
     { title: "The Moonlight Was a Glitch", kind: "Poem", venue: "Straylight Literary Arts Magazine", url: "read/the-moonlight-was-a-glitch/" },
-    { title: "The Palestinian Boy", kind: "Poem", venue: "South Jersey Underground", url: "read/the-palestinian-boy/" },
     { title: "Moisture", kind: "Poem", venue: "South Jersey Underground", url: "read/moisture/" },
+    { title: "The Palestinian Boy", kind: "Poem", venue: "South Jersey Underground", url: "read/the-palestinian-boy/" },
   ],
 
   // Essays, op-eds, fiction, poetry and notes live in content/writing/*.md.

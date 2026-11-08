@@ -97,6 +97,10 @@ content:
         label: Hide from the Writing list
         type: boolean
         description: "The piece keeps its own page, but isn't listed on the home page."
+      - name: backLinkAtEnd
+        label: Return link at the end
+        type: boolean
+        description: "Also show the return link from the top of the page (e.g. ← Screen & Stage) at the bottom, for long pages."
       - name: label
         label: Kind as shown
         type: string

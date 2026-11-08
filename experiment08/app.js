@@ -36,7 +36,13 @@
     external: '<path d="M7 5h12v12h-2V8.4L6.7 18.7l-1.4-1.4L15.6 7H7V5Z"/>',
     read: '<path d="M4 11h12.2l-5.6-5.6L12 4l8 8-8 8-1.4-1.4 5.6-5.6H4v-2Z"/>',
   };
-  const icon = (name) => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ICONS.external}</svg>`;
+  // The arrow icons (Read, and the ↗ for other sites) get class="icon-arrow" so they can match the
+  // size of the site's other arrows (see .platform .icon-arrow in styles.css).
+  const ARROW_ICONS = new Set(["read", "external"]);
+  const icon = (name) => {
+    const n = ICONS[name] ? name : "external";
+    return `<svg${ARROW_ICONS.has(n) ? ' class="icon-arrow"' : ""} viewBox="0 0 24 24" aria-hidden="true">${ICONS[n]}</svg>`;
+  };
   // Laurel wreath with a star, shown before an award note (e.g. Flights' Cinevue award).
   // width/height attributes for an image whose pixel size is known, so the page saves room for it.
   const dims = (size) => (Array.isArray(size) ? ` width="${+size[0]}" height="${+size[1]}"` : "");
@@ -168,7 +174,7 @@
       <div class="wrap film-body">
         <div>
           <p class="film-logline">${esc(f.logline)}</p>
-          <div class="film-about">${f.about.map((p) => `<p>${esc(p)}</p>`).join("")}</div>
+          ${f.about?.length ? `<div class="film-about">${f.about.map((p) => `<p>${esc(p)}</p>`).join("")}</div>` : ""}
           <p class="film-credits">${creditsHtml(f.credits)}</p>
           ${f.collaborator ? `<p class="collab"><strong>Co-director.</strong> ${esc(f.collaborator)}</p>` : ""}
         </div>
@@ -183,27 +189,33 @@
             <img src="${esc(b.image)}" alt="${esc(b.alt)}"${dims(b.size)} loading="lazy">
             ${b.title || b.caption ? `<figcaption>${b.title ? `<span class="film-badge-title">${esc(b.title)}</span>` : ""}${(b.caption || []).map((c) => `<span class="film-badge-line">${esc(c)}</span>`).join("")}</figcaption>` : ""}
           </figure>`).join("")}</div>` : ""}
-          <a class="film-more" href="${esc(document.querySelector('.site-nav a').getAttribute("href"))}" hidden>More films, screenplays &amp; plays</a>
         </aside>
-      </div>`;
-    // Film strips: fit a whole number of sprocket tiles (34px or a little less) across the band.
+      </div>
+      ${f.pageLink ? `<div class="wrap film-page"><a class="film-page-link" href="${esc(f.pageLink.url)}" data-back="film">${cueTitle(f.pageLink.label)}</a></div>` : ""}`;
+    // Film strips: fit a whole number of sprocket tiles (34px or a little less) across the band,
+    // between the extra black at each end (--sprocket-end in styles.css).
     const band = slot("featured-film");
     const fitSprockets = () => {
-      const w = band.clientWidth;
+      const end = parseFloat(getComputedStyle(band).getPropertyValue("--sprocket-end")) || 0;
+      const w = band.clientWidth - 2 * end;
       if (w) band.style.setProperty("--sprocket-tile", `${w / Math.ceil(w / 34)}px`);
     };
     fitSprockets();
     if ("ResizeObserver" in window) new ResizeObserver(fitSprockets).observe(band);
-
-    // "More films, screenplays & plays" only shows after a visitor follows the No Kidding
-    // Around teaser card (its image, title or "Find out more") down to the band, and hides
-    // again once they use it to go back up.
-    const more = band.querySelector(".film-more");
-    document.addEventListener("click", (e) => {
-      if (e.target.closest('.screen-grid a[href="#film"]')) more.hidden = false;
-      else if (e.target.closest(".film-more")) more.hidden = true;
-    });
   }
+
+  // A link with data-back="<id>" (the band's "Find out more about the project") asks the reading
+  // page it opens to point its back links at #<id> instead of the piece's card; the script at the
+  // end of templates/article.html does that. Any other link to a reading page (e.g. the No Kidding
+  // Around card) clears it, so those back links go to the card as usual.
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a[href]");
+    if (!a || a.origin !== location.origin || !a.pathname.includes("/read/")) return;
+    try {
+      if (a.dataset.back) sessionStorage.setItem("backTo", JSON.stringify({ path: a.pathname, hash: "#" + a.dataset.back }));
+      else sessionStorage.removeItem("backTo");
+    } catch {}
+  });
 
   // ---------- Screen & stage ----------
   // Attributes for a link from content.js: in-page filter links keep data-filter, offsite ones open in a new tab.
@@ -250,7 +262,7 @@
       (b) => `
       <article class="book" id="${bookId(b)}">
         ${b.cover
-          ? `<div class="book-cover"><img src="${esc(b.cover)}" alt="Cover of ${esc(b.title)}"${dims(b.coverSize)} loading="lazy"></div>`
+          ? `<div class="book-cover"><img src="${esc(b.cover)}" alt="${esc(b.coverAlt || `Cover of ${b.title}`)}"${dims(b.coverSize)} loading="lazy"></div>`
           : `<div class="book-cover"><div class="book-cover-card" aria-hidden="true"><span class="book-cover-title">${esc(b.title)}</span><span class="book-cover-author">${esc(SITE.person.name)}</span></div></div>`}
         <div>
           <p class="eyebrow">${esc(b.kind)}</p>
@@ -431,15 +443,25 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
+  // The name links to the site root. Here on the home page, scroll up instead of reloading,
+  // and tidy the address to the root too (no index.html or #section left in it).
+  $(".wordmark").addEventListener("click", (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return; // new tab etc.
+    e.preventDefault();
+    window.scrollTo({ top: 0 });
+    history.replaceState(null, "", e.currentTarget.href);
+  });
+
   renderWriting();
 
   // ---------- Back from a reading page ----------
   // Reading pages link back to their piece's card (index.html#short-fiction-totem,
-  // #writing-<name> or a Screen & Stage card such as #work-flights). The Writing list shows nine cards at a time, so first show enough to include
+  // #writing-<name>, a Screen & Stage card such as #work-flights or a book such as
+  // #book-board-to-death). The Writing list shows nine cards at a time, so first show enough to include
   // the card, then scroll to it. It's scrolled to again once images have loaded, unless the
   // reader has started scrolling by then.
   const target = decodeURIComponent(location.hash.slice(1));
-  if (/^(short-fiction|writing|work)-./.test(target)) {
+  if (/^(short-fiction|writing|work|book)-./.test(target)) {
     if (target.startsWith("writing-")) {
       const i = writingList.findIndex((w) => slugOf(w.url) && `writing-${slugOf(w.url)}` === target);
       if (i >= state.limit) {

@@ -65,6 +65,9 @@ function parseFile(file) {
 const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const isAbsolute = (u) => /^(https?:|mailto:|tel:|#|\/\/)/i.test(u);
 const fixUrl = (u, prefix) => (isAbsolute(u) ? u : prefix + sitePath(u));
+// The site's arrows (the same drawing as ARROW in app.js), pointing right and left.
+const ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+const BACK_ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>';
 const linkTarget = (u) => (/^https?:/i.test(u) ? ' target="_blank" rel="noopener"' : "");
 
 function inline(text, prefix) {
@@ -170,15 +173,22 @@ const shortFictionSlugs = new Set(
   (SITE.publishedStories || []).map((s) => (String(s.url).match(/read\/([^/]+)/) || [])[1]).filter(Boolean)
 );
 
-// Pages linked from a Screen & Stage card (e.g. Flights) link back to that card. Same ids as
-// workId() in app.js: "work-" plus the title in lower case with dashes.
+// Pages linked from a Screen & Stage card (e.g. Flights) or a book card (e.g. a novel's opening
+// chapters) link back to that card. Same ids as workId() and bookId() in app.js: "work-" or
+// "book-" plus the title in lower case with dashes.
+const slugify = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const readSlug = (url) => (String(url).match(/^read\/([^/]+)/) || [])[1];
 const screenCards = new Map();
 for (const w of SITE.screen || []) {
-  for (const l of w.links || []) {
-    const slug = (String(l.url).match(/^read\/([^/]+)/) || [])[1];
-    if (slug) screenCards.set(slug, "work-" + w.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""));
-  }
+  for (const l of w.links || []) if (readSlug(l.url)) screenCards.set(readSlug(l.url), "work-" + slugify(w.title));
 }
+const bookCards = new Map();
+for (const b of SITE.books || []) {
+  for (const l of b.buy || []) if (readSlug(l.url)) bookCards.set(readSlug(l.url), "book-" + slugify(b.title));
+}
+// The featured film's own page (featuredFilm.pageLink, e.g. No Kidding Around) links back to its
+// Screen & Stage card if one links to it (as above), otherwise to the film band (#film).
+const filmPageSlug = readSlug(SITE.featuredFilm?.pageLink?.url || "");
 
 fs.rmSync(DIST, { recursive: true, force: true });
 for (const f of STATIC) fs.cpSync(path.join(ROOT, f), path.join(DIST, f), { recursive: true });
@@ -195,18 +205,29 @@ for (const p of pieces.filter((x) => x.body)) {
     })
     .join("");
   const meta = [kindLabel(p), fmtDate(p)].filter(Boolean).map(esc).join(" · ");
+  // The back link goes to the piece's card on the home page (ids set in app.js): its Short
+  // Fiction and Poetry card if it has one, else its Screen & Stage card or the film band, else
+  // its book's card, else its Writing card, else the top of Writing.
+  const backSection = shortFictionSlugs.has(p.slug) ? `short-fiction-${p.slug}`
+    : screenCards.has(p.slug) ? screenCards.get(p.slug)
+    : p.slug === filmPageSlug ? "film"
+    : bookCards.has(p.slug) ? bookCards.get(p.slug)
+    : p.listed ? `writing-${p.slug}` : "writing";
+  const backLabel = shortFictionSlugs.has(p.slug) ? "Short Fiction and Poetry"
+    : screenCards.has(p.slug) || p.slug === filmPageSlug ? "Screen &amp; Stage"
+    : bookCards.has(p.slug) ? "Books"
+    : "All writing";
   const vars = {
     prefix,
     title: esc(plain(p.title)),
     description: esc(plain(p.dek || p.body.slice(0, 160))),
     meta,
-    // The back link goes to the piece's card on the home page (ids set in app.js): its Short
-    // Fiction and Poetry card if it has one, else its Screen & Stage card, else its Writing card,
-    // else the top of Writing.
-    backSection: shortFictionSlugs.has(p.slug) ? `short-fiction-${p.slug}`
-      : screenCards.has(p.slug) ? screenCards.get(p.slug)
-      : p.listed ? `writing-${p.slug}` : "writing",
-    backLabel: shortFictionSlugs.has(p.slug) ? "Short Fiction and Poetry" : screenCards.has(p.slug) ? "Screen &amp; Stage" : "All writing",
+    backSection,
+    backLabel,
+    backArrow: BACK_ARROW,
+    // backLinkAtEnd: true in a piece's header repeats the back link at the bottom of the page.
+    backEnd: p.backLinkAtEnd === "true"
+      ? `<a class="back-link back-link-end" href="${prefix}index.html#${backSection}">${BACK_ARROW}${backLabel}</a>` : "",
     dek: p.dek ? `<p class="article-dek">${inline(p.dek, prefix)}</p>` : "",
     venue: p.venue ? `<p class="article-venue">${esc(p.venue)}</p>` : "",
     // No lead image for poems, or when the image already appears in the text.
@@ -222,7 +243,7 @@ for (const p of pieces.filter((x) => x.body)) {
           .join("")}</div>`
       : "",
     more: more
-      ? `<section class="more"><div class="wrap-narrow"><p class="eyebrow">More ${esc(kindLabel(p).toLowerCase())}</p><ul class="more-list">${more}</ul><a class="text-link" href="${prefix}index.html#writing">All writing →</a></div></section>`
+      ? `<section class="more"><div class="wrap-narrow"><p class="eyebrow">More ${esc(kindLabel(p).toLowerCase())}</p><ul class="more-list">${more}</ul><a class="text-link" href="${prefix}index.html#writing">All writing ${ARROW}</a></div></section>`
       : "",
     social: SITE.social
       .map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`)
@@ -251,7 +272,6 @@ const redirects = {
   "/novel": "index.html#books",
   "/essayingamerica": "index.html#books",
   "/testimonials": "index.html#books",
-  "/no-kidding-around": "index.html#film",
   "/new-page-2": "index.html#screen",
   "/the-country-annex": "index.html#about",
   "/contact": "index.html#follow",
