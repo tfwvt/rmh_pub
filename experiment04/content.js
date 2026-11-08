@@ -49,9 +49,17 @@ window.SITE = {
       "Semi-Finalist — Chicago Script Awards, 2026",
     ],
     sponsor: { name: "Fiscally sponsored by The Gotham Film & Media Institute", logo: "assets/img/logo-gotham.webp" },
-    // Festival badges, shown at the bottom of the right-hand column.
+    // Festival badges, shown at the bottom of the right-hand column. Optional `title` and
+    // `caption` lines go under the badge; each caption entry is its own line, in small capitals.
+    // `size` is the image file's width and height in pixels (see `coverSize` under books).
     badges: [
-      { image: "assets/img/badge-austin-short-film-festival.webp", alt: "Austin Short Film Festival" },
+      {
+        image: "assets/img/badge-austin-short-film-festival.webp",
+        size: [320, 285],
+        alt: "Austin Short Film Festival",
+        title: "Finalist",
+        caption: ["Best Drama Screenplay", "2026 Austin Short Film Festival"],
+      },
     ],
     actions: [
       { label: "Support the film", url: "https://fiscal.thegotham.org/film/5836/no-kidding-around", primary: true },
@@ -131,12 +139,16 @@ window.SITE = {
     },
   ],
 
+  // `coverSize` is the cover file's width and height in pixels. It lets the page save room for the
+  // cover before it loads, so links further down (Writing, About) land in the right place on phones.
+  // If it's missing or out of date the cover still shows correctly.
   books: [
     {
       title: "Views from the Side Mirror",
       subtitle: "Essaying America",
       kind: "Essay collection",
       cover: "assets/img/book-views-from-the-side-mirror.webp",
+      coverSize: [600, 912],
       description: [
         "There’s the America that is, and the one that could be. These essays explore that gulf between, and how we might bridge it — from the underlying dynamic of American politics, between Republican venality and Democratic haplessness, to the surreal hours and days after 9/11 seen from Lower Manhattan.",
       ],
@@ -152,6 +164,7 @@ window.SITE = {
       heroSeparator: ",", // home page "Published Books" list: "A World Between, A Novel" (default is a colon)
       kind: "Science fiction · The Story Plant",
       cover: "assets/img/book-a-world-between.webp",
+      coverSize: [216, 333],
       description: [
         "Parts of the world were disappearing: for a while, nobody noticed. Or cared. But as an increasing number of voids disrupt the fabric of reality, threatening the foundation of the world, they propel some of the greatest minds on the planet to determine what force, godlike or human, is behind the change. Now they must race to stop a dread emptiness before it leads to global oblivion.",
       ],
@@ -171,6 +184,7 @@ window.SITE = {
       subtitle: "A Novel",
       kind: "Novel · Excerpts available",
       cover: "assets/img/book-not-our-fathers-dreams.webp",
+      coverSize: [486, 640],
       description: [
         "A novel of a turbulent, strange, wonderful era in American history, when ordinary events were wrapped in extraordinary circumstances. The short film Flights is excerpted from it.",
       ],
@@ -196,6 +210,20 @@ window.SITE = {
     { text: "Great read. I couldn’t put it down. With a unique writing style, Herzog challenges our understanding of physics, religion and God.", source: "Mark Lieberman" },
   ],
 
+  // Stories and poems for the "Short Fiction and Poetry" section, in this order. The first five
+  // also appear in the "Published Works" list at the top of the home page. Pieces listed here are
+  // left out of the Writing section's list, so they don't show up twice. `url` is the piece's
+  // reading page (its image and date come from its file in content/writing/). Optional: `honor`
+  // (shown after the venue) and `quote` (a line from the piece).
+  publishedStories: [
+    { title: "Totem", kind: "Story", venue: "Solstice Literary Magazine", url: "read/totem/", quote: "You cannot wake the dead, but you can disturb their sleep." },
+    { title: "Winds", kind: "Story", venue: "Toasted Cheese", honor: "Editor’s Pick", url: "read/winds/", quote: "It’s hard for a man to escape himself, even under a Caribbean moon." },
+    { title: "No More, No Less", kind: "Story", venue: "Downstate Story Magazine", honor: "Cover story", url: "read/no-more-no-less/", quote: "He had arrived at the age where men are most vulnerable to folly. The alternative was sadness." },
+    { title: "The Moonlight Was a Glitch", kind: "Poem", venue: "Straylight Literary Arts Magazine", url: "read/the-moonlight-was-a-glitch/" },
+    { title: "The Palestinian Boy", kind: "Poem", venue: "South Jersey Underground", url: "read/the-palestinian-boy/" },
+    { title: "Moisture", kind: "Poem", venue: "South Jersey Underground", url: "read/moisture/" },
+  ],
+
   // Essays, op-eds, fiction, poetry and notes live in content/writing/*.md.
   // Run `node build.js` after adding or changing one.
 
@@ -212,6 +240,5 @@ window.SITE = {
       "Somewhere along the way, I discovered that the worlds of business, politics, and storytelling have more in common than one might expect. Ambition, conflict, improbable characters, unexpected reversals—I’ve encountered them in all three.",
       "Can’t say I planned it that way, but there it is.",
     ],
-    publishedIn: ["Persuasion", "Solstice Literary Magazine", "Toasted Cheese", "Downstate Story Magazine", "Straylight Literary Arts Magazine", "South Jersey Underground"],
   },
 };

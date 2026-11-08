@@ -1,6 +1,6 @@
 # experiment04
 
-This started as a copy of experiment03.
+**Temporarily a copy of experiment08** (8 Nov 2026), so the live DigitalOcean site, which builds this folder, shows experiment08. To put experiment04 back, revert the commit "experiment04: temporarily replace with experiment08".
 
 The website for Robert M. Herzog (novelist, screenwriter, essayist and filmmaker), built to replace [thezog.com](https://thezog.com).
 
@@ -11,11 +11,12 @@ Every essay, story, poem, novel excerpt and blog post that lived on thezog.com i
 | Path | What it is |
 | --- | --- |
 | `index.html`, `app.js`, `styles.css` | The home page |
-| `content.js` | Films, books, reviews, social links and the About text |
+| `content.js` | Films, books, the stories and poems in Short Fiction and Poetry (the first five also appear under Published Works at the top of the page; all of them are left out of the Writing list), reviews, social links and the About text |
 | `content/writing/*.md` | **Every piece of writing**, one Markdown file each |
 | `build.js` | Builds the finished site into `dist/` |
 | `templates/` | The reading-page layout (`article.html`) and the not-found page (`404.html`) |
 | `assets/img/`, `assets/files/` | Images and downloads (including the *No Kidding Around* pitch deck) |
+| `assets/fonts/` | The Fraunces and Inter fonts (SIL Open Font License), served from the site rather than Google Fonts so pages can load them before showing text. Declared at the top of `styles.css` |
 | `package.json` | Tells DigitalOcean (and `npm`) how to build the site |
 | `dist/` | The built site: the files above plus the reading pages (`read/<slug>/`), the Writing list (`writing.js`) and `404.html`. Generated; not in git |
 | `../.pages.yml` | Settings for the Pages CMS editor, at the repository root |
@@ -38,7 +39,7 @@ To let someone else edit (for example Robert), add them as a collaborator in Pag
 - **Date** is optional. Pieces are listed newest first; undated ones come after the dated ones.
 - **Image:** upload or pick one. Uploads go to `assets/img/writing/`. Large photos are published as they are, so resize them to about 1600 pixels wide first.
 - **Also published on:** add Substack, Medium or other copies. With no text, the piece links to the first one instead of having its own page.
-- **Text:** the piece itself, in Markdown (see the basics below). The newest three dated pieces also appear under "Latest" at the top of the home page.
+- **Text:** the piece itself, in Markdown (see the basics below). The newest three dated essays, op-eds and notes also appear under "Latest Articles" at the top of the home page.
 
 **Why the text is plain Markdown, not a formatting toolbar:** Pages CMS's rich-text editor rewrites the Markdown every time it saves. Tested on this site's writing, it turned paragraphs that start with "Mr.", "Dr." or "Ms." into numbered lists, turned the dialogue dashes in *Bayou's Edge* into bullet lists, and deleted the video on the *Flights* page. The plain text editor saves exactly what's typed.
 

@@ -164,6 +164,22 @@ const linkIcon = (label) => {
   return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
 };
 
+// Pieces listed in content.js's publishedStories link back to the Short Fiction and Poetry
+// section from the top of their page; everything else links back to the full Writing list.
+const shortFictionSlugs = new Set(
+  (SITE.publishedStories || []).map((s) => (String(s.url).match(/read\/([^/]+)/) || [])[1]).filter(Boolean)
+);
+
+// Pages linked from a Screen & Stage card (e.g. Flights) link back to that card. Same ids as
+// workId() in app.js: "work-" plus the title in lower case with dashes.
+const screenCards = new Map();
+for (const w of SITE.screen || []) {
+  for (const l of w.links || []) {
+    const slug = (String(l.url).match(/^read\/([^/]+)/) || [])[1];
+    if (slug) screenCards.set(slug, "work-" + w.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""));
+  }
+}
+
 fs.rmSync(DIST, { recursive: true, force: true });
 for (const f of STATIC) fs.cpSync(path.join(ROOT, f), path.join(DIST, f), { recursive: true });
 const listed = pieces.filter((p) => p.listed);
@@ -184,6 +200,13 @@ for (const p of pieces.filter((x) => x.body)) {
     title: esc(plain(p.title)),
     description: esc(plain(p.dek || p.body.slice(0, 160))),
     meta,
+    // The back link goes to the piece's card on the home page (ids set in app.js): its Short
+    // Fiction and Poetry card if it has one, else its Screen & Stage card, else its Writing card,
+    // else the top of Writing.
+    backSection: shortFictionSlugs.has(p.slug) ? `short-fiction-${p.slug}`
+      : screenCards.has(p.slug) ? screenCards.get(p.slug)
+      : p.listed ? `writing-${p.slug}` : "writing",
+    backLabel: shortFictionSlugs.has(p.slug) ? "Short Fiction and Poetry" : screenCards.has(p.slug) ? "Screen &amp; Stage" : "All writing",
     dek: p.dek ? `<p class="article-dek">${inline(p.dek, prefix)}</p>` : "",
     venue: p.venue ? `<p class="article-venue">${esc(p.venue)}</p>` : "",
     // No lead image for poems, or when the image already appears in the text.
@@ -234,7 +257,7 @@ const redirects = {
   "/contact": "index.html#follow",
   "/contact-2": "index.html#follow",
   "/blog": "index.html#writing",
-  "/fiction": "index.html#writing",
+  "/fiction": "index.html#short-fiction",
   "/opedipal-nonfiction": "index.html#writing",
 };
 for (const p of pieces) for (const old of p.legacy) if (p.href) redirects[old.toLowerCase().replace(/\/+$/, "")] = p.href;

@@ -17,6 +17,8 @@
     String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
   const isExternal = (url) => /^https?:/i.test(url);
+  // "read/totem/" → "totem": a piece's reading-page name, used for its cards' ids.
+  const slugOf = (url) => (String(url || "").match(/^read\/([^/]+)/) || [])[1];
   const slugify = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   const bookId = (b) => "book-" + slugify(b.title);
   const workId = (w) => "work-" + slugify(w.title);
@@ -36,6 +38,8 @@
   };
   const icon = (name) => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ICONS.external}</svg>`;
   // Laurel wreath with a star, shown before an award note (e.g. Flights' Cinevue award).
+  // width/height attributes for an image whose pixel size is known, so the page saves room for it.
+  const dims = (size) => (Array.isArray(size) ? ` width="${+size[0]}" height="${+size[1]}"` : "");
   const LAUREL = '<svg class="laurel-icon" viewBox="0 0.3 24 21.6" aria-hidden="true" fill="currentColor"><path d="M7.50 18.79Q5.10 17.64 3.15 19.46Q5.55 20.61 7.50 18.79ZM7.50 18.79Q7.66 16.59 5.63 15.71Q5.48 17.91 7.50 18.79ZM4.37 15.77Q2.90 13.75 0.50 14.41Q1.96 16.43 4.37 15.77ZM4.37 15.77Q5.48 14.02 4.18 12.41Q3.07 14.16 4.37 15.77ZM3.02 11.63Q2.72 9.32 0.45 8.83Q0.75 11.14 3.02 11.63ZM3.02 11.63Q4.71 10.69 4.33 8.80Q2.64 9.74 3.02 11.63ZM3.78 7.34Q4.55 5.33 2.89 3.95Q2.12 5.97 3.78 7.34ZM3.78 7.34Q5.57 7.33 6.06 5.60Q4.27 5.62 3.78 7.34ZM6.46 3.91Q7.98 2.62 7.20 0.79Q5.68 2.08 6.46 3.91ZM8.63 2.66Q10.41 3.07 11.41 1.53Q9.63 1.12 8.63 2.66ZM16.50 18.79Q18.45 20.61 20.85 19.46Q18.90 17.64 16.50 18.79ZM16.50 18.79Q18.52 17.91 18.37 15.71Q16.34 16.59 16.50 18.79ZM19.63 15.77Q22.04 16.43 23.50 14.41Q21.10 13.75 19.63 15.77ZM19.63 15.77Q20.93 14.16 19.82 12.41Q18.52 14.02 19.63 15.77ZM20.98 11.63Q23.25 11.14 23.55 8.83Q21.28 9.32 20.98 11.63ZM20.98 11.63Q21.36 9.74 19.67 8.80Q19.29 10.69 20.98 11.63ZM20.22 7.34Q21.88 5.97 21.11 3.95Q19.45 5.33 20.22 7.34ZM20.22 7.34Q19.73 5.62 17.94 5.60Q18.43 7.33 20.22 7.34ZM17.54 3.91Q18.32 2.08 16.80 0.79Q16.02 2.62 17.54 3.91ZM15.37 2.66Q14.37 1.12 12.59 1.53Q13.59 3.07 15.37 2.66Z"/><path d="M12 20A9 9 0 0 1 8.63 2.66" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M12 20A9 9 0 0 0 15.37 2.66" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M12.00 7.00L12.85 9.23L15.23 9.35L13.38 10.85L14.00 13.15L12.00 11.85L10.00 13.15L10.62 10.85L8.77 9.35L11.15 9.23Z"/><path d="M10.7 20.35Q8.7 19.7 7.0 21.05Q9.0 21.75 10.7 20.35ZM13.30 20.35Q15.30 19.7 17.00 21.05Q15.00 21.75 13.30 20.35Z"/><rect x="10.85" y="19.05" width="2.3" height="1.9" rx="0.35"/></svg>';
   const ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
@@ -73,7 +77,7 @@
   // ---------- Hero ----------
   slot("roles").textContent = SITE.person.roles.join(" · ");
 
-  // Titles in the hero lists (Short Film, Published Books, Latest Articles) end with an arrow,
+  // Titles in the hero lists (Short Film, Published Books, Published Works, Latest Articles) end with an arrow,
   // so they read as links before they're hovered ("link-cue" in styles.css). The last word
   // and the arrow are kept together so the arrow never wraps onto a line by itself.
   const cueTitle = (title) => {
@@ -81,8 +85,11 @@
     return `${esc(m[1])}<span class="nowrap">${esc(m[2])}${ARROW}</span>`;
   };
 
+  // Latest Articles: the newest three essays, op-eds and notes. Stories and poems have their
+  // own list (Published Works).
+  const ARTICLE_KINDS = ["essay", "oped", "notes"];
   slot("latest").innerHTML = writing
-    .filter((w) => w.date && !w.dateLabel && primaryLink(w))
+    .filter((w) => ARTICLE_KINDS.includes(w.kind) && w.date && !w.dateLabel && primaryLink(w))
     .slice(0, 3)
     .map((w) => {
       const link = primaryLink(w);
@@ -123,19 +130,18 @@
       </a></li>${w.heroNote ? `<li class="latest-note">${heroNoteHtml(w)}</li>` : ""}`)
     .join("");
 
-  // Each name stays on one line, except long ones (four words or more), which may break
-  // once, in the middle: "Straylight Literary / Arts Magazine".
-  const pubName = (p) => {
-    const words = p.split(" ");
-    if (words.length < 4) return esc(p);
-    const half = Math.ceil(words.length / 2);
-    return `<span class="pub-part">${esc(words.slice(0, half).join(" "))}</span> <span class="pub-part">${esc(words.slice(half).join(" "))}</span>`;
-  };
-  // The non-breaking space keeps each "/" on the same line as the name before it, so a
-  // line can end with one but never starts with one.
-  slot("published-in").innerHTML = SITE.about.publishedIn
-    .map((p) => `<span class="pub${p.split(" ").length >= 4 ? " pub-long" : ""}">${pubName(p)}</span>`)
-    .join('&nbsp;<span class="sep" aria-hidden="true">/</span> ');
+  // Published stories and poems, linking to their reading pages. The venue (and any honor)
+  // sits under the title; a quote from the piece goes below, like the award line under Flights.
+  slot("hero-stories").innerHTML = (SITE.publishedStories || [])
+    .slice(0, 5)
+    .map((s) => `<li${s.quote ? ' class="has-note"' : ""}><a class="link-cue" href="${esc(s.url)}">
+        <span class="story-head">
+          <span class="latest-title">${cueTitle(s.title)}</span>
+          <span class="story-venue"><cite>${esc(s.venue)}</cite>${s.honor ? ` · ${esc(s.honor)}` : ""}</span>
+        </span>
+        <span class="latest-meta">${esc(s.kind)}</span>
+      </a></li>${s.quote ? `<li class="latest-note story-quote">“${esc(s.quote)}”</li>` : ""}`)
+    .join("");
 
   // ---------- Featured film ----------
   // "Written and produced by X · Co-directed by Y": the role before "by" in each part is bold.
@@ -145,13 +151,18 @@
     .join(" · ");
   const f = SITE.featuredFilm;
   if (f) {
+    // The label across the top; the film's image, whole and uncovered, on the left with the
+    // title and laurels beside it; the logline, about text, buttons and sponsor below in two columns.
     slot("featured-film").innerHTML = `
-      <div class="film-hero">
-        <img src="${esc(f.image)}" alt="${esc(f.imageAlt)}" loading="lazy">
-        <div class="wrap">
-          <p class="eyebrow">Now in development · Feature screenplay</p>
+      <div class="wrap film-top">
+        <p class="eyebrow film-eyebrow">Now in development · Feature screenplay</p>
+        <figure class="film-media">
+          <img src="${esc(f.image)}" alt="${esc(f.imageAlt)}" width="1276" height="661" loading="lazy">
+        </figure>
+        <div class="film-intro">
           <h2 class="film-title" id="film-title">${esc(f.title)}</h2>
           <span class="film-status">${esc(f.status)}</span>
+          <ul class="laurels">${f.laurels.map((l) => `<li>${LAUREL}<span>${esc(l)}</span></li>`).join("")}</ul>
         </div>
       </div>
       <div class="wrap film-body">
@@ -162,14 +173,16 @@
           ${f.collaborator ? `<p class="collab"><strong>Co-director.</strong> ${esc(f.collaborator)}</p>` : ""}
         </div>
         <aside class="film-side">
-          <ul class="laurels">${f.laurels.map((l) => `<li>${LAUREL}<span>${esc(l)}</span></li>`).join("")}</ul>
           <div class="film-actions">
             ${f.actions
               .map((a) => `<a class="btn${a.primary ? " btn-primary" : ""}" href="${esc(a.url)}"${linkAttrs(a.url)}>${esc(a.label)}</a>`)
               .join("")}
           </div>
-          ${f.sponsor ? `<div class="sponsor"><span>${esc(f.sponsor.name)}</span><img src="${esc(f.sponsor.logo)}" alt="The Gotham Film &amp; Media Institute" loading="lazy"></div>` : ""}
-          ${f.badges?.length ? `<div class="film-badges">${f.badges.map((b) => `<img src="${esc(b.image)}" alt="${esc(b.alt)}" loading="lazy">`).join("")}</div>` : ""}
+          ${f.sponsor ? `<div class="sponsor"><span>${esc(f.sponsor.name)}</span><img src="${esc(f.sponsor.logo)}" alt="The Gotham Film &amp; Media Institute" width="800" height="146" loading="lazy"></div>` : ""}
+          ${f.badges?.length ? `<div class="film-badges">${f.badges.map((b) => `<figure class="film-badge">
+            <img src="${esc(b.image)}" alt="${esc(b.alt)}"${dims(b.size)} loading="lazy">
+            ${b.title || b.caption ? `<figcaption>${b.title ? `<span class="film-badge-title">${esc(b.title)}</span>` : ""}${(b.caption || []).map((c) => `<span class="film-badge-line">${esc(c)}</span>`).join("")}</figcaption>` : ""}
+          </figure>`).join("")}</div>` : ""}
           <a class="film-more" href="${esc(document.querySelector('.site-nav a').getAttribute("href"))}" hidden>More films, screenplays &amp; plays</a>
         </aside>
       </div>`;
@@ -237,7 +250,7 @@
       (b) => `
       <article class="book" id="${bookId(b)}">
         ${b.cover
-          ? `<div class="book-cover"><img src="${esc(b.cover)}" alt="Cover of ${esc(b.title)}" loading="lazy"></div>`
+          ? `<div class="book-cover"><img src="${esc(b.cover)}" alt="Cover of ${esc(b.title)}"${dims(b.coverSize)} loading="lazy"></div>`
           : `<div class="book-cover"><div class="book-cover-card" aria-hidden="true"><span class="book-cover-title">${esc(b.title)}</span><span class="book-cover-author">${esc(SITE.person.name)}</span></div></div>`}
         <div>
           <p class="eyebrow">${esc(b.kind)}</p>
@@ -265,18 +278,47 @@
         .join("");
   }
 
+  // ---------- Short fiction and poetry ----------
+  // Cards like the Writing ones: the piece's image (if it has one), kind and date, title, the venue
+  // and any honor, a quote from the piece, and a Read button. Image and date come from the piece's
+  // Markdown file (via writing.js); everything else from SITE.publishedStories.
+  const storyCard = (s) => {
+    const w = writing.find((p) => p.url === s.url) || {};
+    const img = w.image
+      ? `<a class="piece-media" href="${esc(s.url)}" tabindex="-1" aria-hidden="true"><img src="${esc(w.image)}" alt="" loading="lazy"${w.imagePosition ? ` style="object-position:${esc(w.imagePosition)}"` : ""}></a>`
+      : "";
+    const date = w.title ? fmtDate(w) : "";
+    return `
+      <article class="piece${img ? "" : " piece-noimg"}"${slugOf(s.url) ? ` id="short-fiction-${esc(slugOf(s.url))}"` : ""}>
+        ${img}
+        <div class="piece-body">
+          <p class="piece-meta"><span class="piece-kind">${esc(s.kind)}</span>${date ? `<span>${esc(date)}</span>` : ""}</p>
+          <h3><a href="${esc(s.url)}">${esc(s.title)}</a></h3>
+          <p class="piece-venue"><cite>${esc(s.venue)}</cite>${s.honor ? `<span class="piece-honor"> · ${esc(s.honor)}</span>` : ""}</p>
+          ${s.quote ? `<blockquote class="piece-quote">“${esc(s.quote)}”</blockquote>` : ""}
+          <div class="piece-links">
+            <a class="platform platform-read" href="${esc(s.url)}">${icon("read")}Read</a>
+          </div>
+        </div>
+      </article>`;
+  };
+  slot("short-fiction").innerHTML = (SITE.publishedStories || []).map(storyCard).join("");
+
   // ---------- Writing ----------
+  // Everything except the pieces in Short Fiction and Poetry, which have their own section.
+  const shortFictionUrls = new Set((SITE.publishedStories || []).map((s) => s.url));
+  const writingList = writing.filter((w) => !shortFictionUrls.has(w.url));
   const PAGE = 9;
   const state = { kind: "all", q: "", limit: PAGE };
   const grid = slot("writing");
   const moreBtn = slot("more");
   const searchInput = slot("search");
 
-  const kinds = ["all", ...Object.keys(KIND_LABELS).filter((k) => writing.some((w) => w.kind === k))];
+  const kinds = ["all", ...Object.keys(KIND_LABELS).filter((k) => writingList.some((w) => w.kind === k))];
   const filtersEl = slot("filters");
   filtersEl.innerHTML = kinds
     .map((k) => {
-      const n = k === "all" ? writing.length : writing.filter((w) => w.kind === k).length;
+      const n = k === "all" ? writingList.length : writingList.filter((w) => w.kind === k).length;
       return `<button class="chip" type="button" data-kind="${k}" aria-pressed="${k === state.kind}">${FILTER_LABELS[k]}<span class="count">${n}</span></button>`;
     })
     .join("");
@@ -287,7 +329,7 @@
     const date = fmtDate(w);
     if (date) meta.push(`<span>${esc(date)}</span>`);
     return `
-      <article class="piece${w.image ? "" : " piece-noimg"}">
+      <article class="piece${w.image ? "" : " piece-noimg"}"${slugOf(w.url) ? ` id="writing-${esc(slugOf(w.url))}"` : ""}>
         ${w.image ? (primary
           ? `<a class="piece-media" href="${esc(primary.url)}"${linkAttrs(primary.url)} tabindex="-1" aria-hidden="true"><img src="${esc(w.image)}" alt="" loading="lazy"${w.imagePosition ? ` style="object-position:${esc(w.imagePosition)}"` : ""}></a>`
           : `<div class="piece-media" aria-hidden="true"><img src="${esc(w.image)}" alt="" loading="lazy"${w.imagePosition ? ` style="object-position:${esc(w.imagePosition)}"` : ""}></div>`) : ""}
@@ -311,7 +353,7 @@
 
   function renderWriting() {
     const q = state.q.trim().toLowerCase();
-    const matches = writing.filter(
+    const matches = writingList.filter(
       (w) =>
         (state.kind === "all" || w.kind === state.kind) &&
         (!q || [w.title, w.dek, w.venue].join(" ").toLowerCase().includes(q))
@@ -390,4 +432,30 @@
   onScroll();
 
   renderWriting();
+
+  // ---------- Back from a reading page ----------
+  // Reading pages link back to their piece's card (index.html#short-fiction-totem,
+  // #writing-<name> or a Screen & Stage card such as #work-flights). The Writing list shows nine cards at a time, so first show enough to include
+  // the card, then scroll to it. It's scrolled to again once images have loaded, unless the
+  // reader has started scrolling by then.
+  const target = decodeURIComponent(location.hash.slice(1));
+  if (/^(short-fiction|writing|work)-./.test(target)) {
+    if (target.startsWith("writing-")) {
+      const i = writingList.findIndex((w) => slugOf(w.url) && `writing-${slugOf(w.url)}` === target);
+      if (i >= state.limit) {
+        state.limit = Math.ceil((i + 1) / PAGE) * PAGE;
+        renderWriting();
+      }
+    }
+    const card = document.getElementById(target);
+    if (card) {
+      let moved = false;
+      const stop = () => (moved = true);
+      ["wheel", "touchstart", "keydown"].forEach((t) => addEventListener(t, stop, { once: true, passive: true }));
+      const go = () => !moved && card.scrollIntoView({ block: "start", behavior: "instant" });
+      go();
+      if (document.readyState === "complete") return;
+      addEventListener("load", go, { once: true });
+    }
+  }
 })();
