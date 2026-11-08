@@ -97,7 +97,7 @@ The site is a DigitalOcean App Platform static site that deploys automatically w
 
 | Setting | Value |
 | --- | --- |
-| Source directory | `experiment04` |
+| Source directory | `experiment08` |
 | Build command | `npm run build` |
 | Output directory | `dist` |
 | Error document | `404.html` |

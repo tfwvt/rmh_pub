@@ -1,9 +1,9 @@
 # Pages CMS settings (https://pagescms.org): an editor for the writing on Robert M. Herzog's site.
-# Each piece is one Markdown file in experiment04/content/writing/. Saving in the editor commits
-# that file to GitHub, and DigitalOcean rebuilds the site (see experiment04/README.md).
+# Each piece is one Markdown file in experiment08/content/writing/. Saving in the editor commits
+# that file to GitHub, and DigitalOcean rebuilds the site (see experiment08/README.md).
 
 media:
-  input: experiment04/assets/img/writing
+  input: experiment08/assets/img/writing
   output: assets/img/writing
   rename: safe
   extensions: [jpg, jpeg, png, webp, gif]
@@ -12,7 +12,7 @@ content:
   - name: writing
     label: Writing
     type: collection
-    path: experiment04/content/writing
+    path: experiment08/content/writing
     format: yaml-frontmatter
     filename:
       template: "{primary}.md"
@@ -90,7 +90,7 @@ content:
       - name: body
         label: Text
         type: code
-        description: "The piece itself, in Markdown. Leave empty for a piece published only elsewhere. Formatting tips are in experiment04/README.md."
+        description: "The piece itself, in Markdown. Leave empty for a piece published only elsewhere. Formatting tips are in experiment08/README.md."
         options:
           format: markdown
       - name: unlisted
