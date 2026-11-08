@@ -49,9 +49,15 @@ window.SITE = {
       "Semi-Finalist — Chicago Script Awards, 2026",
     ],
     sponsor: { name: "Fiscally sponsored by The Gotham Film & Media Institute", logo: "assets/img/logo-gotham.webp" },
-    // Festival badges, shown at the bottom of the right-hand column.
+    // Festival badges, shown at the bottom of the right-hand column. Optional `title` and
+    // `caption` lines go under the badge; each caption entry is its own line, in small capitals.
     badges: [
-      { image: "assets/img/badge-austin-short-film-festival.webp", alt: "Austin Short Film Festival" },
+      {
+        image: "assets/img/badge-austin-short-film-festival.webp",
+        alt: "Austin Short Film Festival",
+        title: "Finalist",
+        caption: ["Best Drama Screenplay", "2026 Austin Short Film Festival"],
+      },
     ],
     actions: [
       { label: "Support the film", url: "https://fiscal.thegotham.org/film/5836/no-kidding-around", primary: true },

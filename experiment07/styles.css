@@ -267,25 +267,29 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 .film-feature::before { top: 0; }
 .film-feature::after { bottom: 0; }
-.film-hero { position: relative; display: flex; align-items: flex-start; overflow: hidden; }
-/* The source image has an award badge baked into its lower third; keep it out of frame. */
-.film-hero img { position: absolute; top: 0; left: 0; width: 100%; height: 140%; object-fit: cover; object-position: 50% 0; opacity: .62; }
-.film-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(15 14 13 / .15) 0%, rgb(15 14 13 / .55) 55%, var(--film-bg) 100%); }
-/* The title block starts as far down as it did when the image band was clamp(380px, 56vw, 620px)
-   tall (a third of that). The band now ends just below the status pill: 8px here plus the
-   body's 24px top padding leaves 32px between the pill and the logline. */
-.film-hero .wrap { position: relative; z-index: 1; padding-top: calc(clamp(380px, 56vw, 620px) / 3); padding-bottom: 8px; }
+/* Top of the band: the label centred across the top, then the film's image on the left,
+   whole and uncovered (its Austin finalist badge included), with the title, status and
+   laurels beside it, centred on the image. Same columns as the body below, so the image
+   sits over the logline and the title over the buttons. */
+.film-top { display: grid; grid-template-columns: 1.2fr .8fr; gap: 28px clamp(32px, 6vw, 80px); align-items: center; padding-top: calc(var(--film-strip) + 28px); }
+/* A little larger than other labels. The negative margin balances the letter-spacing after
+   the last letter, so the text is truly centred. */
+.film-eyebrow { grid-column: 1 / -1; text-align: center; font-size: 14px; margin: 0 -.14em 0 0; }
+.film-media { margin: 0; }
+.film-media img { display: block; width: 100%; height: auto; border-radius: calc(var(--radius) - 4px); }
 .film-feature .eyebrow { color: var(--film-accent); }
-.film-title { font-size: clamp(48px, 9vw, 112px); font-weight: 400; letter-spacing: -0.03em; line-height: .95; margin-bottom: 18px; }
+.film-title { font-size: clamp(44px, 5.2vw, 68px); font-weight: 400; letter-spacing: -0.03em; line-height: .95; margin-bottom: 18px; }
 .film-status { display: inline-flex; align-items: center; gap: 8px; font: 500 13px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--film-ink); border: 1px solid rgb(255 255 255 / .25); padding: 8px 14px; border-radius: 999px; }
 .film-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--film-accent); box-shadow: 0 0 0 4px rgb(229 162 102 / .2); }
-.film-body { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(32px, 6vw, 80px); padding-top: 24px; padding-bottom: 40px; }
+/* 28px above the body, the same as the gaps between items in the right-hand column. */
+.film-body { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(32px, 6vw, 80px); padding-top: 28px; padding-bottom: 40px; }
 /* Keep the space above the bottom film strip to the 40px padding: no trailing margins. */
 .film-body > * > :last-child { margin-bottom: 0; padding-bottom: 0; }
 .film-logline { font: 300 clamp(22px, 2.4vw, 30px)/1.4 var(--serif); margin-bottom: 28px; }
 .film-about p { color: var(--film-muted); }
 .film-credits { font-size: 14px; color: var(--film-muted); border-top: 1px solid var(--film-line); padding-top: 18px; margin-top: 28px; }
 .film-side { display: flex; flex-direction: column; gap: 28px; }
+.film-intro .laurels { margin-top: 28px; }
 .laurels li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--film-line); font-size: 15px; line-height: 1.45; }
 .laurels li:first-child { border-top: 1px solid var(--film-line); }
 .laurels .laurel-icon { flex-shrink: 0; width: 24px; height: 21.6px; margin: 1px 0 0; vertical-align: 0; color: var(--film-accent); }
@@ -297,7 +301,12 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .sponsor { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding-block: 12px; font-size: 13px; color: var(--film-muted); }
 .sponsor img { width: 200px; filter: invert(1) brightness(1.2); opacity: .85; }
 .film-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
-.film-badges img { width: 160px; height: auto; }
+.film-badge { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+.film-badge img { width: 160px; height: auto; }
+/* Under the badge: "FINALIST", then the award in smaller capitals, one entry per line. */
+.film-badge figcaption { display: flex; flex-direction: column; gap: 4px; text-transform: uppercase; }
+.film-badge-title { font: 600 20px/1.2 var(--sans); letter-spacing: .2em; margin-right: -.2em; color: var(--film-ink); margin-bottom: 4px; }
+.film-badge-line { font: 600 11px/1.4 var(--sans); letter-spacing: .14em; margin-right: -.14em; color: var(--film-muted); }
 /* "More films, screenplays & plays": back up to Screen & Stage, the same place as the menu's Film link. */
 /* 12px lower than the band's usual 28px gap, and 12px closer to the bottom film strip
    (the negative margin eats into .film-body's 40px bottom padding). The .film-side prefix
@@ -308,7 +317,21 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .collab strong, .film-credits strong { color: var(--film-ink); font-weight: 500; }
 
 @media (max-width: 860px) {
-  .film-body { grid-template-columns: 1fr; }
+  /* One column: the image, then the title and logline, then the rest. */
+  .film-top, .film-body { grid-template-columns: 1fr; }
+  .film-top { gap: 28px; }
+}
+/* Where the Screen & Stage cards above are one per row (765px and below, from .screen-grid's
+   340px minimum card width), the label and title come first, then the image, then the
+   status and laurels. */
+@media (max-width: 765px) {
+  .film-top { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+  .film-intro { display: contents; }
+  .film-eyebrow { order: 1; text-align: left; font-size: 12px; margin: 0 0 14px; }
+  .film-title { order: 2; margin-bottom: 24px; }
+  .film-media { order: 3; margin-bottom: 28px; }
+  .film-status { order: 4; align-self: flex-start; }
+  .film-intro .laurels { order: 5; }
 }
 /* On wide screens the dark panel stops at the content width instead of running edge to edge. */
 @media (min-width: 1260px) {

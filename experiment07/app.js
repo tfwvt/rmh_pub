@@ -145,13 +145,18 @@
     .join(" · ");
   const f = SITE.featuredFilm;
   if (f) {
+    // The label across the top; the film's image, whole and uncovered, on the left with the
+    // title and laurels beside it; the logline, about text, buttons and sponsor below in two columns.
     slot("featured-film").innerHTML = `
-      <div class="film-hero">
-        <img src="${esc(f.image)}" alt="${esc(f.imageAlt)}" loading="lazy">
-        <div class="wrap">
-          <p class="eyebrow">Now in development · Feature screenplay</p>
+      <div class="wrap film-top">
+        <p class="eyebrow film-eyebrow">Now in development · Feature screenplay</p>
+        <figure class="film-media">
+          <img src="${esc(f.image)}" alt="${esc(f.imageAlt)}" width="1276" height="661" loading="lazy">
+        </figure>
+        <div class="film-intro">
           <h2 class="film-title" id="film-title">${esc(f.title)}</h2>
           <span class="film-status">${esc(f.status)}</span>
+          <ul class="laurels">${f.laurels.map((l) => `<li>${LAUREL}<span>${esc(l)}</span></li>`).join("")}</ul>
         </div>
       </div>
       <div class="wrap film-body">
@@ -162,14 +167,16 @@
           ${f.collaborator ? `<p class="collab"><strong>Co-director.</strong> ${esc(f.collaborator)}</p>` : ""}
         </div>
         <aside class="film-side">
-          <ul class="laurels">${f.laurels.map((l) => `<li>${LAUREL}<span>${esc(l)}</span></li>`).join("")}</ul>
           <div class="film-actions">
             ${f.actions
               .map((a) => `<a class="btn${a.primary ? " btn-primary" : ""}" href="${esc(a.url)}"${linkAttrs(a.url)}>${esc(a.label)}</a>`)
               .join("")}
           </div>
           ${f.sponsor ? `<div class="sponsor"><span>${esc(f.sponsor.name)}</span><img src="${esc(f.sponsor.logo)}" alt="The Gotham Film &amp; Media Institute" loading="lazy"></div>` : ""}
-          ${f.badges?.length ? `<div class="film-badges">${f.badges.map((b) => `<img src="${esc(b.image)}" alt="${esc(b.alt)}" loading="lazy">`).join("")}</div>` : ""}
+          ${f.badges?.length ? `<div class="film-badges">${f.badges.map((b) => `<figure class="film-badge">
+            <img src="${esc(b.image)}" alt="${esc(b.alt)}" loading="lazy">
+            ${b.title || b.caption ? `<figcaption>${b.title ? `<span class="film-badge-title">${esc(b.title)}</span>` : ""}${(b.caption || []).map((c) => `<span class="film-badge-line">${esc(c)}</span>`).join("")}</figcaption>` : ""}
+          </figure>`).join("")}</div>` : ""}
           <a class="film-more" href="${esc(document.querySelector('.site-nav a').getAttribute("href"))}" hidden>More films, screenplays &amp; plays</a>
         </aside>
       </div>`;
