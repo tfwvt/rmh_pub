@@ -16,7 +16,7 @@ He was being kicked out of a Tenants Association Board meeting. Oh the ignominy!
 
 The numbers were all on his side. He had triangulated proofs of how bad, how wrong, was the buy-out deal the Board was swallowing. He had the internal papers of the LLC that owned the buildings, clearly stating the price they had been looking for, millions lower than what was now on the table. That was before they realized how they could screw the rookies the Tenants Association board were.
 
-There was the Net Present Value analysis he – and only he – had done, establishing what the current value of the property to its owners was. And the coup de grace, he’d analyzed the impact if the rent controls were kept in place, a possibility that would way depress the value of the property.
+There was the Net Present Value analysis he – and only he – had done, establishing what the current value of the property to its owners was. And the coup de grâce, he’d analyzed the impact if the rent controls were kept in place, a possibility that would way depress the value of the property.
 
 Forty million dollars! That’s what they were overpaying. Forty fucking million dollars, and he could demonstrate it.
 
@@ -24,7 +24,7 @@ But Abby & Co. and their lawyer had another agenda. One in which facts didn’t 
 
 He’d even met with Abby in person, innocent to her intentions, when he got the LLC papers. Proud to display them, pierce their meanings, to be a savior to the community coffers. She’d seemed to listen. But only, it was now clear to him, to find ways to rebut his analysis. His facts. Him.
 
-Alternative facts had become part of the vernacular. He’d thought it only applied to the characters on the screen, to the Conways and the Spicers – the enablers for the Donald, establishing a universe alternative to the one he, and much of the planet, inhabited. This wasn’t quantum mechanics or string theory, it was string-along theory, and here it was, infecting the small community room in PS 72 in the West Village of Lower Manhattan which the Tenants’ Board borrowed for its meetings. A shiny table and polished chairs befitting the children who normally occupied it. Here it was, and he, who had the temerity to bring up an arsenal of facts and analyses he had uncovered and performed, and the audacity to publicly challenge the numbers they were tossing like blown up balloons, numbers detached from any external reality, but the larger they were the more important the Board members felt, the more the gonads of their novice minds tingled – fuck, he was being asked by this collection of school teachers and office managers and small time barely accountants to leave the room!
+Alternative facts had become part of the vernacular. He’d thought it only applied to the characters on the screen, to the Conways and the Spicers – the enablers for the Donald, establishing a universe alternative to the one he, and much of the planet, inhabited. This wasn’t quantum mechanics or string theory, it was string-along theory, and here it was, infecting the small community room in PS 72 in the West Village of Lower Manhattan which the Tenants Board borrowed for its meetings. A shiny table and polished chairs befitting the children who normally occupied it. Here it was, and he, who had the temerity to bring up an arsenal of facts and analyses he had uncovered and performed, and the audacity to publicly challenge the numbers they were tossing like blown up balloons, numbers detached from any external reality, but the larger they were the more important the Board members felt, the more the gonads of their novice minds tingled – fuck, he was being asked by this collection of school teachers and office managers and small time barely accountants to leave the room!
 
 He had sat in and presented and participated in meetings with the heads of Goldman Sachs and Pfizer and Exxon Mobil and ConEd, with Mayors and Senators, and once even the President of these United States – not the current one, granted, no, a former one who didn’t establish a distortion field that converted rational thought into self-serving monstrosities, whipping up the crowds and reducing service to sycophancy as a new, warped normal – he, sitting along the side wall, not invited to the table, speaking up resolutely, trying to pierce their fact cloud once too often, he was getting the hook!
 
@@ -34,7 +34,7 @@ He picked up his papers and folders, all the proofs, all his analyses of their f
 
 Genvive stared ahead, not knowing what to do.
 
-In the Hudson River Housing complex of the West Village of lower Manhattan, the moon had definitely left the seventh house.
+In the Hudson River Housing complex of the West Village of Lower Manhattan, the moon had definitely left the seventh house.
 
 He left, which is what put Genvive in real danger.
 
@@ -74,7 +74,7 @@ Abby was stunned. Her body began to shake. She tried to keep her voice calm, her
 
 “How much are we talking about?”
 
-“Well, two bedrooms would go for four to five thousand a month, three’s around seven to eight, fours’ maybe ten, twelve, depends on the apartment. And the ones with gardens, even more.”
+“Well, two bedrooms would go for four to five thousand a month, threes around seven to eight, fours maybe ten, twelve, depends on the apartment. And the ones with gardens, even more.”
 
 My god, Abby thought, with her three bedroom and garden that opened up to the central courtyard, it would be astronomical. She took a deep breath.
 
@@ -90,7 +90,7 @@ My god, Abby thought, with her three bedroom and garden that opened up to the ce
 
 “It’s not the end of the world Abby, after all people have been enjoying artificially low rates for years, they should have a lot of savings from that. And there might be other alternatives. You’ll do fine.”
 
-Mary hung up. Abby was overwhelmed. Yes, they’d enjoyed lower rents, but when they first moved here the real estate wasn’t hot, it was… frigid. Surely their tenure here should count for something, if values were up it was due to her perseverance, and that of her neighbors. But then, this was a city where landlords raised the rent on tenants who painted their apartments, citing the increase in value. My God, she thought, all the money spent on kids, vacations. There weren’t any savings! Her husband George did okay, an accountant, she had her teacher’s salary, but they couldn’t come close to what Mary was talking about. And she was sure very few other tenants could either.
+Mary hung up. Abby was overwhelmed. Yes, they’d enjoyed lower rents, but when they first moved here the real estate wasn’t hot, it was… frigid. Surely their tenure here should count for something, if values were up it was due to her perseverance, and that of her neighbors. But then, this was a city where landlords raised the rent on tenants who painted their apartments, citing the increase in value. My god, she thought, all the money spent on kids, vacations. There weren’t any savings! Her husband George did okay, an accountant, she had her teacher’s salary, but they couldn’t come close to what Mary was talking about. And she was sure very few other tenants could either.
 
 Late that night, after she’d told her husband George, after she’d taken a melatonin to help her sleep through thoughts of the impending crisis, she replayed the conversation with Mary in her head. And remembered something Mary had said.
 
@@ -108,7 +108,7 @@ Genvive kept saying how it was good for them, the daily climb, several times a d
 
 But she wasn’t the one climbing the stairs, holding two bags of groceries. She was smart enough to just buy a quart of milk at a time, to regulate the weight, but he’d bought a half gallon of the Organic Valley Grass Fed, he liked the idea of it and that was the only size it came in. Not a brand made with city dwellers in mind, at least not the ones without elevators.
 
-They’d lived in Hudson River Houses for over twenty years. Genvive had a friend who lived there, and knowing of the cramped two bedroom they were living in on the Lower East Side, with two kids sharing a bedroom way beyond the expiration date for such an arrangement, he called Genvive and said there was an apartment opening up, four bedrooms, West Village, yes rather rough around the edges, the heavy scenes, but still. It would take a bit of a payment to the building manager to make it work, but hey, that’s New York real estate, and it would be worth it. The rent was just plain cheap, let alone for four bedrooms, and was stabilized, in the mysterious way some apartments were, don’t look too close. Henry was making okay money, as an associate at the VC firm, but couldn’t touch something of that size that was market rate, anywhere in Manhattan.
+They’d lived in Hudson River Housing for over twenty years. Genvive had a friend who lived there, and knowing of the cramped two bedroom they were living in on the Lower East Side, with two kids sharing a bedroom way beyond the expiration date for such an arrangement, he called Genvive and said there was an apartment opening up, four bedrooms, West Village, yes rather rough around the edges, the heavy scenes, but still. It would take a bit of a payment to the building manager to make it work, but hey, that’s New York real estate, and it would be worth it. The rent was just plain cheap, let alone for four bedrooms, and was stabilized, in the mysterious way some apartments were, don’t look too close. Henry was making okay money, as an associate at the VC firm, but couldn’t touch something of that size that was market rate, anywhere in Manhattan.
 
 So Genvive, far more polished and cheerful and innocent-looking than Henry, connected with Eduardo, the building manager, and for a couple of thousand under the table dollars they found themselves at the top of the waiting list, most likely in the company of many other recent residents who’d paid the same tax, and moved in. Their own bedroom, plus one for each kid, and a spare room, where he could toss his clothes without censure for their invading other rooms, and a repository for the enormous amounts of papers and files he’d accumulated over the years. A place to position his cherished table, an eight footer of walnut with a crackling vinyl cover he’d found thrown out of a city-owned building one day, that had sat begrudgingly along the walls of a crowded room for so many years. He borrowed a van, and now it, and Henry, had room to breathe.
 
@@ -116,11 +116,11 @@ They loved the neighborhood. It had a humane scale, low rise townhouses and tene
 
 Genvive’s colleagues in the gallery wouldn’t venture anywhere near, looked at her in amazement when she said where she lived. They were Upper East Side, to that manor born. Some had cautiously dipped their toes into the Upper West Side, as it became socially palatable, but there was nothing doing below 72nd Street. Whereas Henry joked he and Genvive got nose bleeds north of 14th.
 
-They’d been there for twenty years, enjoying the net benefits of low rents that facilitated vacations in Italy, frequent trips to Genvive’s family in Belgium, annual full family rentals in Wellfleet, eating at hot spots and old favorites in Soho and Tribeca, with an increasing number taking root locally, buying clothes they liked at Paul Smith and Morgane Le Fay, Vince and Theory.
+They’d been there for twenty years, enjoying the net benefits of low rents that facilitated vacations in Italy, frequent trips to Genvive’s family in Belgium, annual full family rentals in Wellfleet, eating at hot spots and old favorites in SoHo and Tribeca, with an increasing number taking root locally, buying clothes they liked at Paul Smith and Morgane Le Fay, Vince and Theory.
 
 Like their rent, their lives were stabilized.
 
-Henry juggled the bags, shifting the lighter and heavier ones, tucking in the fresh baked baguette from the artisanal bakery nearby. He had to admit, it was worth it, the walk-up. Especially now, with the fiasco of his having to leave the firm. And maybe Genvive was right, even good for his health
+Henry juggled the bags, shifting the lighter and heavier ones, tucking in the fresh baked baguette from the artisanal bakery nearby. He had to admit, it was worth it, the walk-up. Especially now, with the fiasco of his having to leave the firm. And maybe Genvive was right, even good for his health.
 
 But then the rumors started.
 
@@ -128,13 +128,13 @@ But then the rumors started.
 
 Market rates!
 
-They would destroy the buildings’ semblance of community, desiccate the dwellers, force abandonment of apartments where people had lived for twenty, thirty years or more. Some were as they always were, but others, people had poured their creative and homebound sensibilities into them, built in elaborate shelves and systems, broken down walls to open up small kitchens, in the duplexes even tucked in balcony working spaces that housed music studios, writers’ lofts, artists garrotes. She was head of the Tenants Association, they would blame her, take it out on her, regardless of how unfair that might be.
+They would destroy the buildings’ semblance of community, desiccate the dwellers, force abandonment of apartments where people had lived for twenty, thirty years or more. Some were as they always were, but others, people had poured their creative and homebound sensibilities into them, built in elaborate shelves and systems, broken down walls to open up small kitchens, in the duplexes even tucked in balcony working spaces that housed music studios, writers’ lofts, artists’ garrets. She was head of the Tenants Association, they would blame her, take it out on her, regardless of how unfair that might be.
 
 It was the end.
 
 She’d heard of grand old rental buildings in the area, as around the rest of the city, converting to cooperative housing. She knew nothing about it, other than the rumors of first buyers getting great deals, insiders, becoming players in the great game of New York real estate, the classic local source of mammoth fortunes and family treasure.
 
-But Hudson River Housing was built on the premise of affordability, on the small scale that venerated community, its residents — many on fixed income — city employees, small business owners, or creative people, managing, some well, some struggling; they didn’t seem the stuff of buyers, and this wasn’t a single building, a cohesive group of fellow tenants. HRH was a discontinuous sprawl of thirty-six stairways in eighteen buildings housing 360 apartments. How could that be managed? It was a disaster.
+But Hudson River Housing was built on the premise of affordability, on the small scale that venerated community, its residents — many on fixed income — city employees, small business owners, or creative people, managing, some well, some struggling; they didn’t seem the stuff of buyers, and this wasn’t a single building, a cohesive group of fellow tenants. HRH was a discontinuous sprawl of thirty-six stairways in eighteen buildings housing three hundred sixty apartments. How could that be managed? It was a disaster.
 
 They had to fight it.
 
@@ -154,7 +154,7 @@ It was Asher she called, trying to keep the fear out of her voice, never show an
 
 “Asher, people cahn’t pay that, people could be evicted. After all these years heah.”
 
-“Abby, it doesn’t have to go that way. I’ve been preparing for this for years. We could buy the complex, make it work for everyone, there’d be a path for everybody to stay, own—
+“Abby, it doesn’t have to go that way. I’ve been preparing for this for years. We could buy the complex, make it work for everyone, there’d be a path for everybody to stay, own—”
 
 “Buy! Asher, really, how could we possibly? It’s so many apartments, buildings, people, you’re talking millions, tens of millions of dahlers, that’s not something residents like us could do.”
 
@@ -174,7 +174,7 @@ She had to play this right.
 
 When Marilyn left the city’s Department of Housing, she had visions of becoming a player in the Great Game of New York real estate. After all, her years in the agency had given her a familiarity with the arcane nuances of the city’s byzantine housing regulations, governing small rents and huge developments, and all the spaces in between. She pictured representing the titans, the Rudins and the Tisches, Steve Ross and Related, Tishman and Durst, LeFrak, Ratner, she’d even do a Trump if asked.
 
-But they all had their own firms lined up, and if the partners didn’t all possess Marilyn’s insider experience, it was because they could afford to obtain it when they needed it. They were the donors that drove the campaigns, they gave to both sides so they were always winners. They had many people on the inside of the agencies and departments, the offices and yes up to City Hall, and Marilyn’s Fordham JD degree and years slogging at an agency didn’t meet muster when compared to the Ivy-covered graduates who inhabited the offices of the major New York firms.
+But they all had their own firms lined up, and if the partners didn’t all possess Marilyn’s insider experience, it was because they could afford to obtain it when they needed it. They were the donors that drove the campaigns, they gave to both sides so they were always winners. They had many people on the inside of the agencies and departments, the offices and yes up to City Hall, and Marilyn’s Fordham JD degree and years slogging at an agency didn’t pass muster when compared to the Ivy-covered graduates who inhabited the offices of the major New York firms.
 
 So Marilyn dug in, made a good if not glamorous living representing tenants and landlords, whoever would pay, in the myriad versions of their disputes. Gradually building on that base to represent buyers or, better, sellers, in acquiring apartments, fulfilling dreams of equity and greed in equal parts. Which led to working with owners of tenements and townhouses who wanted to cash in on the always erupting spot bubbles of value that drove the city periodically and relentlessly. Eight and ten unit tenements on the Upper West and Lower East Sides, as the areas came into their own, developing cachet that led to greater value. Townhouses in Brooklyn, in the Slope and the Heights and the Hills, bringing together neighbors who otherwise couldn’t agree on garbage disposal to collectively pay millions for the rights and privileges of ownership, planting roots in the soil of the city, getting a stake in the game, buy, flip, buy, sell, find the bigger and better places, or get in the neighborhoods with the best schools, the easiest transportation, the hippest restaurants. Whatever drove them to play the game.
 
@@ -184,7 +184,7 @@ The second time Abby called, she picked up, apologized for being so busy, and sa
 
 ### Chapter Six: The Buildings
 
-Let’s face it, the buildings were has-beens. They had been born in a time that collapsed despair and hopes, New York City in the 70’s. They started with vision, to capture the spirit of the low rise brownstone stoops, street shops, small town feel of the West Village, which Jane Jacobs, the patron saint of urban sensibilities, had declared the apotheosis of urbane urban living, carving out that sensibility in a city that surrounded the enclave with the desire and quest for bigger, larger, higher, denser.
+Let’s face it, the buildings were has-beens. They had been born in a time that collapsed despair and hopes, New York City in the 70s. They started with vision, to capture the spirit of the low rise brownstone stoops, street shops, small town feel of the West Village, which Jane Jacobs, the patron saint of urban sensibilities, had declared the apotheosis of urbane urban living, carving out that sensibility in a city that surrounded the enclave with the desire and quest for bigger, larger, higher, denser.
 
 The hope of the original developers had fallen prey to the economic despair of the times. Bankrupt, they offloaded the project to a well-heeled partnership that found a way to complete construction in the time honored fashion of cutting back and cutting corners. The results were boxes where you could hear the neighbor’s parakeet chirping through your walls, the stomp of the toddler above, the little dog yipping below: not a good basis for creating the cozy communal feelings of good will once envisioned.
 
@@ -203,11 +203,11 @@ No attempt to reach them worked. A call, trying to be polite, appealing to them 
 
 So much, Jane, for the hope of community with shared values and myths.
 
-When the disease rampaged and they were felled by their unseen but deadly antagonist, Henry confessed to himself mixed feelings, the general humanistic sadness at a death too young and undeserved, coupled with relief for the end of an intolerable situation for which, much as he prided himself with his negotiation skills, he had not been able to find recourse. Although he would not find relief with future occupants, their bouncing children and yapping dogs.
+When the disease rampaged and they were felled by their unseen but deadly antagonist, Henry confessed to himself mixed feelings, the general humanistic sadness at a death too young and undeserved, coupled with relief for the end of an intolerable situation for which, much as he prided himself on his negotiation skills, he had not been able to find recourse. Although he would not find relief with future occupants, their bouncing children and yapping dogs.
 
-It all changed, the vacancies of apartments and spirit opened up a new clamor for development. The banners were lowered, and pushed away were the night hookers whistling at passing cars, long coats open to the views of red bras and hitched up packed panties beneath. Newly resident mothers with strollers clamored for the sidewalks in front of the meatpacking places to be scrubbed of the stains of blood and offal, scrubbing the businesses themselves to morph into street level shops filled with brand name aspirants, Vince and Theory and Helmut Lang, Christian Louboutin and Diana von Furstenberg, and an unending supply of multi-syllabic high end Italian clothing stores, alongside upscale artisans and coffee shops and wine bars. Spaces that once contained disheveled rambunctious art galleries now sported Wolford wools and Hermes scarfs. The last remaining bodega installed a salad bar, its once dusty shelves now abounded with ready-made ingredients and meals for people who used their ovens to store their knits.
+It all changed, the vacancies of apartments and spirit opened up a new clamor for development. The banners were lowered, and pushed away were the night hookers whistling at passing cars, long coats open to the views of red bras and hitched up packed panties beneath. Newly resident mothers with strollers clamored for the sidewalks in front of the meatpacking places to be scrubbed of the stains of blood and offal, scrubbing the businesses themselves to morph into street level shops filled with brand name aspirants, Vince and Theory and Helmut Lang, Christian Louboutin and Diane von Furstenberg, and an unending supply of multi-syllabic high end Italian clothing stores, alongside upscale artisans and coffee shops and wine bars. Spaces that once contained disheveled rambunctious art galleries now sported Wolford wools and Hermès scarfs. The last remaining bodega installed a salad bar, its once dusty shelves now abounded with ready-made ingredients and meals for people who used their ovens to store their knits.
 
-The garage that had served as the exterior shot for Taxi was torn down, replaced by eight bland stories. The brochure for the building proclaimed the charms of the West Village, to enjoy browsing the small shops and stores, then they installed on the bottom floor a Rite Aid who’s broad shelves put many of those charming small shops out of business. Real estate developers destroy the elements they exploit. Then they move on to the next unexploited neighborhood.
+The garage that had served as the exterior shot for Taxi was torn down, replaced by eight bland stories. The brochure for the building proclaimed the charms of the West Village, to enjoy browsing the small shops and stores, then they installed on the bottom floor a Rite Aid whose broad shelves put many of those charming small shops out of business. Real estate developers destroy the elements they exploit. Then they move on to the next unexploited neighborhood.
 
 Along the waterfront a foreign LLC built three glass towers, with no relationship to the surrounding buildings other than the happenstance of proximity, designed as tax shelter boxes for the likes of Martha Stewart and Calvin Klein and celebrity chefs du jour, for people who came and went, if at all, in limos; not even their feet touched their surroundings. They’d buy in the first round and sell in the second, turning a quick profit while touting the virtues of a community they ignored. The apartments were dark most of the time, shrouding the stubby buildings beneath them, well beneath them.
 
