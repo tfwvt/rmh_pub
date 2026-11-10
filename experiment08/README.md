@@ -17,8 +17,8 @@ Every essay, story, poem, novel excerpt and blog post that lived on thezog.com i
 | `templates/` | The reading-page layout (`article.html`) and the not-found page (`404.html`) |
 | `assets/img/`, `assets/files/` | Images and downloads (including the *No Kidding Around* pitch deck) |
 | `assets/fonts/` | The Fraunces and Inter fonts (SIL Open Font License), served from the site rather than Google Fonts so pages can load them before showing text. Declared at the top of `styles.css` |
-| `package.json` | Tells DigitalOcean (and `npm`) how to build the site |
-| `dist/` | The built site: the files above plus the reading pages (`read/<slug>/`), the Writing list (`writing.js`), `404.html`, a redirect page at each old thezog.com address, `sitemap.xml` and `robots.txt`. Generated; not in git |
+| `package.json` | Tells DigitalOcean (and `npm`) how to build the site, and lists the two packages the build uses: `yaml` and `sharp` (for the share pictures) |
+| `dist/` | The built site: the files above plus the reading pages (`read/<slug>/`), the Writing list (`writing.js`), `404.html`, a redirect page at each old thezog.com address, `sitemap.xml`, `robots.txt` and `assets/share/` (JPEG copies of the pictures pages show in link previews, since LinkedIn doesn't show WebP). Generated; not in git |
 | `../.pages.yml` | Settings for the Pages CMS editor, at the repository root |
 
 ## Adding or editing writing with Pages CMS
@@ -37,7 +37,7 @@ To let someone else edit (for example Robert), add them as a collaborator in Pag
 
 - **Title** and **Kind** are required. The file name, and so the web address (`read/the-title/`), comes from the title when the piece is created. Changing the title later doesn't change the address.
 - **Date** is optional. Pieces are listed newest first; undated ones come after the dated ones.
-- **Image:** upload or pick one. Uploads go to `assets/img/writing/`. Large photos are published as they are, so resize them to about 1600 pixels wide first.
+- **Image:** upload or pick one. Uploads go to `assets/img/writing/`. Large photos are published as they are, so resize them to about 1600 pixels wide first. (The build makes a JPEG copy for link previews by itself.)
 - **Also published on:** add Substack, Medium or other copies. With no text, the piece links to the first one instead of having its own page.
 - **Text:** the piece itself, in Markdown (see the basics below). The newest three dated essays, op-eds and notes also appear under "Latest Articles" at the top of the home page.
 
@@ -79,7 +79,7 @@ Films, books, reviews and the About text live in `content.js`, which the editor 
    - Other optional fields: `venue` (where it was published), `dateLabel` (shown instead of the date, e.g. `Fall 2010`), `label` (shown instead of the kind, e.g. `Short film`), `imagePosition` (which part of the image stays in frame on the home page cards, e.g. `50% 20%`), `unlisted: true` (hide the piece from the Writing list, and from the sitemap unless `content.js` links to it) and `legacy` (old thezog.com addresses, see below).
 3. Commit and push. DigitalOcean builds and publishes the site.
 
-To preview locally: run `npm install` once, then `npm run build` (Node 18 or newer), and open `dist/index.html`. The build prints a warning if any Markdown didn't convert cleanly or a page still links to an old thezog.com address. If a header can't be read, the build stops and names the file.
+To preview locally: run `npm install` once, then `npm run build` (Node 20.11 or newer), and open `dist/index.html`. The build prints a warning if any Markdown didn't convert cleanly or a page still links to an old thezog.com address. It also warns if a picture couldn't be copied as a JPEG for link previews (that page then shares the original picture). If a header can't be read, the build stops and names the file.
 
 **Markdown basics:**
 - A blank line starts a new paragraph.

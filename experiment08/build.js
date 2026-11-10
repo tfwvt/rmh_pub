@@ -12,21 +12,20 @@
  *   <old address>/index.html a redirect from each old thezog.com address to its new page
  *   404.html                 the not-found page, which also catches old addresses in odd capitalisation
  *   sitemap.xml, robots.txt  for search engines
+ *   assets/share/…           JPEG copies of the reading pages' pictures, for link previews
  *
- * Needs Node 18 or newer.
+ * Needs Node 20.11 or newer. (A JavaScript module: package.json says "type": "module".)
  */
-"use strict";
-
-const fs = require("fs");
-const path = require("path");
-const vm = require("vm");
-const YAML = require("yaml");
+import fs from "node:fs";
+import path from "node:path";
+import vm from "node:vm";
+import YAML from "yaml";
 
 // The site's public address, with no slash at the end. It goes into the canonical and share
 // tags, the structured data and the sitemap. Change it here if the site moves.
 const SITE_URL = "https://www.thezog.com";
 
-const ROOT = __dirname;
+const ROOT = import.meta.dirname;
 const SRC = path.join(ROOT, "content", "writing");
 const DIST = path.join(ROOT, "dist");
 const OUT = path.join(DIST, "read");
@@ -225,6 +224,35 @@ fs.rmSync(DIST, { recursive: true, force: true });
 for (const f of STATIC) fs.cpSync(path.join(ROOT, f), path.join(DIST, f), { recursive: true });
 const listed = pieces.filter((p) => p.listed);
 
+// ---------- Share images ----------
+// LinkedIn and some other sites don't show WebP pictures in link previews, so each picture a page
+// shares gets a JPEG copy, at most 1200 pixels wide, under assets/share/ (in the same folders as
+// under assets/img/). This needs the sharp package (npm install); without it, or if a picture
+// can't be read, the page shares the original picture instead.
+const sharp = await import("sharp").then((m) => m.default).catch(() => null);
+const shareWarnings = sharp ? [] : ["sharp isn't installed, so pages share their original pictures (LinkedIn doesn't show WebP)"];
+async function shareCopy(image) {
+  if (!sharp || /^https?:/i.test(image)) return { url: image };
+  const out = "assets/share/" + sitePath(image).replace(/^assets\/(img\/)?/, "").replace(/\.[^./]*$/, "") + ".jpg";
+  try {
+    fs.mkdirSync(path.dirname(path.join(DIST, out)), { recursive: true });
+    const info = await sharp(path.join(ROOT, sitePath(image)))
+      .resize({ width: 1200, withoutEnlargement: true })
+      .flatten({ background: "#ffffff" })
+      .jpeg({ quality: 82, mozjpeg: true })
+      .toFile(path.join(DIST, out));
+    return { url: out, width: info.width, height: info.height };
+  } catch (err) {
+    shareWarnings.push(`${image}: no JPEG copy for link previews (${err.message})`);
+    return { url: image };
+  }
+}
+const shareImages = new Set([PORTRAIT_JPG, ...pieces.filter((p) => p.body && p.image).map((p) => p.image)]);
+const shared = new Map(await Promise.all([...shareImages].map(async (img) => [img, await shareCopy(img)])));
+// og:image:width and og:image:height let Facebook and LinkedIn show the picture the first time a link is shared.
+const ogImageSize = (s) =>
+  s.width ? `<meta property="og:image:width" content="${s.width}">\n  <meta property="og:image:height" content="${s.height}">` : "";
+
 // ---------- Home page: address, share image and structured data ----------
 // Robert as a person (with his profiles elsewhere) and the site itself, for search engines.
 const homePath = path.join(DIST, "index.html");
@@ -232,7 +260,8 @@ fs.writeFileSync(
   homePath,
   fill(fs.readFileSync(homePath, "utf8"), {
     siteUrl: SITE_URL,
-    ogImage: absUrl(PORTRAIT_JPG),
+    ogImage: absUrl(shared.get(PORTRAIT_JPG).url),
+    ogImageSize: ogImageSize(shared.get(PORTRAIT_JPG)),
     jsonld: jsonLd({
       "@context": "https://schema.org",
       "@graph": [
@@ -277,7 +306,8 @@ for (const p of pieces.filter((x) => x.body)) {
     : "All writing";
   const canonical = absUrl(p.url);
   const description = p.dek ? plain(p.dek) : summary(p.body);
-  const shareImage = absUrl(p.image || PORTRAIT_JPG);
+  const share = shared.get(p.image || PORTRAIT_JPG);
+  const shareImage = absUrl(share.url);
   const vars = {
     prefix,
     title: esc(plain(p.title)),
@@ -313,6 +343,7 @@ for (const p of pieces.filter((x) => x.body)) {
       ? `<figure class="article-hero"><img src="${esc(fixUrl(p.image, prefix))}" alt=""${p.imagePosition ? ` style="object-position:${esc(p.imagePosition)}"` : ""}></figure>`
       : "",
     ogImage: esc(shareImage),
+    ogImageSize: ogImageSize(share),
     body: markdown(p.body, prefix),
     proseClass: p.kind === "poetry" ? "prose prose-poem" : "prose",
     alsoOn: p.links.length
@@ -411,7 +442,7 @@ fs.writeFileSync(
 fs.writeFileSync(path.join(DIST, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 
 // ---------- Report ----------
-const leftovers = [];
+const leftovers = [...shareWarnings];
 for (const p of pieces.filter((x) => x.body)) {
   const html = fs.readFileSync(path.join(OUT, p.slug, "index.html"), "utf8");
   const text = html.replace(/<[^>]+>/g, " ");
