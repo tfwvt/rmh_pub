@@ -6,10 +6,12 @@
  *   npm run build
  *
  * Writes to dist/:
- *   the home page, styles, scripts and assets, copied as they are
+ *   the home page, styles, scripts and assets (the home page gets its address and search tags filled in)
  *   read/<slug>/index.html   one page per piece that has body text
  *   writing.js               the list the home page shows under "Writing"
- *   404.html                 sends old thezog.com addresses to their new pages
+ *   <old address>/index.html a redirect from each old thezog.com address to its new page
+ *   404.html                 the not-found page, which also catches old addresses in odd capitalisation
+ *   sitemap.xml, robots.txt  for search engines
  *
  * Needs Node 18 or newer.
  */
@@ -19,6 +21,10 @@ const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 const YAML = require("yaml");
+
+// The site's public address, with no slash at the end. It goes into the canonical and share
+// tags, the structured data and the sitemap. Change it here if the site moves.
+const SITE_URL = "https://www.thezog.com";
 
 const ROOT = __dirname;
 const SRC = path.join(ROOT, "content", "writing");
@@ -137,6 +143,31 @@ const byDate = (a, b) => {
   return a.title.localeCompare(b.title);
 };
 const plain = (s) => String(s || "").replace(/[*_\\]/g, "");
+// Full address of a site path ("read/totem/", "assets/…"); addresses elsewhere are left as they are.
+const absUrl = (u) => (/^https?:/i.test(u) ? u : `${SITE_URL}/${sitePath(u)}`);
+// Search-result summary for a piece without a dek: the opening words of its text as plain prose.
+function summary(md, max = 155) {
+  const text = md
+    .replace(/(\\| {2,})\n(?!\n)/g, " / ") // a poem's line breaks, written the usual way for quoted verse
+    .replace(/<[^>]+>/g, " ")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/^(#{1,4}|>|\+|\d+\.)\s+/gm, "")
+    .replace(/^-{3,}$/gm, " ")
+    .replace(/[*_\\]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (text.length <= max) return text;
+  return text.slice(0, max).replace(/\s+\S*$/, "").replace(/[\s,;:.!?—–\/-]+$/, "") + "…";
+}
+// A <script type="application/ld+json"> block. "<" is escaped so the JSON can't close the tag.
+const jsonLd = (data) =>
+  `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>`;
+const PERSON_ID = `${SITE_URL}/#person`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
+const PORTRAIT_JPG = "assets/img/robert-herzog.jpg"; // the share image when a page has none of its own
+// Schema.org types for the reading pages.
+const SCHEMA_TYPES = { fiction: "ShortStory", poetry: "CreativeWork" };
 
 // ---------- Load ----------
 const pieces = fs
@@ -194,6 +225,33 @@ fs.rmSync(DIST, { recursive: true, force: true });
 for (const f of STATIC) fs.cpSync(path.join(ROOT, f), path.join(DIST, f), { recursive: true });
 const listed = pieces.filter((p) => p.listed);
 
+// ---------- Home page: address, share image and structured data ----------
+// Robert as a person (with his profiles elsewhere) and the site itself, for search engines.
+const homePath = path.join(DIST, "index.html");
+fs.writeFileSync(
+  homePath,
+  fill(fs.readFileSync(homePath, "utf8"), {
+    siteUrl: SITE_URL,
+    ogImage: absUrl(PORTRAIT_JPG),
+    jsonld: jsonLd({
+      "@context": "https://schema.org",
+      "@graph": [
+        { "@type": "WebSite", "@id": WEBSITE_ID, url: `${SITE_URL}/`, name: SITE.person.name, publisher: { "@id": PERSON_ID }, inLanguage: "en" },
+        {
+          "@type": "Person",
+          "@id": PERSON_ID,
+          name: SITE.person.name,
+          url: `${SITE_URL}/`,
+          image: absUrl(PORTRAIT_JPG),
+          jobTitle: SITE.person.roles.join(", "),
+          ...(SITE.about?.lead ? { description: SITE.about.lead } : {}),
+          sameAs: SITE.social.map((s) => s.url),
+        },
+      ],
+    }),
+  })
+);
+
 for (const p of pieces.filter((x) => x.body)) {
   const prefix = "../../";
   const more = listed
@@ -217,10 +275,30 @@ for (const p of pieces.filter((x) => x.body)) {
     : screenCards.has(p.slug) || p.slug === filmPageSlug ? "Screen &amp; Stage"
     : bookCards.has(p.slug) ? "Books"
     : "All writing";
+  const canonical = absUrl(p.url);
+  const description = p.dek ? plain(p.dek) : summary(p.body);
+  const shareImage = absUrl(p.image || PORTRAIT_JPG);
   const vars = {
     prefix,
     title: esc(plain(p.title)),
-    description: esc(plain(p.dek || p.body.slice(0, 160))),
+    description: esc(description),
+    canonical: esc(canonical),
+    // Wide previews for pieces with their own picture; the portrait fallback is tall, so it gets the small square card.
+    twitterCard: p.image ? "summary_large_image" : "summary",
+    jsonld: jsonLd({
+      "@context": "https://schema.org",
+      "@type": SCHEMA_TYPES[p.kind] || "Article",
+      headline: plain(p.title).slice(0, 110),
+      description,
+      url: canonical,
+      mainEntityOfPage: canonical,
+      image: shareImage,
+      ...(p.date ? { datePublished: p.date } : {}),
+      ...(SCHEMA_TYPES[p.kind] === "CreativeWork" ? { genre: "Poetry" } : {}),
+      author: { "@type": "Person", "@id": PERSON_ID, name: SITE.person.name, url: `${SITE_URL}/` },
+      isPartOf: { "@type": "WebSite", "@id": WEBSITE_ID, url: `${SITE_URL}/` },
+      inLanguage: "en",
+    }),
     meta,
     backSection,
     backLabel,
@@ -234,7 +312,7 @@ for (const p of pieces.filter((x) => x.body)) {
     hero: p.image && p.kind !== "poetry" && !p.body.includes(p.image)
       ? `<figure class="article-hero"><img src="${esc(fixUrl(p.image, prefix))}" alt=""${p.imagePosition ? ` style="object-position:${esc(p.imagePosition)}"` : ""}></figure>`
       : "",
-    ogImage: p.image ? esc(fixUrl(p.image, prefix)) : `${prefix}assets/img/robert-herzog.jpg`,
+    ogImage: esc(shareImage),
     body: markdown(p.body, prefix),
     proseClass: p.kind === "poetry" ? "prose prose-poem" : "prose",
     alsoOn: p.links.length
@@ -284,14 +362,68 @@ for (const p of pieces) for (const old of p.legacy) if (p.href) redirects[old.to
 const notFound = fs.readFileSync(path.join(ROOT, "templates", "404.html"), "utf8");
 fs.writeFileSync(path.join(DIST, "404.html"), fill(notFound, { redirects: JSON.stringify(redirects, null, 2) }));
 
+// ---------- A redirect page at each old address ----------
+// The 404 page's redirect runs in the browser, but search engines see a "not found" there and
+// drop the old page from their results. A page at the old address that forwards straight away
+// counts as a permanent move, so the old page's place in search results passes to the new one.
+let redirectPages = 0;
+for (const [old, target] of Object.entries(redirects)) {
+  const dir = path.join(DIST, old);
+  const file = path.join(dir, "index.html");
+  if (!dir.startsWith(DIST + path.sep) || fs.existsSync(file)) continue; // never replace a real page
+  // Forward to a path on this site (so it also works on the DigitalOcean address and in local
+  // previews); the canonical tag names the full address.
+  const local = /^https?:/i.test(target) ? target : "/" + target.replace(/^index\.html/, "");
+  const full = absUrl(target.replace(/^index\.html/, ""));
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(
+    file,
+    `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>This page has moved — Robert M. Herzog</title>
+  <link rel="canonical" href="${esc(full)}">
+  <meta http-equiv="refresh" content="0; url=${esc(local)}">
+  <script>location.replace(${JSON.stringify(local).replace(/</g, "\\u003c")});</script>
+</head>
+<body>
+  <p>This page has moved to <a href="${esc(local)}">${esc(full)}</a>.</p>
+</body>
+</html>
+`
+  );
+  redirectPages++;
+}
+
+// ---------- sitemap.xml and robots.txt ----------
+// The home page and every reading page that's linked from the site: the Writing list, or a
+// card in content.js (Flights, No Kidding Around). Hidden pieces that nothing links to stay out.
+const contentSource = fs.readFileSync(path.join(ROOT, "content.js"), "utf8");
+const linkedFromContent = new Set([...contentSource.matchAll(/read\/([a-z0-9-]+)/g)].map((m) => m[1]));
+const sitemapUrls = [`${SITE_URL}/`, ...pieces.filter((p) => p.body && (p.listed || linkedFromContent.has(p.slug))).map((p) => absUrl(p.url))];
+fs.writeFileSync(
+  path.join(DIST, "sitemap.xml"),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls
+    .map((u) => `  <url><loc>${esc(u)}</loc></url>`)
+    .join("\n")}\n</urlset>\n`
+);
+fs.writeFileSync(path.join(DIST, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+
 // ---------- Report ----------
 const leftovers = [];
 for (const p of pieces.filter((x) => x.body)) {
   const html = fs.readFileSync(path.join(OUT, p.slug, "index.html"), "utf8");
   const text = html.replace(/<[^>]+>/g, " ");
   if (/(^|\s)\*|\*(\s|$)|\]\(/.test(text)) leftovers.push(`${p.slug}: unconverted Markdown`);
-  // Links to the thezog.com home page are fine; links to its old inner pages are not.
-  if (/thezog\.com\/[^"\s<]/i.test(html.replace(/mailto:[^"]+/g, ""))) leftovers.push(`${p.slug}: links to old thezog.com page`);
+  // In the text, links to the thezog.com home page and to this site's own pages (read/…, assets/…)
+  // are fine; links to the old site's inner pages are not. (The head's canonical and share tags
+  // use thezog.com addresses on purpose, so only <main> is checked.)
+  const main = (html.match(/<main[\s\S]*<\/main>/) || [""])[0].replace(/mailto:[^"]+/g, "");
+  if (/thezog\.com\/(?!read\/|assets\/|#)[^"\s<]/i.test(main)) leftovers.push(`${p.slug}: links to old thezog.com page`);
 }
-console.log(`Built ${pieces.filter((p) => p.body).length} pages, ${list.length} listed pieces, ${Object.keys(redirects).length} redirects.`);
+console.log(
+  `Built ${pieces.filter((p) => p.body).length} pages, ${list.length} listed pieces, ${Object.keys(redirects).length} redirects ` +
+    `(${redirectPages} redirect pages), ${sitemapUrls.length} pages in the sitemap.`
+);
 if (leftovers.length) console.log("Check:\n  " + leftovers.join("\n  "));

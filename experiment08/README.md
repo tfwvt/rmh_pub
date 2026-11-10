@@ -13,12 +13,12 @@ Every essay, story, poem, novel excerpt and blog post that lived on thezog.com i
 | `index.html`, `app.js`, `styles.css` | The home page |
 | `content.js` | Films, books, the stories and poems in Short Fiction and Poetry (the first five also appear under Published Works at the top of the page; all of them are left out of the Writing list), reviews, social links and the About text |
 | `content/writing/*.md` | **Every piece of writing**, one Markdown file each |
-| `build.js` | Builds the finished site into `dist/` |
+| `build.js` | Builds the finished site into `dist/`. `SITE_URL` at the top is the site's public address |
 | `templates/` | The reading-page layout (`article.html`) and the not-found page (`404.html`) |
 | `assets/img/`, `assets/files/` | Images and downloads (including the *No Kidding Around* pitch deck) |
 | `assets/fonts/` | The Fraunces and Inter fonts (SIL Open Font License), served from the site rather than Google Fonts so pages can load them before showing text. Declared at the top of `styles.css` |
 | `package.json` | Tells DigitalOcean (and `npm`) how to build the site |
-| `dist/` | The built site: the files above plus the reading pages (`read/<slug>/`), the Writing list (`writing.js`) and `404.html`. Generated; not in git |
+| `dist/` | The built site: the files above plus the reading pages (`read/<slug>/`), the Writing list (`writing.js`), `404.html`, a redirect page at each old thezog.com address, `sitemap.xml` and `robots.txt`. Generated; not in git |
 | `../.pages.yml` | Settings for the Pages CMS editor, at the repository root |
 
 ## Adding or editing writing with Pages CMS
@@ -76,7 +76,7 @@ Films, books, reviews and the About text live in `content.js`, which the editor 
    - `date` is optional; undated pieces are listed after dated ones.
    - `image` and `links` are optional.
    - Leave the body empty to list a piece that's published only elsewhere. It then links to the first entry under `links`.
-   - Other optional fields: `venue` (where it was published), `dateLabel` (shown instead of the date, e.g. `Fall 2010`), `label` (shown instead of the kind, e.g. `Short film`), `imagePosition` (which part of the image stays in frame on the home page cards, e.g. `50% 20%`), `unlisted: true` (hide the piece from the Writing list) and `legacy` (old thezog.com addresses, see below).
+   - Other optional fields: `venue` (where it was published), `dateLabel` (shown instead of the date, e.g. `Fall 2010`), `label` (shown instead of the kind, e.g. `Short film`), `imagePosition` (which part of the image stays in frame on the home page cards, e.g. `50% 20%`), `unlisted: true` (hide the piece from the Writing list, and from the sitemap unless `content.js` links to it) and `legacy` (old thezog.com addresses, see below).
 3. Commit and push. DigitalOcean builds and publishes the site.
 
 To preview locally: run `npm install` once, then `npm run build` (Node 18 or newer), and open `dist/index.html`. The build prints a warning if any Markdown didn't convert cleanly or a page still links to an old thezog.com address. If a header can't be read, the build stops and names the file.
@@ -108,7 +108,15 @@ If a deploy fails, the build log in DigitalOcean shows the error. A header that 
 
 ## Moving thezog.com to this site
 
-Point the thezog.com domain at the DigitalOcean app. The site is served from the domain root, where `404.html` sends visitors from old addresses (`/totem`, `/new-page-30`, `/blog/2021/…`) to the matching new pages. The list of old addresses is kept in each piece's `legacy` field.
+The site is set up to live at **https://www.thezog.com**, the address the old Squarespace site used (it sent the bare thezog.com there), so old links and search results carry over. The address is set once, as `SITE_URL` at the top of `build.js`. It goes into every page's canonical and share tags, the structured data for search engines, `sitemap.xml` and `robots.txt`.
+
+To move the domain:
+
+1. In the DigitalOcean app's settings, add `www.thezog.com` and `thezog.com` as domains, and set the DNS records DigitalOcean asks for where the domain is registered.
+2. Check that both addresses load the new site. `www.thezog.com` matters most: every old link and search result uses it.
+3. In [Google Search Console](https://search.google.com/search-console), add `www.thezog.com` (it may already be there from the old site) and submit `https://www.thezog.com/sitemap.xml`. Bing Webmaster Tools can import the site from Search Console.
+
+**Old addresses:** each piece's `legacy` field lists its old thezog.com addresses (`/totem`, `/new-page-30`, `/blog/2021/…`), and `build.js` lists a few old section pages. The build puts a small page at each old address that forwards straight to the new one, which search engines treat as a permanent move. `404.html` also forwards old addresses typed with different capitals.
 
 ## Sources
 

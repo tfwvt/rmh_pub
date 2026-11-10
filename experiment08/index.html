@@ -8,10 +8,16 @@
   <meta name="author" content="Robert M. Herzog">
   <meta name="theme-color" content="#f5f1e8" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)">
+  <!-- The {{…}} values are filled in by build.js: the site's address (SITE_URL) and structured data. -->
+  <link rel="canonical" href="{{siteUrl}}/">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Robert M. Herzog">
+  <meta property="og:url" content="{{siteUrl}}/">
   <meta property="og:title" content="Robert M. Herzog">
   <meta property="og:description" content="Novelist, screenwriter, essayist and filmmaker. Essays and stories at the fault lines of democracy and culture.">
-  <meta property="og:image" content="assets/img/robert-herzog.jpg">
+  <meta property="og:image" content="{{ogImage}}">
+  <meta name="twitter:card" content="summary">
+  {{jsonld}}
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231a1714'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' text-anchor='middle' fill='%23e09a5c'%3EZ%3C/text%3E%3C/svg%3E">
   <!-- Fonts (declared in styles.css): fetched straight away, so the text first appears in them. -->
   <link rel="preload" href="assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
