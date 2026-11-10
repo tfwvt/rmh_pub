@@ -123,7 +123,7 @@ window.SITE = {
       title: "4 Times 50, Not 200",
       kind: "Play in four courses",
       image: "assets/img/script-4-times-50.webp",
-      imageAlt: "Two men sharing a long outdoor lunch",
+      imageAlt: "Four men laughing and talking over a long restaurant lunch with wine",
       laurels: ["Selected to be in the NYC Fringe Festival 2027"],
       laurelsBelow: true, // show the laurel line under the summary
       summary: "Over a series of grand lunches, four guys turning 50 in 1996 seek a future that better reflects the hopes of their past.",
