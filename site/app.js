@@ -117,7 +117,7 @@
   renderWriting();
 
   // ---------- Arriving at a section or card ----------
-  // Reading pages link back to their piece's card (index.html#short-fiction-totem,
+  // Reading pages link back to their piece's card (/#short-fiction-totem,
   // #writing-<name>, a Screen & Stage card such as #work-flights or a book such as
   // #book-board-to-death), and old thezog.com addresses forward to sections (#books, #about).
   // The Writing list shows nine cards at a time, so first show enough to include the card,

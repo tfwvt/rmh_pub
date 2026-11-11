@@ -75,7 +75,9 @@ function parseFile(file) {
 // ---------- Markdown ----------
 const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const isAbsolute = (u) => /^(https?:|mailto:|tel:|#|\/\/)/i.test(u);
-const fixUrl = (u, prefix) => (isAbsolute(u) ? u : prefix + sitePath(u));
+// Links to the home page ("index.html#books") drop the "index.html", so the address bar shows
+// thezog.com/#books. (Writing either form in a piece is fine.)
+const fixUrl = (u, prefix) => (isAbsolute(u) ? u : prefix + sitePath(u).replace(/^index\.html(?=#|$)/, ""));
 // The site's arrows (ARROW comes from build-home.js), pointing right and left.
 const BACK_ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>';
 const linkTarget = (u) => (/^https?:/i.test(u) ? ' target="_blank" rel="noopener"' : "");
@@ -98,7 +100,9 @@ function inline(text, prefix) {
   return s.replace(/\u0000(\d+)\u0000/g, (_, i) => keep[i]);
 }
 
-function markdown(md, prefix) {
+// eagerBlocks: the first picture in this many opening blocks loads straight away instead of when
+// scrolled to.
+function markdown(md, prefix, eagerBlocks = 0) {
   const blocks = md.split(/\n{2,}/).map((b) => b.replace(/^\n+|\n+$/g, "")).filter(Boolean);
   const html = [];
   for (let i = 0; i < blocks.length; i++) {
@@ -111,7 +115,8 @@ function markdown(md, prefix) {
       html.push(`<h${level}>${inline(m[2], prefix)}</h${level}>`);
     } else if ((m = b.match(/^!\[([^\]]*)\]\((\S+?)(?:\s+"([^"]*)")?\)$/))) {
       const cap = m[3] ? `<figcaption>${inline(m[3], prefix)}</figcaption>` : "";
-      html.push(`<figure><img src="${esc(fixUrl(m[2], prefix))}" alt="${esc(m[1] || m[3] || "")}" loading="lazy">${cap}</figure>`);
+      const eager = i < eagerBlocks && !html.some((h) => h.startsWith("<figure>"));
+      html.push(`<figure><img src="${esc(fixUrl(m[2], prefix))}" alt="${esc(m[1] || m[3] || "")}"${eager ? "" : ' loading="lazy"'}>${cap}</figure>`);
     } else if (b.split("\n").every((l) => l.startsWith(">"))) {
       html.push(`<blockquote>${markdown(b.replace(/^> ?/gm, ""), prefix)}</blockquote>`);
     } else if (/^(\+ |\d+\. )/.test(b)) {
@@ -333,6 +338,10 @@ for (const p of pieces.filter((x) => x.body)) {
     : screenCards.has(p.slug) || p.slug === filmPageSlug ? "Screen &amp; Stage"
     : bookCards.has(p.slug) ? "Books"
     : "All writing";
+  // No lead picture for poems, or when the picture already appears in the text.
+  const hero = p.image && p.kind !== "poetry" && !p.body.includes(p.image)
+    ? `<figure class="article-hero"><img src="${esc(fixUrl(p.image, prefix))}" alt=""${p.imagePosition ? ` style="object-position:${esc(p.imagePosition)}"` : ""}></figure>`
+    : "";
   const canonical = absUrl(p.url);
   const description = p.dek ? plain(p.dek) : summary(p.body);
   const share = shared.get(p.image || PORTRAIT_JPG);
@@ -364,16 +373,14 @@ for (const p of pieces.filter((x) => x.body)) {
     backArrow: BACK_ARROW,
     // backLinkAtEnd: true in a piece's header repeats the back link at the bottom of the page.
     backEnd: p.backLinkAtEnd === "true"
-      ? `<a class="back-link back-link-end" href="${prefix}index.html#${backSection}">${BACK_ARROW}${backLabel}</a>` : "",
+      ? `<a class="back-link back-link-end" href="${prefix}#${backSection}">${BACK_ARROW}${backLabel}</a>` : "",
     dek: p.dek ? `<p class="article-dek">${inline(p.dek, prefix)}</p>` : "",
     venue: p.venue ? `<p class="article-venue">${esc(p.venue)}</p>` : "",
-    // No lead image for poems, or when the image already appears in the text.
-    hero: p.image && p.kind !== "poetry" && !p.body.includes(p.image)
-      ? `<figure class="article-hero"><img src="${esc(fixUrl(p.image, prefix))}" alt=""${p.imagePosition ? ` style="object-position:${esc(p.imagePosition)}"` : ""}></figure>`
-      : "",
+    hero,
     ogImage: esc(shareImage),
     ogImageSize: ogImageSize(share),
-    body: markdown(p.body, prefix),
+    // Without a lead picture, a picture in the first two blocks is the top of the page.
+    body: markdown(p.body, prefix, hero ? 0 : 2),
     proseClass: p.kind === "poetry" ? "prose prose-poem" : "prose",
     alsoOn: p.links.length
       ? `<div class="also-on"><span>Also published on</span>${p.links
@@ -381,8 +388,9 @@ for (const p of pieces.filter((x) => x.body)) {
           .join("")}</div>`
       : "",
     more: more
-      ? `<section class="more"><div class="wrap-narrow"><p class="eyebrow">More ${esc(kindLabel(p).toLowerCase())}</p><ul class="more-list">${more}</ul><a class="text-link" href="${prefix}index.html#writing">All writing ${ARROW}</a></div></section>`
+      ? `<section class="more"><div class="wrap-narrow"><p class="eyebrow">More ${esc(kindLabel(p).toLowerCase())}</p><ul class="more-list">${more}</ul><a class="text-link" href="${prefix}#writing">All writing ${ARROW}</a></div></section>`
       : "",
+    newsletterUrl: esc(SITE.newsletter.url),
     social: SITE.social
       .map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`)
       .join(""),
@@ -396,16 +404,16 @@ for (const p of pieces.filter((x) => x.body)) {
 
 // ---------- 404.html with redirects from the old site ----------
 const redirects = {
-  "/novel": "index.html#books",
-  "/essayingamerica": "index.html#books",
-  "/testimonials": "index.html#books",
-  "/new-page-2": "index.html#screen",
-  "/the-country-annex": "index.html#about",
-  "/contact": "index.html#follow",
-  "/contact-2": "index.html#follow",
-  "/blog": "index.html#writing",
-  "/fiction": "index.html#short-fiction",
-  "/opedipal-nonfiction": "index.html#writing",
+  "/novel": "#books",
+  "/essayingamerica": "#books",
+  "/testimonials": "#books",
+  "/new-page-2": "#screen",
+  "/the-country-annex": "#about",
+  "/contact": "#follow",
+  "/contact-2": "#follow",
+  "/blog": "#writing",
+  "/fiction": "#short-fiction",
+  "/opedipal-nonfiction": "#writing",
 };
 for (const p of pieces) for (const old of p.legacy) if (p.href) redirects[old.toLowerCase().replace(/\/+$/, "")] = p.href;
 const notFound = fs.readFileSync(path.join(ROOT, "templates", "404.html"), "utf8");

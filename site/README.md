@@ -82,7 +82,7 @@ Films, books, reviews and the About text live in `content.js`, which the editor 
    - Other optional fields: `venue` (where it was published), `dateLabel` (shown instead of the date, e.g. `Fall 2010`), `label` (shown instead of the kind, e.g. `Short film`), `imagePosition` (which part of the image stays in frame on the home page cards, e.g. `50% 20%`), `unlisted: true` (hide the piece from the Writing list, and from the sitemap unless `content.js` links to it) and `legacy` (old thezog.com addresses, see below).
 3. Commit and push. DigitalOcean builds and publishes the site.
 
-To preview locally: run `npm install` once, then `npm run build` (Node 20.11 or newer), and open `dist/index.html`. The build prints a warning if any Markdown didn't convert cleanly or a page still links to an old thezog.com address. It also warns if a picture couldn't be copied as a JPEG for link previews (that page then shares the original picture). If a header can't be read, the build stops and names the file.
+To preview locally: run `npm install` once, then `npm run build` (Node 20.11 or newer). Then, from the repository root, run `python3 serve.py site/dist 8001` and open http://localhost:8001/. (Opening `dist/index.html` straight from the disk doesn't work everywhere: the reading pages' links back to the home page are written for a web server.) The build prints a warning if any Markdown didn't convert cleanly or a page still links to an old thezog.com address. It also warns if a picture couldn't be copied as a JPEG for link previews (that page then shares the original picture). If a header can't be read, the build stops and names the file.
 
 **Markdown basics:**
 - A blank line starts a new paragraph.

@@ -35,11 +35,11 @@
     <div class="wrap header-inner">
       <a class="wordmark" href="{{prefix}}">Robert M. Herzog</a>
       <nav class="site-nav" aria-label="Main">
-        <a href="{{prefix}}index.html#screen">Film</a>
-        <a href="{{prefix}}index.html#books">Books</a>
-        <a href="{{prefix}}index.html#short-fiction">Writing</a>
-        <a href="{{prefix}}index.html#about">About</a>
-        <a href="{{prefix}}index.html#follow" class="nav-subscribe">Subscribe</a>
+        <a href="{{prefix}}#screen">Film</a>
+        <a href="{{prefix}}#books">Books</a>
+        <a href="{{prefix}}#short-fiction">Writing</a>
+        <a href="{{prefix}}#about">About</a>
+        <a href="{{prefix}}#follow" class="nav-subscribe">Subscribe</a>
       </nav>
     </div>
   </header>
@@ -47,7 +47,7 @@
   <main id="main">
     <article class="article">
       <header class="article-head wrap-narrow">
-        <a class="back-link" href="{{prefix}}index.html#{{backSection}}">{{backArrow}}{{backLabel}}</a>
+        <a class="back-link" href="{{prefix}}#{{backSection}}">{{backArrow}}{{backLabel}}</a>
         <p class="eyebrow">{{meta}}</p>
         <h1 class="article-title">{{title}}</h1>
         {{dek}}
@@ -64,7 +64,7 @@
           {{alsoOn}}
           <div class="article-subscribe">
             <p>New essays and stories, straight to your inbox.</p>
-            <a class="btn btn-primary" href="https://robertherzog.substack.com/subscribe" target="_blank" rel="noopener">Subscribe on Substack</a>
+            <a class="btn btn-primary" href="{{newsletterUrl}}" target="_blank" rel="noopener">Subscribe on Substack</a>
           </div>
         </footer>
       </div>
