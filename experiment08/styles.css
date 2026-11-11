@@ -42,9 +42,11 @@
   --card: #fbf8f2;
   --ink: #1a1714;
   --ink-2: #4a443c;
-  --muted: #7a7166;
+  /* --muted and --accent are as light as they can be while text in them stays readable (at least
+     4.5:1 contrast) on both --paper and the darker --paper-2 sections. */
+  --muted: #6c645a;
   --line: #dcd3c2;
-  --accent: #a4561f;
+  --accent: #9c521d;
   --accent-soft: #f0dcc6;
   --on-accent: #fffaf3;
 
@@ -495,7 +497,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 .chip:hover { border-color: var(--ink); color: var(--ink); }
 .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-.chip .count { opacity: .55; margin-left: 4px; font-variant-numeric: tabular-nums; }
+.chip .count { opacity: .8; margin-left: 4px; font-variant-numeric: tabular-nums; }
 .search { position: relative; display: flex; align-items: center; }
 .search svg { position: absolute; left: 12px; width: 16px; height: 16px; fill: none; stroke: var(--muted); stroke-width: 2; pointer-events: none; }
 .search input {

@@ -30,7 +30,8 @@ const ROOT = import.meta.dirname;
 const SRC = path.join(ROOT, "content", "writing");
 const DIST = path.join(ROOT, "dist");
 const OUT = path.join(DIST, "read");
-const STATIC = ["index.html", "app.js", "styles.css", "assets"];
+// The site's icon (the Z) is also copied to the root, where browsers and search engines look for it.
+const STATIC = ["index.html", "app.js", "styles.css", "assets", "favicon.ico", "favicon.svg", "apple-touch-icon.png"];
 
 const KIND_LABELS = { essay: "Essay", oped: "Op-Ed", fiction: "Fiction", poetry: "Poetry", notes: "Notes", film: "Film" };
 

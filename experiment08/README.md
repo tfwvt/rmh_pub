@@ -12,6 +12,7 @@ Every essay, story, poem, novel excerpt and blog post that lived on thezog.com i
 | --- | --- |
 | `index.html`, `styles.css` | The home page's layout and styles. The build fills in its sections (the `{{…}}` values) |
 | `build-home.js` | Writes the home page's sections (films, books, stories, the Writing list, About, the links at the bottom) from `content.js` and `content/writing/`, so they're in the page's HTML and search engines see them without running JavaScript |
+| `favicon.ico`, `favicon.svg`, `apple-touch-icon.png` | The site's icon (the Z, drawn from Fraunces) for browser tabs, search results and phone home screens. The build copies them to the site's root |
 | `app.js` | The home page's interactive parts: the Writing filters, search and "Show more", the film strips' fit and the scroll back to a card |
 | `content.js` | Films, books, the stories and poems in Short Fiction and Poetry (the first five also appear under Published Works at the top of the page; all of them are left out of the Writing list), reviews, social links and the About text |
 | `content/writing/*.md` | **Every piece of writing**, one Markdown file each |

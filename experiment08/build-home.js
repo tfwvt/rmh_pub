@@ -183,7 +183,7 @@ export function homeSections(SITE, writingData) {
           <p class="film-credits">${creditsHtml(f.credits)}</p>
           ${f.collaborator ? `<p class="collab"><strong>Co-director.</strong> ${esc(f.collaborator)}</p>` : ""}
         </div>
-        <aside class="film-side">
+        <div class="film-side">
           <div class="film-actions">
             ${f.actions
               .map((a) => `<a class="btn${a.primary ? " btn-primary" : ""}" href="${esc(a.url)}"${linkAttrs(a.url)}>${esc(a.label)}</a>`)
@@ -194,7 +194,7 @@ export function homeSections(SITE, writingData) {
             <img src="${esc(b.image)}" alt="${esc(b.alt)}"${dims(b.size)} loading="lazy">
             ${b.title || b.caption ? `<figcaption>${b.title ? `<span class="film-badge-title">${esc(b.title)}</span>` : ""}${(b.caption || []).map((c) => `<span class="film-badge-line">${esc(c)}</span>`).join("")}</figcaption>` : ""}
           </figure>`).join("")}</div>` : ""}
-        </aside>
+        </div>
       </div>
       ${f.pageLink ? `<div class="wrap film-page"><a class="film-page-link" href="${esc(f.pageLink.url)}" data-back="film">${cueTitle(f.pageLink.label)}</a></div>` : ""}`;
   }
