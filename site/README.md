@@ -1,8 +1,8 @@
-# experiment08
+# Robert M. Herzog's website
 
-This started as a copy of experiment07.
+The website for Robert M. Herzog (novelist, screenwriter, essayist and filmmaker), live at [thezog.com](https://thezog.com), where it replaced his old Squarespace site.
 
-The website for Robert M. Herzog (novelist, screenwriter, essayist and filmmaker), built to replace [thezog.com](https://thezog.com).
+This folder was called `experiment08` until November 2026, so older commits use that name.
 
 Every essay, story, poem, novel excerpt and blog post that lived on thezog.com is now hosted here, each on its own reading page. Pieces that are also on Substack or Medium link to those copies, and work published only elsewhere (for example in *Persuasion*) links out.
 
@@ -100,7 +100,7 @@ The site is a DigitalOcean App Platform static site that deploys automatically w
 
 | Setting | Value |
 | --- | --- |
-| Source directory | `experiment08` |
+| Source directory | `site` |
 | Build command | `npm run build` |
 | Output directory | `dist` |
 | Error document | `404.html` |

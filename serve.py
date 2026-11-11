@@ -5,7 +5,7 @@ Like `python3 -m http.server`, but every reload fetches the latest files, so
 edits to site.js, styles.css or content.js show up straight away.
 
 Usage:  python3 serve.py [folder] [port]
-        python3 serve.py experiment04/dist 8001   # http://localhost:8001/
+        python3 serve.py site/dist 8001   # http://localhost:8001/
 """
 import functools
 import http.server
