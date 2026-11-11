@@ -55,4 +55,4 @@ He waved a distant goodbye through the red felt curtains, hesitating at the rope
 
 He went to bed and composed himself, because he knew in the morning he could not tell his best friend the source of his anger. Martha waved away his breath, then took his arm and cradled her head upon it, and he left it there until it grew numb.
 
-> This short story was the cover story for Vol. XIX, 2010, of [*Downstate Story Magazine*](http://www.wiu.edu/users/mfgeh/dss/index.html). *DSM* publisher Elaine Hopkins recently was [quoted](http://www.pekintimes.com/topstories/x1714279502/Magazine-showcases-local-talent) as saying that “No More, No Less” is “good enough to be in *The New Yorker*.”
+> This short story was the cover story for Vol. XIX, 2010, of [*Downstate Story Magazine*](https://web.archive.org/web/20170706005933/http://www.wiu.edu/users/mfgeh/dss/index.html). *DSM* publisher Elaine Hopkins recently was [quoted](https://web.archive.org/web/20111107144428/http://www.pekintimes.com/topstories/x1714279502/Magazine-showcases-local-talent) as saying that “No More, No Less” is “good enough to be in *The New Yorker*.”

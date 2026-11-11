@@ -50,4 +50,4 @@ Based on the director/writer’s novel *Not Our Father’s Dream*, this short fi
 
 Fong, his main character says, “Shouldn’t living be connected to what you want, not just avoiding what you didn’t? It’s this ‘Fongosophy’ and depth beyond the words on paper or the scenes on the screen that leave us wanting more from this emerging filmmaker. This effervescent study of conflict between what the writer terms citizenship and morality could not be more timely. Herzog says that the film captures “an almost true, but entirely surreal experience”. It’s only in the canvas of long-form that we’ll see if Herzog lives up to his potential. *Flights* is featured in the Hampton International Film Festival’s Conflict and Resolution section and was named “best film short subject” Cinevue International Film Competition, Florida.
 
-— Joyce Schwarz, [FilmFestivals.com](http://www.fest21.com/en/blog/zog/film_festivalscom_review_of_flights)﻿
+— Joyce Schwarz, [FilmFestivals.com](https://web.archive.org/web/20101206172822/http://www.fest21.com/en/blog/zog/film_festivalscom_review_of_flights)﻿

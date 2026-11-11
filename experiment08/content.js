@@ -173,7 +173,7 @@ window.SITE = {
         { label: "Barnes & Noble", url: "https://www.barnesandnoble.com/w/a-world-between-robert-herzog/1122946120" },
         { label: "Apple Books", url: "https://itunes.apple.com/us/book/a-world-between/id1087143185?mt=11" },
         { label: "Kobo", url: "https://www.kobo.com/us/en/ebook/a-world-between-2" },
-        { label: "IndieBound", url: "https://www.indiebound.org/book/9781611882179" },
+        { label: "Bookshop.org", url: "https://bookshop.org/p/books/world-between-robert-herzog/fdaad67286b697c7?ean=9781611882179" },
         { label: "Read Chapter One", url: "read/a-world-between-chapter-one/" },
       ],
     },
