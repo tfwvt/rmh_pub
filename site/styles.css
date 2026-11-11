@@ -636,6 +636,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .article-hero { max-width: 1080px; margin: 0 auto clamp(36px, 5vw, 56px); padding: 0 var(--gutter); }
 /* Shown whole (never cropped): some lead images have their own lettering. */
 .article-hero img { width: auto; max-width: 100%; max-height: min(680px, 80vh); margin: 0 auto; border-radius: var(--radius); }
+/* When the build knows the picture's size (--w, its width, and --r, width ÷ height), the width is
+   set up front: the same size the rules above give the loaded picture, but before it arrives, so
+   the text below doesn't jump. The height follows from the width and height attributes. */
+.article-hero img[width] { width: min(100%, var(--w), calc(min(680px, 80vh) * var(--r))); }
 
 .prose { font: 400 19px/1.75 var(--serif); font-optical-sizing: auto; color: var(--ink); overflow-wrap: break-word; }
 .prose p { margin: 0 0 1.25em; }

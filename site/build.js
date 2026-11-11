@@ -277,6 +277,33 @@ async function shareCopy(image) {
     return { url: image };
   }
 }
+// ---------- Picture sizes ----------
+// The width and height of each picture under assets/img/, so a page can hold the right space for
+// a picture before it arrives and the text below doesn't jump when it does. Also needs sharp;
+// without it, pictures simply have no sizes, as before.
+const imageSizes = new Map();
+if (sharp) {
+  const imgDir = path.join(ROOT, "assets", "img");
+  const files = fs.readdirSync(imgDir, { recursive: true }).filter((f) => /\.(webp|jpe?g|png|gif)$/i.test(f));
+  await Promise.all(
+    files.map(async (f) => {
+      try {
+        const m = await sharp(path.join(imgDir, f)).metadata();
+        const { width, height } = m.autoOrient || m; // as shown, after any rotation the camera recorded
+        if (width && height) imageSizes.set("assets/img/" + f.split(path.sep).join("/"), { width, height });
+      } catch {} // a picture sharp can't read just goes without a size
+    })
+  );
+}
+const sizeOf = (src, prefix) => imageSizes.get(sitePath(src.startsWith(prefix) ? src.slice(prefix.length) : src));
+// Adds width and height to the <img> tags in a piece's HTML that don't have them yet.
+const addImageSizes = (html, prefix) =>
+  html.replace(/<img\b[^>]*>/g, (tag) => {
+    const src = (tag.match(/\ssrc="([^"]+)"/) || [])[1];
+    const size = src && !/\swidth=/.test(tag) && sizeOf(src, prefix);
+    return size ? tag.replace(/^<img/, `<img width="${size.width}" height="${size.height}"`) : tag;
+  });
+
 const shareImages = new Set([PORTRAIT_JPG, ...pieces.filter((p) => p.body && p.image).map((p) => p.image)]);
 const shared = new Map(await Promise.all([...shareImages].map(async (img) => [img, await shareCopy(img)])));
 // og:image:width and og:image:height let Facebook and LinkedIn show the picture the first time a link is shared.
@@ -339,8 +366,15 @@ for (const p of pieces.filter((x) => x.body)) {
     : bookCards.has(p.slug) ? "Books"
     : "All writing";
   // No lead picture for poems, or when the picture already appears in the text.
+  // With its size known, the lead picture gets its width and shape (--w, --r: see .article-hero in
+  // styles.css) up front, so its box is the right size before the picture arrives.
+  const heroSize = p.image && sizeOf(p.image, "");
+  const heroStyle = [
+    heroSize ? `--w:${heroSize.width}px;--r:${heroSize.width}/${heroSize.height}` : "",
+    p.imagePosition ? `object-position:${esc(p.imagePosition)}` : "",
+  ].filter(Boolean).join(";");
   const hero = p.image && p.kind !== "poetry" && !p.body.includes(p.image)
-    ? `<figure class="article-hero"><img src="${esc(fixUrl(p.image, prefix))}" alt=""${p.imagePosition ? ` style="object-position:${esc(p.imagePosition)}"` : ""}></figure>`
+    ? `<figure class="article-hero"><img src="${esc(fixUrl(p.image, prefix))}" alt=""${heroSize ? ` width="${heroSize.width}" height="${heroSize.height}"` : ""}${heroStyle ? ` style="${heroStyle}"` : ""}></figure>`
     : "";
   const canonical = absUrl(p.url);
   const description = p.dek ? plain(p.dek) : summary(p.body);
@@ -380,7 +414,7 @@ for (const p of pieces.filter((x) => x.body)) {
     ogImage: esc(shareImage),
     ogImageSize: ogImageSize(share),
     // Without a lead picture, a picture in the first two blocks is the top of the page.
-    body: markdown(p.body, prefix, hero ? 0 : 2),
+    body: addImageSizes(markdown(p.body, prefix, hero ? 0 : 2), prefix),
     proseClass: p.kind === "poetry" ? "prose prose-poem" : "prose",
     alsoOn: p.links.length
       ? `<div class="also-on"><span>Also published on</span>${p.links
