@@ -26,6 +26,10 @@ import { homeSections, ARROW, bookId, workId } from "./build-home.js";
 // tags, the structured data and the sitemap. Change it here if the site moves.
 const SITE_URL = "https://thezog.com";
 
+// Cloudflare Web Analytics: visitor counts, with no cookies (see dash.cloudflare.com → Web
+// Analytics). The token isn't secret; it's in every page. Leave it empty to stop counting.
+const ANALYTICS_TOKEN = "68a7af7a90f0479d8ad0fe5a2c1d4c71";
+
 const ROOT = import.meta.dirname;
 const SRC = path.join(ROOT, "content", "writing");
 const DIST = path.join(ROOT, "dist");
@@ -163,6 +167,21 @@ function summary(md, max = 155) {
 // A <script type="application/ld+json"> block. "<" is escaped so the JSON can't close the tag.
 const jsonLd = (data) =>
   `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>`;
+// Cloudflare's counting script, for the head of every page. It only loads at the site's own
+// address, so local previews and the DigitalOcean address don't add to the numbers.
+const SITE_HOST = new URL(SITE_URL).hostname;
+const analytics = ANALYTICS_TOKEN
+  ? `<!-- Cloudflare Web Analytics (visitor counts, no cookies), on ${SITE_HOST} only. Set in build.js. -->
+  <script>
+    if (location.hostname === ${JSON.stringify(SITE_HOST)}) {
+      const s = document.createElement("script");
+      s.type = "module";
+      s.src = "https://static.cloudflareinsights.com/beacon.min.js";
+      s.dataset.cfBeacon = ${JSON.stringify(JSON.stringify({ token: ANALYTICS_TOKEN }))};
+      document.head.append(s);
+    }
+  </script>`
+  : "";
 const PERSON_ID = `${SITE_URL}/#person`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 const PORTRAIT_JPG = "assets/img/robert-herzog.jpg"; // the share image when a page has none of its own
@@ -269,6 +288,7 @@ fs.writeFileSync(
   fill(fs.readFileSync(homePath, "utf8"), {
     ...homeSections(SITE, list),
     siteUrl: SITE_URL,
+    analytics,
     ogImage: absUrl(shared.get(PORTRAIT_JPG).url),
     ogImageSize: ogImageSize(shared.get(PORTRAIT_JPG)),
     jsonld: jsonLd({
@@ -367,6 +387,7 @@ for (const p of pieces.filter((x) => x.body)) {
       .map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`)
       .join(""),
     year: String(new Date().getFullYear()),
+    analytics,
   };
   const dir = path.join(OUT, p.slug);
   fs.mkdirSync(dir, { recursive: true });
@@ -388,7 +409,7 @@ const redirects = {
 };
 for (const p of pieces) for (const old of p.legacy) if (p.href) redirects[old.toLowerCase().replace(/\/+$/, "")] = p.href;
 const notFound = fs.readFileSync(path.join(ROOT, "templates", "404.html"), "utf8");
-fs.writeFileSync(path.join(DIST, "404.html"), fill(notFound, { redirects: JSON.stringify(redirects, null, 2) }));
+fs.writeFileSync(path.join(DIST, "404.html"), fill(notFound, { redirects: JSON.stringify(redirects, null, 2), analytics }));
 
 // ---------- A redirect page at each old address ----------
 // The 404 page's redirect runs in the browser, but search engines see a "not found" there and

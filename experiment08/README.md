@@ -109,6 +109,10 @@ DigitalOcean uses the Node version in `package.json` (`"engines"`). Keep it pinn
 
 If a deploy fails, the build log in DigitalOcean shows the error. A header that isn't valid YAML stops the build and names the file, and the live site stays as it was.
 
+## Visitor counts
+
+[Cloudflare Web Analytics](https://dash.cloudflare.com) (Analytics & Logs → Web Analytics) counts visits, pages, where visitors came from, countries and devices. It uses no cookies, so the site needs no cookie banner. `ANALYTICS_TOKEN` at the top of `build.js` turns it on for every page, including the not-found page, which shows broken links people arrive by. It only counts on `thezog.com` itself, not in local previews or at the DigitalOcean address. Visitors whose ad blocker stops it aren't counted, so the numbers are a minimum.
+
 ## Moving thezog.com to this site
 
 The site lives at **https://thezog.com**. The address is set once, as `SITE_URL` at the top of `build.js`. It goes into every page's canonical and share tags, the structured data for search engines, `sitemap.xml` and `robots.txt`.
