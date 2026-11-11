@@ -6,9 +6,9 @@
  *   npm run build
  *
  * Writes to dist/:
- *   the home page, styles, scripts and assets (the home page gets its address and search tags filled in)
+ *   the home page, styles, script and assets. The home page gets its address, search tags and
+ *   sections (films, books, the Writing list and so on, from build-home.js) filled in
  *   read/<slug>/index.html   one page per piece that has body text
- *   writing.js               the list the home page shows under "Writing"
  *   <old address>/index.html a redirect from each old thezog.com address to its new page
  *   404.html                 the not-found page, which also catches old addresses in odd capitalisation
  *   sitemap.xml, robots.txt  for search engines
@@ -20,6 +20,7 @@ import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
 import YAML from "yaml";
+import { homeSections, ARROW, bookId, workId } from "./build-home.js";
 
 // The site's public address, with no slash at the end. It goes into the canonical and share
 // tags, the structured data and the sitemap. Change it here if the site moves.
@@ -29,7 +30,7 @@ const ROOT = import.meta.dirname;
 const SRC = path.join(ROOT, "content", "writing");
 const DIST = path.join(ROOT, "dist");
 const OUT = path.join(DIST, "read");
-const STATIC = ["index.html", "app.js", "styles.css", "content.js", "assets"];
+const STATIC = ["index.html", "app.js", "styles.css", "assets"];
 
 const KIND_LABELS = { essay: "Essay", oped: "Op-Ed", fiction: "Fiction", poetry: "Poetry", notes: "Notes", film: "Film" };
 
@@ -70,8 +71,7 @@ function parseFile(file) {
 const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const isAbsolute = (u) => /^(https?:|mailto:|tel:|#|\/\/)/i.test(u);
 const fixUrl = (u, prefix) => (isAbsolute(u) ? u : prefix + sitePath(u));
-// The site's arrows (the same drawing as ARROW in app.js), pointing right and left.
-const ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+// The site's arrows (ARROW comes from build-home.js), pointing right and left.
 const BACK_ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>';
 const linkTarget = (u) => (/^https?:/i.test(u) ? ' target="_blank" rel="noopener"' : "");
 
@@ -204,17 +204,15 @@ const shortFictionSlugs = new Set(
 );
 
 // Pages linked from a Screen & Stage card (e.g. Flights) or a book card (e.g. a novel's opening
-// chapters) link back to that card. Same ids as workId() and bookId() in app.js: "work-" or
-// "book-" plus the title in lower case with dashes.
-const slugify = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+// chapters) link back to that card (ids from workId() and bookId() in build-home.js).
 const readSlug = (url) => (String(url).match(/^read\/([^/]+)/) || [])[1];
 const screenCards = new Map();
 for (const w of SITE.screen || []) {
-  for (const l of w.links || []) if (readSlug(l.url)) screenCards.set(readSlug(l.url), "work-" + slugify(w.title));
+  for (const l of w.links || []) if (readSlug(l.url)) screenCards.set(readSlug(l.url), workId(w));
 }
 const bookCards = new Map();
 for (const b of SITE.books || []) {
-  for (const l of b.buy || []) if (readSlug(l.url)) bookCards.set(readSlug(l.url), "book-" + slugify(b.title));
+  for (const l of b.buy || []) if (readSlug(l.url)) bookCards.set(readSlug(l.url), bookId(b));
 }
 // The featured film's own page (featuredFilm.pageLink, e.g. No Kidding Around) links back to its
 // Screen & Stage card if one links to it (as above), otherwise to the film band (#film).
@@ -223,6 +221,13 @@ const filmPageSlug = readSlug(SITE.featuredFilm?.pageLink?.url || "");
 fs.rmSync(DIST, { recursive: true, force: true });
 for (const f of STATIC) fs.cpSync(path.join(ROOT, f), path.join(DIST, f), { recursive: true });
 const listed = pieces.filter((p) => p.listed);
+// The home page's Writing list (and Latest Articles and the Short Fiction cards' dates).
+const list = listed.map((p) => {
+  const o = { kind: p.kind, title: p.title, dek: p.dek || "", date: p.date || null };
+  for (const k of ["dateLabel", "venue", "image", "imagePosition", "url"]) if (p[k]) o[k] = p[k];
+  o.links = p.links;
+  return o;
+});
 
 // ---------- Share images ----------
 // LinkedIn and some other sites don't show WebP pictures in link previews, so each picture a page
@@ -253,12 +258,15 @@ const shared = new Map(await Promise.all([...shareImages].map(async (img) => [im
 const ogImageSize = (s) =>
   s.width ? `<meta property="og:image:width" content="${s.width}">\n  <meta property="og:image:height" content="${s.height}">` : "";
 
-// ---------- Home page: address, share image and structured data ----------
-// Robert as a person (with his profiles elsewhere) and the site itself, for search engines.
+// ---------- Home page: sections, address, share image and structured data ----------
+// The sections are written into the page itself (build-home.js), so search engines and other
+// sites see the whole page without running its script. The structured data describes Robert
+// as a person (with his profiles elsewhere) and the site itself.
 const homePath = path.join(DIST, "index.html");
 fs.writeFileSync(
   homePath,
   fill(fs.readFileSync(homePath, "utf8"), {
+    ...homeSections(SITE, list),
     siteUrl: SITE_URL,
     ogImage: absUrl(shared.get(PORTRAIT_JPG).url),
     ogImageSize: ogImageSize(shared.get(PORTRAIT_JPG)),
@@ -363,18 +371,6 @@ for (const p of pieces.filter((x) => x.body)) {
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, "index.html"), fill(template, vars));
 }
-
-// ---------- writing.js ----------
-const list = listed.map((p) => {
-  const o = { kind: p.kind, title: p.title, dek: p.dek || "", date: p.date || null };
-  for (const k of ["dateLabel", "venue", "image", "imagePosition", "url"]) if (p[k]) o[k] = p[k];
-  o.links = p.links;
-  return o;
-});
-fs.writeFileSync(
-  path.join(DIST, "writing.js"),
-  `// Generated by build.js from content/writing/*.md. Do not edit by hand.\nwindow.SITE_WRITING = ${JSON.stringify(list, null, 2)};\n`
-);
 
 // ---------- 404.html with redirects from the old site ----------
 const redirects = {

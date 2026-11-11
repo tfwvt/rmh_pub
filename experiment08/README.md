@@ -10,7 +10,9 @@ Every essay, story, poem, novel excerpt and blog post that lived on thezog.com i
 
 | Path | What it is |
 | --- | --- |
-| `index.html`, `app.js`, `styles.css` | The home page |
+| `index.html`, `styles.css` | The home page's layout and styles. The build fills in its sections (the `{{…}}` values) |
+| `build-home.js` | Writes the home page's sections (films, books, stories, the Writing list, About, the links at the bottom) from `content.js` and `content/writing/`, so they're in the page's HTML and search engines see them without running JavaScript |
+| `app.js` | The home page's interactive parts: the Writing filters, search and "Show more", the film strips' fit and the scroll back to a card |
 | `content.js` | Films, books, the stories and poems in Short Fiction and Poetry (the first five also appear under Published Works at the top of the page; all of them are left out of the Writing list), reviews, social links and the About text |
 | `content/writing/*.md` | **Every piece of writing**, one Markdown file each |
 | `build.js` | Builds the finished site into `dist/`. `SITE_URL` at the top is the site's public address |
@@ -18,7 +20,7 @@ Every essay, story, poem, novel excerpt and blog post that lived on thezog.com i
 | `assets/img/`, `assets/files/` | Images and downloads (including the *No Kidding Around* pitch deck) |
 | `assets/fonts/` | The Fraunces and Inter fonts (SIL Open Font License), served from the site rather than Google Fonts so pages can load them before showing text. Declared at the top of `styles.css` |
 | `package.json` | Tells DigitalOcean (and `npm`) how to build the site, and lists the two packages the build uses: `yaml` and `sharp` (for the share pictures) |
-| `dist/` | The built site: the files above plus the reading pages (`read/<slug>/`), the Writing list (`writing.js`), `404.html`, a redirect page at each old thezog.com address, `sitemap.xml`, `robots.txt` and `assets/share/` (JPEG copies of the pictures pages show in link previews, since LinkedIn doesn't show WebP). Generated; not in git |
+| `dist/` | The built site: the files above plus the reading pages (`read/<slug>/`), `404.html`, a redirect page at each old thezog.com address, `sitemap.xml`, `robots.txt` and `assets/share/` (JPEG copies of the pictures pages show in link previews, since LinkedIn doesn't show WebP). Generated; not in git |
 | `../.pages.yml` | Settings for the Pages CMS editor, at the repository root |
 
 ## Adding or editing writing with Pages CMS
