@@ -23,7 +23,7 @@ import YAML from "yaml";
 
 // The site's public address, with no slash at the end. It goes into the canonical and share
 // tags, the structured data and the sitemap. Change it here if the site moves.
-const SITE_URL = "https://www.thezog.com";
+const SITE_URL = "https://thezog.com";
 
 const ROOT = import.meta.dirname;
 const SRC = path.join(ROOT, "content", "writing");

@@ -108,13 +108,26 @@ If a deploy fails, the build log in DigitalOcean shows the error. A header that 
 
 ## Moving thezog.com to this site
 
-The site is set up to live at **https://www.thezog.com**, the address the old Squarespace site used (it sent the bare thezog.com there), so old links and search results carry over. The address is set once, as `SITE_URL` at the top of `build.js`. It goes into every page's canonical and share tags, the structured data for search engines, `sitemap.xml` and `robots.txt`.
+The site lives at **https://thezog.com**. The address is set once, as `SITE_URL` at the top of `build.js`. It goes into every page's canonical and share tags, the structured data for search engines, `sitemap.xml` and `robots.txt`.
+
+The old Squarespace site used `www.thezog.com` (it sent the bare thezog.com there), so every old link and search result uses www. `www.thezog.com` therefore has to keep working, as a permanent redirect to `thezog.com`, so those links carry over.
 
 To move the domain:
 
-1. In the DigitalOcean app's settings, add `www.thezog.com` and `thezog.com` as domains, and set the DNS records DigitalOcean asks for where the domain is registered.
-2. Check that both addresses load the new site. `www.thezog.com` matters most: every old link and search result uses it.
-3. In [Google Search Console](https://search.google.com/search-console), add `www.thezog.com` (it may already be there from the old site) and submit `https://www.thezog.com/sitemap.xml`. Bing Webmaster Tools can import the site from Search Console.
+1. In the DigitalOcean app's settings, add `thezog.com` and `www.thezog.com` as domains. At the DNS host (Bluehost), point `thezog.com` at the two A records DigitalOcean gives, and make `www` a CNAME to the app's `….ondigitalocean.app` hostname. Enter just the hostname, without `https://`, even though DigitalOcean's Networking tab shows it with one.
+2. Wait until both domains show Active, so each has its HTTPS certificate.
+3. Redirect www to the bare domain by adding this rule to the app spec's `ingress.rules` (Settings → App Spec):
+   ```yaml
+   - match:
+       authority:
+         exact: www.thezog.com
+     redirect:
+       authority: thezog.com
+       scheme: https
+       redirect_code: 301
+   ```
+   Then check that `https://www.thezog.com/read/a-world-between-chapter-one/` lands on `https://thezog.com/read/a-world-between-chapter-one/`, keeping the path.
+4. In [Google Search Console](https://search.google.com/search-console), add `thezog.com` as a Domain property (it covers www too) and submit `https://thezog.com/sitemap.xml`. Bing Webmaster Tools can import the site from Search Console.
 
 **Old addresses:** each piece's `legacy` field lists its old thezog.com addresses (`/totem`, `/new-page-30`, `/blog/2021/…`), and `build.js` lists a few old section pages. The build puts a small page at each old address that forwards straight to the new one, which search engines treat as a permanent move. `404.html` also forwards old addresses typed with different capitals.
 
