@@ -284,7 +284,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .hero-title { white-space: nowrap; }
   .hero-title br { display: none; }
   .hero-portrait { max-width: 340px; margin: 0 0 calc(clamp(32px, 6vw, 80px) - 32px); }
-  .hero-portrait img { aspect-ratio: 1 / 1; }
   .hero-lists { grid-template-columns: 1fr; }
   .latest { max-width: 560px; }
 }
