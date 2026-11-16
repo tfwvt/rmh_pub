@@ -131,8 +131,8 @@ window.SITE = {
     {
       title: "Adjacent Beds",
       kind: "Work in progress",
-      image: "assets/img/script-adjacent-beds.webp",
-      imageAlt: "A man wearing a virtual reality headset in the dark",
+      image: "assets/img/script-adjacent-beds-poster.webp",
+      imageAlt: "Adjacent Beds poster: glowing data screens beside an empty hospital bed, with the line “Losing Everything is only the Beginning”",
       summary: "A poignant story of a son’s world of cutting edge augmented reality technology clashing with his trying to deal with his aging mother and keep his life from unraveling.",
     },
   ],
